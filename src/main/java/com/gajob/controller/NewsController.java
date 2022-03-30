@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,14 +21,15 @@ public class NewsController {
 
   private final NewsCrawling newsCrawling;
 
-  @GetMapping("/news") // 크롤링한 데이터 가져오기
-  public List<News> getNewsData(String url) throws IOException {
-    return newsCrawling.getNewsData(newsCrawling.getNewsUrl(1));
+  @GetMapping("/news") // 크롤링한 뉴스 데이터 가져오기
+  public ResponseEntity<NewsDto> getNews() {
+    return new ResponseEntity(newsCrawling.getNews(),
+        HttpStatus.OK);
   }
 
-  @PostMapping("/save") // 크롤링한 데이터 DB 저장
-  public ResponseEntity<NewsDto> newsSave() throws Exception {
-    return ResponseEntity.ok(newsCrawling.newsSave(new NewsDto(News.builder().build())));
+  @PostMapping("/news") // 크롤링한 뉴스 데이터 DB 저장
+  public ResponseEntity<NewsDto> saveNews() throws Exception {
+    return ResponseEntity.ok(newsCrawling.saveNews(new NewsDto(News.builder().build())));
   }
 
 }

@@ -1,6 +1,7 @@
 package com.gajob.service.crawling;
 
 import com.gajob.dto.NewsDto;
+import com.gajob.dto.NewsResponseDto;
 import com.gajob.entity.News;
 import com.gajob.repository.NewsRepository;
 import java.io.IOException;
@@ -24,11 +25,13 @@ public class NewsCrawlingImpl implements NewsCrawling {
   private final String URL = "https://www.yna.co.kr/economy/job-foundation";
   private final String PAGE = "";
 
+  @Override
   public String getNewsUrl(int page) {
     return URL + "?" + PAGE + page;
   }
 
   // Jsoup을 이용하여 사이트 내 데이터 추출
+  @Override
   public List<News> getNewsData(String URL) throws IOException {
     List<News> newsList = new ArrayList<>();
 
@@ -71,7 +74,8 @@ public class NewsCrawlingImpl implements NewsCrawling {
 
   // Crawling한 뉴스 정보들을 DB에 저장한다.
   @Transactional
-  public NewsDto newsSave(NewsDto newsDto) throws Exception {
+  @Override
+  public NewsDto saveNews(NewsDto newsDto) throws Exception {
     List<News> list = new ArrayList<>();
 
     int page = 1;
@@ -87,6 +91,18 @@ public class NewsCrawlingImpl implements NewsCrawling {
       }
     }
     return null;
+  }
+
+  // DB에 저장한 뉴스 정보 읽어오기
+  @Transactional
+  @Override
+  public List<NewsResponseDto> getNews() {
+    List<NewsResponseDto> newsResponseDtos = new ArrayList<>();
+    for (News news : newsRepository.findAll()) {
+      NewsResponseDto newsResponseDto = new NewsResponseDto(news);
+      newsResponseDtos.add(newsResponseDto);
+    }
+    return newsResponseDtos;
   }
 
   // getNewsData() 메소드를 호출하여 allNews List에 저장을 한다.

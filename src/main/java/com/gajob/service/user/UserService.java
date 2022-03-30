@@ -1,4 +1,4 @@
-package com.gajob.service;
+package com.gajob.service.user;
 
 import java.util.Map;
 import org.springframework.web.bind.annotation.RequestBody;

@@ -1,6 +1,6 @@
 package com.gajob.controller;
 
-import com.gajob.service.UserService;
+import com.gajob.service.user.UserService;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
