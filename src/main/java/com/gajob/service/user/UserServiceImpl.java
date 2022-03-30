@@ -1,4 +1,4 @@
-package com.gajob.service;
+package com.gajob.service.user;
 
 import com.gajob.config.security.JwtTokenProvider;
 import com.gajob.entity.User;
