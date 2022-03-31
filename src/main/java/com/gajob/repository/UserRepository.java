@@ -8,4 +8,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
   Optional<User> findByUsername(String username);
 
+  // 중복인 값이 들어올 경우 true, 아니면 false 리턴
+  boolean existsByUsername(String username);
+
 }
