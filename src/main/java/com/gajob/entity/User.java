@@ -28,6 +28,7 @@ public class User implements UserDetails {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name = "user_id")
   private Long id;
 
   @Column(length = 50, nullable = false, unique = true)
@@ -35,6 +36,9 @@ public class User implements UserDetails {
 
   @Column(length = 100, nullable = false)
   private String password; //유저비밀번호
+
+  @Column(length = 50, nullable = false, unique = true)
+  private String nickname; //유저닉네임
 
   @ElementCollection(fetch = FetchType.EAGER)
   @Builder.Default
@@ -72,5 +76,9 @@ public class User implements UserDetails {
     return true;
   }
 
-
+  // 닉네임과 비밀번호만 수정 가능하게 설정
+  public void modify(String nickname, String password) {
+    this.nickname = nickname;
+    this.password = password;
+  }
 }

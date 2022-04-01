@@ -25,6 +25,7 @@ public class UserServiceImpl implements UserService {
     return userRepository.save(User.builder()
         .username(user.get("username"))
         .password(passwordEncoder.encode(user.get("password")))
+        .nickname(user.get("nickname"))
         .roles(Collections.singletonList("ROLE_USER")) //최초로 회원 가입시 USER로 설정
         .build()).getId();
   }

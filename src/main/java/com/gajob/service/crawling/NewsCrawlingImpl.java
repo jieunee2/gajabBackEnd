@@ -1,6 +1,6 @@
 package com.gajob.service.crawling;
 
-import com.gajob.dto.NewsDto;
+import com.gajob.dto.NewsRequestDto;
 import com.gajob.dto.NewsResponseDto;
 import com.gajob.entity.News;
 import com.gajob.repository.NewsRepository;
@@ -66,7 +66,7 @@ public class NewsCrawlingImpl implements NewsCrawling {
       String imgUrl = imgUrlElements.get(i).getElementsByAttribute("src").attr("src");
 
       // url 앞에 https를 붙여주어 링크를 완성시킴
-      News news = new News(title, contents, createTime, "https:" + url, "https:" + imgUrl);
+      News news = new News(title, contents, createTime, url, imgUrl);
       newsList.add(news);
     }
     return newsList;
@@ -75,7 +75,7 @@ public class NewsCrawlingImpl implements NewsCrawling {
   // Crawling한 뉴스 정보들을 DB에 저장한다.
   @Transactional
   @Override
-  public NewsDto saveNews(NewsDto newsDto) throws Exception {
+  public NewsRequestDto saveNews(NewsRequestDto newsRequestDto) throws Exception {
     List<News> list = new ArrayList<>();
 
     int page = 1;
