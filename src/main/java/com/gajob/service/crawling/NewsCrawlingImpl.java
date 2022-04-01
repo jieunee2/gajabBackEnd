@@ -66,7 +66,7 @@ public class NewsCrawlingImpl implements NewsCrawling {
       String imgUrl = imgUrlElements.get(i).getElementsByAttribute("src").attr("src");
 
       // url 앞에 https를 붙여주어 링크를 완성시킴
-      News news = new News(title, contents, createTime, url, imgUrl);
+      News news = new News(title, contents, createTime, url.substring(2), "https:" + imgUrl);
       newsList.add(news);
     }
     return newsList;
