@@ -1,31 +1,32 @@
 package com.gajob.entity;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.stream.Collectors;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.util.Set;
 import javax.persistence.Column;
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
+import lombok.Setter;
 
+@Entity // DB의 테이블과 1:1 매핑되는 객체
+@Table(name = "user") // 테이블명 user로 지정
 @Getter
-@NoArgsConstructor
-@AllArgsConstructor
+@Setter
 @Builder
-@Entity
-public class User implements UserDetails {
+@AllArgsConstructor
+@NoArgsConstructor
+public class User {
 
+  @JsonIgnore
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "user_id")
@@ -37,48 +38,18 @@ public class User implements UserDetails {
   @Column(length = 100, nullable = false)
   private String password; //유저비밀번호
 
-  @Column(length = 50, nullable = false, unique = true)
-  private String nickname; //유저닉네임
+  @Column(name = "nickname", length = 50)
+  private String nickname;
 
-  @ElementCollection(fetch = FetchType.EAGER)
-  @Builder.Default
-  private List<String> roles = new ArrayList<>();
+  @Column(name = "activated")
+  private boolean activated;
 
-  @Override
-  public Collection<? extends GrantedAuthority> getAuthorities() {
-    return this.roles.stream()
-        .map(SimpleGrantedAuthority::new)
-        .collect(Collectors.toList());
-  }
+  @ManyToMany
+  @JoinTable(
+      name = "user_authority",
+      joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "user_id")},
+      inverseJoinColumns = {
+          @JoinColumn(name = "authority_name", referencedColumnName = "authority_name")})
+  private Set<Authority> authorities;
 
-  @Override
-  public String getUsername() {
-    return username;
-  }
-
-  @Override
-  public boolean isAccountNonExpired() {
-    return true;
-  }
-
-  @Override
-  public boolean isAccountNonLocked() {
-    return true;
-  }
-
-  @Override
-  public boolean isCredentialsNonExpired() {
-    return true;
-  }
-
-  @Override
-  public boolean isEnabled() {
-    return true;
-  }
-
-  // 닉네임과 비밀번호만 수정 가능하게 설정
-  public void modify(String nickname, String password) {
-    this.nickname = nickname;
-    this.password = password;
-  }
 }
