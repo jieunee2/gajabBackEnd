@@ -1,6 +1,6 @@
 package com.gajob.service.crawling;
 
-import com.gajob.dto.NewsRequestDto;
+import com.gajob.dto.NewsDto;
 import com.gajob.dto.NewsResponseDto;
 import com.gajob.entity.News;
 import com.gajob.repository.NewsRepository;
@@ -19,7 +19,6 @@ import org.springframework.transaction.annotation.Transactional;
 public class NewsCrawlingImpl implements NewsCrawling {
 
   // 연합뉴스 취업/창업 카테고리 기사 크롤링
-
   private final NewsRepository newsRepository;
 
   private final String URL = "https://www.yna.co.kr/economy/job-foundation";
@@ -65,8 +64,7 @@ public class NewsCrawlingImpl implements NewsCrawling {
       // 기사 이미지 URL 추출
       String imgUrl = imgUrlElements.get(i).getElementsByAttribute("src").attr("src");
 
-      // url 앞에 https를 붙여주어 링크를 완성시킴
-      News news = new News(title, contents, createTime, url.substring(2), "https:" + imgUrl);
+      News news = new News(title, contents, createTime, url.substring(2), "https:" + imgUrl.replace(".jpg",""));
       newsList.add(news);
     }
     return newsList;
@@ -75,7 +73,7 @@ public class NewsCrawlingImpl implements NewsCrawling {
   // Crawling한 뉴스 정보들을 DB에 저장한다.
   @Transactional
   @Override
-  public NewsRequestDto saveNews(NewsRequestDto newsRequestDto) throws Exception {
+  public NewsDto saveNews(NewsDto newsDto) throws Exception {
     List<News> list = new ArrayList<>();
 
     int page = 1;

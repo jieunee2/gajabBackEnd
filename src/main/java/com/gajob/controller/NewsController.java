@@ -3,8 +3,6 @@ package com.gajob.controller;
 import com.gajob.dto.NewsDto;
 import com.gajob.entity.News;
 import com.gajob.service.crawling.NewsCrawling;
-import java.io.IOException;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.http.HttpStatus;
@@ -16,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/crawling")
+@RequestMapping("/issue")
 public class NewsController {
 
   private final NewsCrawling newsCrawling;
