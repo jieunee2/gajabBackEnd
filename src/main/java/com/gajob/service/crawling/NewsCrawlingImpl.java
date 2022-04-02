@@ -19,7 +19,6 @@ import org.springframework.transaction.annotation.Transactional;
 public class NewsCrawlingImpl implements NewsCrawling {
 
   // 연합뉴스 취업/창업 카테고리 기사 크롤링
-
   private final NewsRepository newsRepository;
 
   private final String URL = "https://www.yna.co.kr/economy/job-foundation";
