@@ -38,11 +38,14 @@ public class User {
   @Column(length = 100, nullable = false)
   private String password; //유저비밀번호
 
+  @Column(nullable = false)
+  private String name; //유저이름
+
   @Column(name = "nickname", length = 50)
-  private String nickname;
+  private String nickname; //닉네임
 
   @Column(name = "activated")
-  private boolean activated;
+  private boolean activated; //활성화여부
 
   @ManyToMany
   @JoinTable(
