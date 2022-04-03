@@ -33,6 +33,7 @@ public class UserService {
     User user = User.builder()
         .username(userDto.getUsername())
         .password(passwordEncoder.encode(userDto.getPassword()))
+        .name((userDto.getName()))
         .nickname(userDto.getNickname())
         .authorities(Collections.singleton(authority))
         .activated(true)
