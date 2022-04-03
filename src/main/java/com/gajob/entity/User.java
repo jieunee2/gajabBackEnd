@@ -41,7 +41,7 @@ public class User {
   @Column(nullable = false)
   private String name; //유저이름
 
-  @Column(name = "nickname", length = 50)
+  @Column(nullable = false, name = "nickname", length = 50)
   private String nickname; //닉네임
 
   @Column(name = "activated")
