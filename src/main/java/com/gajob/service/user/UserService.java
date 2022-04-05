@@ -21,7 +21,7 @@ public class UserService {
 
   @Transactional
   public User signup(UserDto userDto) {
-    if (userRepository.findOneWithAuthoritiesByUsername(userDto.getUsername()).orElse(null)
+    if (userRepository.findOneWithAuthoritiesByEmail(userDto.getEmail()).orElse(null)
         != null) {
       throw new RuntimeException("이미 가입되어 있는 유저입니다.");
     }
@@ -31,7 +31,7 @@ public class UserService {
         .build();
 
     User user = User.builder()
-        .username(userDto.getUsername())
+        .email(userDto.getEmail())
         .password(passwordEncoder.encode(userDto.getPassword()))
         .name((userDto.getName()))
         .nickname(userDto.getNickname())
@@ -44,14 +44,14 @@ public class UserService {
 
   // username을 파라미터로 받아 해당 유저의 정보 및 권한 정보를 리턴
   @Transactional(readOnly = true)
-  public Optional<User> getUserWithAuthorities(String username) {
-    return userRepository.findOneWithAuthoritiesByUsername(username);
+  public Optional<User> getUserWithAuthorities(String email) {
+    return userRepository.findOneWithAuthoritiesByEmail(email);
   }
 
   // SecurityUtil의 getCurrentUsername() 메소드가 리턴하는 username의 유저 및 권한 정보를 리
   @Transactional(readOnly = true)
   public Optional<User> getMyUserWithAuthorities() {
     return SecurityUtil.getCurrentUsername()
-        .flatMap(userRepository::findOneWithAuthoritiesByUsername);
+        .flatMap(userRepository::findOneWithAuthoritiesByEmail);
   }
 }
