@@ -1,6 +1,6 @@
-package com.gajob.repository;
+package com.gajob.repository.user;
 
-import com.gajob.entity.User;
+import com.gajob.entity.user.User;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;

@@ -1,4 +1,4 @@
-package com.gajob.dto;
+package com.gajob.dto.user;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

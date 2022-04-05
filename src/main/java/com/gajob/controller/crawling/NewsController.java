@@ -1,7 +1,7 @@
-package com.gajob.controller;
+package com.gajob.controller.crawling;
 
-import com.gajob.dto.NewsDto;
-import com.gajob.entity.News;
+import com.gajob.dto.crawling.NewsDto;
+import com.gajob.entity.crawling.News;
 import com.gajob.service.crawling.NewsCrawling;
 import lombok.RequiredArgsConstructor;
 
