@@ -33,7 +33,7 @@ public class User {
   private Long id;
 
   @Column(length = 50, nullable = false, unique = true)
-  private String username; //유저아이디
+  private String email; //유저아이디
 
   @Column(length = 100, nullable = false)
   private String password; //유저비밀번호
