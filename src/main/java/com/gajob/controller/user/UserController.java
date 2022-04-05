@@ -1,10 +1,10 @@
-package com.gajob.controller;
+package com.gajob.controller.user;
 
 
-import com.gajob.dto.LoginDto;
-import com.gajob.dto.TokenDto;
-import com.gajob.dto.UserDto;
-import com.gajob.entity.User;
+import com.gajob.dto.user.LoginDto;
+import com.gajob.dto.user.TokenDto;
+import com.gajob.dto.user.UserDto;
+import com.gajob.entity.user.User;
 import com.gajob.jwt.JwtFilter;
 import com.gajob.jwt.TokenProvider;
 import com.gajob.service.user.UserService;
