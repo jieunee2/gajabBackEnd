@@ -1,7 +1,7 @@
 package com.gajob.service.user;
 
-import com.gajob.entity.User;
-import com.gajob.repository.UserRepository;
+import com.gajob.entity.user.User;
+import com.gajob.repository.user.UserRepository;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.security.core.GrantedAuthority;

@@ -1,24 +1,25 @@
-package com.gajob.dto;
+package com.gajob.dto.crawling;
 
-import com.gajob.entity.News;
+import com.gajob.entity.crawling.News;
 import lombok.Data;
 
-@Data
-public class NewsResponseDto {
+@Data // 생성자, Getter, Setter, toString 등을 자동으로 생성해준다.
+public class NewsDto {
 
-  private Long id;
+  //  private Long id;
   private String title;
   private String contents;
   private String createTime;
   private String url;
   private String imgUrl;
 
-  public NewsResponseDto(News news) {
-    this.id = news.getId();
+  public NewsDto(News news) {
+//    this.id = news.getId();
     this.title = news.getTitle();
     this.contents = news.getContents();
     this.createTime = news.getCreateTime();
     this.url = news.getUrl();
     this.imgUrl = news.getImgUrl();
   }
+
 }

@@ -1,9 +1,9 @@
 package com.gajob.service.user;
 
-import com.gajob.dto.UserDto;
-import com.gajob.entity.Authority;
-import com.gajob.entity.User;
-import com.gajob.repository.UserRepository;
+import com.gajob.dto.user.UserDto;
+import com.gajob.entity.user.Authority;
+import com.gajob.entity.user.User;
+import com.gajob.repository.user.UserRepository;
 import com.gajob.util.SecurityUtil;
 import java.util.Collections;
 import java.util.Optional;

@@ -1,4 +1,4 @@
-package com.gajob.entity;
+package com.gajob.entity.user;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.Set;

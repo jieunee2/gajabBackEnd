@@ -1,8 +1,8 @@
 package com.gajob.service.crawling;
 
-import com.gajob.dto.NewsDto;
-import com.gajob.dto.NewsResponseDto;
-import com.gajob.entity.News;
+import com.gajob.dto.crawling.NewsDto;
+import com.gajob.dto.crawling.NewsResponseDto;
+import com.gajob.entity.crawling.News;
 import java.io.IOException;
 import java.util.List;
 

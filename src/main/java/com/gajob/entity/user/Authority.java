@@ -1,4 +1,4 @@
-package com.gajob.entity;
+package com.gajob.entity.user;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
