@@ -9,7 +9,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
   // username을 기준으로 User 정보(authorities 정보 포함)를 가져오는 역할을 수행
   @EntityGraph(attributePaths = "authorities")
-  Optional<User> findOneWithAuthoritiesByUsername(String username);
+  Optional<User> findOneWithAuthoritiesByEmail(String email);
 
 //  User findByNickname(String nickname);
 //
