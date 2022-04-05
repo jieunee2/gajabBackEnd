@@ -48,7 +48,7 @@ public class UserService {
     return userRepository.findOneWithAuthoritiesByEmail(email);
   }
 
-  // SecurityUtil의 getCurrentUsername() 메소드가 리턴하는 username의 유저 및 권한 정보를 리
+  // SecurityUtil의 getCurrentUsername() 메소드가 리턴하는 username의 유저 및 권한 정보를 리턴
   @Transactional(readOnly = true)
   public Optional<User> getMyUserWithAuthorities() {
     return SecurityUtil.getCurrentUsername()
