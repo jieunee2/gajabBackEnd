@@ -26,7 +26,7 @@ public class NewsCrawlingImpl implements NewsCrawling {
 
   @Override
   public String getNewsUrl(int page) {
-    return URL + "?" + PAGE + page;
+    return URL + "/" + PAGE + page;
   }
 
   // Jsoup을 이용하여 사이트 내 데이터 추출
@@ -64,7 +64,8 @@ public class NewsCrawlingImpl implements NewsCrawling {
       // 기사 이미지 URL 추출
       String imgUrl = imgUrlElements.get(i).getElementsByAttribute("src").attr("src");
 
-      News news = new News(title, contents, createTime, url.substring(2), "https:" + imgUrl.replace(".jpg",""));
+      News news = new News(title, contents, createTime, url.substring(2),
+          "https:" + imgUrl.replace(".jpg", ""));
       newsList.add(news);
     }
     return newsList;
@@ -76,13 +77,13 @@ public class NewsCrawlingImpl implements NewsCrawling {
   public NewsDto saveNews(NewsDto newsDto) throws Exception {
     List<News> list = new ArrayList<>();
 
-    int page = 1;
+//    int page = 5;
 
     // 반복문을 통해서 5페이지까지의 정보를 가져온다. (20페이지까지 있으나 너무 많은 데이터를 가져올 필요가 없으므로 적당량만 추출)
     for (int i = 1; i <= 5; i++) {
       String url = getNewsUrl(i);
+      System.out.println("->"+url);
       List<News> newsData = getNewsData(url);
-
       // for 문을 통해서 getNewsData 메소드를 통해 받아온 데이터들을 newsRepository에 저장한다.
       for (News news : newsData) {
         newsRepository.save(news);
