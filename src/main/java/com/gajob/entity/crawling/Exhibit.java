@@ -1,4 +1,4 @@
-package com.gajob.entity;
+package com.gajob.entity.crawling;
 
 import lombok.*;
 
