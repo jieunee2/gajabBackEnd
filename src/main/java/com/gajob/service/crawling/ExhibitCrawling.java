@@ -1,7 +1,7 @@
 package com.gajob.service.crawling;
 
-import com.gajob.dto.ExhibitDto;
-import com.gajob.entity.Exhibit;
+import com.gajob.dto.crawling.ExhibitDto;
+import com.gajob.entity.crawling.Exhibit;
 
 import java.io.IOException;
 import java.util.List;

@@ -1,8 +1,8 @@
 package com.gajob.service.crawling;
 
-import com.gajob.dto.ExhibitDto;
-import com.gajob.entity.Exhibit;
-import com.gajob.repository.ExhibitRepository;
+import com.gajob.dto.crawling.ExhibitDto;
+import com.gajob.entity.crawling.Exhibit;
+import com.gajob.repository.crawling.ExhibitRepository;
 import lombok.RequiredArgsConstructor;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;

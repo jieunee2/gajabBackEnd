@@ -1,6 +1,6 @@
-package com.gajob.dto;
+package com.gajob.dto.crawling;
 
-import com.gajob.entity.Exhibit;
+import com.gajob.entity.crawling.Exhibit;
 import lombok.Data;
 
 @Data
