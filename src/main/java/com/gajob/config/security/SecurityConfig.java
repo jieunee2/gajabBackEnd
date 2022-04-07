@@ -67,9 +67,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         .and()
         .authorizeRequests()
-        // 아래 세 개의 API는 Token이 없어도 호출 가능
+        // 아래 API는 Token이 없어도 호출 가능
         .antMatchers("/signup").permitAll()
         .antMatchers("/login").permitAll()
+        .antMatchers("/issue/news").permitAll()
+        .antMatchers("/issue/exhibit").permitAll()
         .anyRequest().authenticated()
 
         .and()
