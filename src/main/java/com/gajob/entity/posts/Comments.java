@@ -47,4 +47,9 @@ public class Comments {
   @JoinColumn(name = "user_id")
   private User user;
 
+  // 댓글 수정
+  public void update(String comment) {
+    this.comment = comment;
+  }
+
 }

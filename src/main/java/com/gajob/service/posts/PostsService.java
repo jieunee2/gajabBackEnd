@@ -9,4 +9,9 @@ public interface PostsService {
   PostsResponseDto save(PostsDto postsDto); //게시물 저장
 
   PostsReadDto updateView(Long id); //게시물 낱개 조회 및 조회수 증가
+
+  PostsReadDto update(Long id, PostsDto postsDto); //게시물 수정
+
+  String delete(Long id); //게시물 삭제
+
 }

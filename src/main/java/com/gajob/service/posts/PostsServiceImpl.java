@@ -34,10 +34,33 @@ public class PostsServiceImpl implements PostsService {
     postsRepository.updateView(id);
 
     Posts posts = postsRepository.findById(id)
-        .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 존재하지 않습니다." + id));
+        .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 존재하지 않습니다."));
     PostsReadDto postsReadDto = new PostsReadDto(posts);
 
     return postsReadDto;
   }
+
+  // 게시물 수정
+  @Transactional
+  public PostsReadDto update(Long id, PostsDto postsDto) {
+    Posts posts = postsRepository.findById(id)
+        .orElseThrow(() -> new IllegalArgumentException("해당 게시물이 존재하지 않습니다."));
+    posts.update(postsDto.getTitle(), postsDto.getContent(), postsDto.getCategory());
+
+    PostsReadDto postsReadDto = new PostsReadDto(posts);
+
+    return postsReadDto;
+  }
+
+  // 게시물 삭제
+  @Transactional
+  public String delete(Long id) {
+    Posts posts = postsRepository.findById(id)
+        .orElseThrow(() -> new IllegalArgumentException("해당 게시물이 존재하지 않습니다."));
+    postsRepository.delete(posts);
+
+    return "posts-delete";
+  }
+
 
 }
