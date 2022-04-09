@@ -21,7 +21,7 @@ import org.springframework.data.annotation.LastModifiedDate;
 @Builder
 @Getter
 @Entity
-public class Comments {
+public class PostsComments {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)

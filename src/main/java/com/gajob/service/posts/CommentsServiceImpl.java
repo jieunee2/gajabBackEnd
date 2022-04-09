@@ -2,7 +2,7 @@ package com.gajob.service.posts;
 
 import com.gajob.dto.posts.CommentsDto;
 import com.gajob.dto.posts.CommentsResponseDto;
-import com.gajob.entity.posts.Comments;
+import com.gajob.entity.posts.PostsComments;
 import com.gajob.entity.posts.Posts;
 import com.gajob.entity.user.User;
 import com.gajob.repository.posts.CommentsRepository;
@@ -38,12 +38,12 @@ public class CommentsServiceImpl implements CommentsService {
     Posts posts = postsRepository.findById(postId)
         .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 존재하지 않습니다." + postId));
 
-    Comments comments = commentsRepository.findById(commentsId)
+    PostsComments postsComments = commentsRepository.findById(commentsId)
         .orElseThrow(() -> new IllegalArgumentException("해당 댓글이 존재하지 않습니다. " + commentsId));
 
-    comments.update(commentsDto.getComment());
+    postsComments.update(commentsDto.getComment());
 
-    CommentsResponseDto commentsResponseDto = new CommentsResponseDto(comments);
+    CommentsResponseDto commentsResponseDto = new CommentsResponseDto(postsComments);
 
     return commentsResponseDto;
   }
@@ -51,9 +51,9 @@ public class CommentsServiceImpl implements CommentsService {
   // 댓글 삭제
   @Transactional
   public String delete(Long id) {
-    Comments comments = commentsRepository.findById(id)
+    PostsComments postsComments = commentsRepository.findById(id)
         .orElseThrow(() -> new IllegalArgumentException("해당 댓글이 존재하지 않습니다."));
-    commentsRepository.delete(comments);
+    commentsRepository.delete(postsComments);
 
     return "comments-delete";
   }

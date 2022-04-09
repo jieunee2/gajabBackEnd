@@ -28,7 +28,7 @@ public class PostsReadDto {
     this.view = posts.getView();
     this.createdDate = posts.getCreatedDate();
     this.modifiedDate = posts.getModifiedDate();
-    this.comments = posts.getCommentsList().stream().map(CommentsResponseDto::new)
+    this.comments = posts.getPostsCommentsList().stream().map(CommentsResponseDto::new)
         .collect(Collectors.toList());
   }
 
