@@ -21,12 +21,12 @@ public class ExhibitController {
   private final ExhibitCrawling exhibitCrawling;
 
   @GetMapping("/exhibit")
-  public List<Exhibit> getFairData(String url) throws IOException {
+  public List<Exhibit> getExhibitData(String url) throws IOException {
     return exhibitCrawling.getExhibitData(exhibitCrawling.getExhibitUrl(1));
   }
 
   @PostMapping("/exhibit") // 크롤링한 데이터 DB 저장
-  public ResponseEntity<ExhibitDto> fairSave() throws Exception {
+  public ResponseEntity<ExhibitDto> exhibitSave() throws Exception {
     return ResponseEntity.ok(
         exhibitCrawling.exhibitSave(new ExhibitDto(Exhibit.builder().build())));
   }

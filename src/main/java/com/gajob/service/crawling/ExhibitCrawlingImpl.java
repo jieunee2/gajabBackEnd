@@ -68,9 +68,10 @@ public class ExhibitCrawlingImpl implements ExhibitCrawling {
             // 공모전 이미지 URL 추출
             String imgUrl = imgUrlElements.get(i).getElementsByAttribute("src").attr("src");
 
+            // 크롤링한 url을 포함한 html 코드 내에서 숫자 축출
             String number = url.replaceAll("[^0-9]", "");
 
-            Exhibit exhibit = new Exhibit(title, organization, state, todayState, "https://www.work.go.kr/empSpt/exhibit/exhibit/exhibitDtl.do?contestSeq=" +  number, imgUrl);
+            Exhibit exhibit = new Exhibit(title, organization, state, todayState, "www.work.go.kr/empSpt/exhibit/exhibit/exhibitDtl.do?contestSeq=" +  number, imgUrl);
             exhibitList.add(exhibit);
         }
         return exhibitList;
