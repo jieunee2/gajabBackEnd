@@ -47,7 +47,7 @@ public class PostsServiceImpl implements PostsService {
   public PostsReadDto update(Long id, PostsDto postsDto) {
     Posts posts = postsRepository.findById(id)
         .orElseThrow(() -> new IllegalArgumentException("해당 게시물이 존재하지 않습니다."));
-    posts.update(postsDto.getTitle(), postsDto.getContent(), postsDto.getCategory());
+    posts.update(postsDto.getTitle(), postsDto.getContent(), postsDto.getPostCategory());
 
     PostsReadDto postsReadDto = new PostsReadDto(posts);
 
