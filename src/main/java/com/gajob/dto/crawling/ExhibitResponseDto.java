@@ -4,8 +4,9 @@ import com.gajob.entity.crawling.Exhibit;
 import lombok.Data;
 
 @Data
-public class ExhibitDto {
+public class ExhibitResponseDto {
 
+    private Long id;
     private String title;
     private String organization;
     private String state;
@@ -13,14 +14,13 @@ public class ExhibitDto {
     private String url;
     private String imgUrl;
 
-
-    public ExhibitDto(Exhibit exhibit) {
+    public ExhibitResponseDto(Exhibit exhibit) {
+        this.id = exhibit.getId();
         this.title = exhibit.getTitle();
         this.organization = exhibit.getOrganization();
         this.state = exhibit.getState();
         this.todayState = exhibit.getTodayState();
         this.url = exhibit.getUrl();
         this.imgUrl = exhibit.getImgUrl();
-   
     }
 }

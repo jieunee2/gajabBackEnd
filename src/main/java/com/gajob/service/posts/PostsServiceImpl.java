@@ -35,10 +35,12 @@ public class PostsServiceImpl implements PostsService {
 
     Posts posts = postsRepository.findById(id)
         .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 존재하지 않습니다."));
+
     PostsReadDto postsReadDto = new PostsReadDto(posts);
 
     return postsReadDto;
   }
+
 
   // 게시물 수정
   @Transactional
@@ -61,6 +63,5 @@ public class PostsServiceImpl implements PostsService {
 
     return "posts-delete";
   }
-
 
 }
