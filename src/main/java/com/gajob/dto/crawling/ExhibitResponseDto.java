@@ -9,6 +9,8 @@ public class ExhibitResponseDto {
     private Long id;
     private String title;
     private String organization;
+    private String category;
+    private String target;
     private String state;
     private String todayState;
     private String url;
@@ -18,6 +20,8 @@ public class ExhibitResponseDto {
         this.id = exhibit.getId();
         this.title = exhibit.getTitle();
         this.organization = exhibit.getOrganization();
+        this.category = exhibit.getCategory();
+        this.target = exhibit.getTarget();
         this.state = exhibit.getState();
         this.todayState = exhibit.getTodayState();
         this.url = exhibit.getUrl();
