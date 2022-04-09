@@ -1,6 +1,7 @@
 package com.gajob.service.crawling;
 
 import com.gajob.dto.crawling.ExhibitDto;
+import com.gajob.dto.crawling.ExhibitResponseDto;
 import com.gajob.entity.crawling.Exhibit;
 import com.gajob.repository.crawling.ExhibitRepository;
 import lombok.RequiredArgsConstructor;
@@ -19,17 +20,18 @@ import java.util.List;
 public class ExhibitCrawlingImpl implements ExhibitCrawling {
 
     //워크넷 공모전 모음 크롤링
-
     private final ExhibitRepository exhibitRepository;
 
     private final String URL = "https://www.work.go.kr/empSpt/exhibit/exhibit/exhibitPicList.do";
     private final String PAGE = "";
 
+    @Override
     public String getExhibitUrl(int page) {
         return URL + "?" + PAGE + page;
     }
 
     // Jsoup을 이용하여 사이트 내 데이터 추출
+    @Override
     public List<Exhibit> getExhibitData(String URL) throws IOException {
         List<Exhibit> exhibitList = new ArrayList<>();
 
@@ -79,21 +81,34 @@ public class ExhibitCrawlingImpl implements ExhibitCrawling {
 
     // Crawling한 공모전 정보들을 DB에 저장한다.
     @Transactional
-    public ExhibitDto exhibitSave(ExhibitDto exhibitDto) throws Exception {
+    @Override
+    public ExhibitDto saveExhibit(ExhibitDto exhibitDto) throws Exception {
         List<Exhibit> list = new ArrayList<>();
 
-        int page = 1;
+        //    int page = 5;
 
         // 반복문을 통해서 5페이지까지의 정보를 가져온다. (20페이지까지 있으나 너무 많은 데이터를 가져올 필요가 없으므로 적당량만 추출)
         for (int i = 1; i <= 5; i++) {
             String url = getExhibitUrl(i);
+            System.out.println("->" + url);
             List<Exhibit> exhibitData = getExhibitData(url);
-
             // for 문을 통해서 getNewsData 메소드를 통해 받아온 데이터들을 newsRepository에 저장한다.
             for (Exhibit exhibit : exhibitData) {
                 exhibitRepository.save(exhibit);
             }
         }
         return null;
+    }
+
+    // DB에 저장한 공모전 정보 읽어오기
+    @Transactional
+    @Override
+    public List<ExhibitResponseDto> getExhibit() {
+        List<ExhibitResponseDto> exhibitResponseDtos = new ArrayList<>();
+        for (Exhibit exhibit : exhibitRepository.findAll()) {
+            ExhibitResponseDto exhibitResponseDto = new ExhibitResponseDto(exhibit);
+            exhibitResponseDtos.add(exhibitResponseDto);
+        }
+        return exhibitResponseDtos;
     }
 }
