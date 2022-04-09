@@ -13,6 +13,7 @@ public class ExhibitDto {
     private String url;
     private String imgUrl;
 
+
     public ExhibitDto(Exhibit exhibit) {
         this.title = exhibit.getTitle();
         this.organization = exhibit.getOrganization();
@@ -20,5 +21,6 @@ public class ExhibitDto {
         this.todayState = exhibit.getTodayState();
         this.url = exhibit.getUrl();
         this.imgUrl = exhibit.getImgUrl();
+   
     }
 }

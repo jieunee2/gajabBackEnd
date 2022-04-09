@@ -1,7 +1,9 @@
 package com.gajob.service.crawling;
 
 import com.gajob.dto.crawling.ExhibitDto;
+
 import com.gajob.dto.crawling.ExhibitResponseDto;
+
 import com.gajob.entity.crawling.Exhibit;
 import com.gajob.repository.crawling.ExhibitRepository;
 import lombok.RequiredArgsConstructor;
