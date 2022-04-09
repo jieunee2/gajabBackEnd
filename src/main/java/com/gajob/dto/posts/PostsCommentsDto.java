@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class CommentsDto {
+public class PostsCommentsDto {
 
   private Long id;
   private String comment;

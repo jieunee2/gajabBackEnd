@@ -17,7 +17,7 @@ public class PostsReadDto {
   private int view;
   private LocalDateTime createdDate, modifiedDate;
   //   List 타입을 DTO 클래스로해서 엔티티간 무한 참조를 방지
-  private List<CommentsResponseDto> comments;
+  private List<PostsCommentsResponseDto> comments;
 
   public PostsReadDto(Posts posts) {
     this.id = posts.getId();
@@ -28,7 +28,7 @@ public class PostsReadDto {
     this.view = posts.getView();
     this.createdDate = posts.getCreatedDate();
     this.modifiedDate = posts.getModifiedDate();
-    this.comments = posts.getPostsCommentsList().stream().map(CommentsResponseDto::new)
+    this.comments = posts.getPostsCommentsList().stream().map(PostsCommentsResponseDto::new)
         .collect(Collectors.toList());
   }
 

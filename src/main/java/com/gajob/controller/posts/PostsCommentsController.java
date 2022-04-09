@@ -1,7 +1,7 @@
 package com.gajob.controller.posts;
 
-import com.gajob.dto.posts.CommentsDto;
-import com.gajob.dto.posts.CommentsResponseDto;
+import com.gajob.dto.posts.PostsCommentsDto;
+import com.gajob.dto.posts.PostsCommentsResponseDto;
 import com.gajob.service.posts.PostsCommentsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -25,16 +25,16 @@ public class PostsCommentsController {
 
 
   @PostMapping("/comments/{id}") // 댓글 저장
-  public ResponseEntity<CommentsResponseDto> save(@PathVariable Long id,
-      @RequestBody CommentsDto commentsDto) {
-    return ResponseEntity.ok(postsCommentsService.save(id, commentsDto));
+  public ResponseEntity<PostsCommentsResponseDto> save(@PathVariable Long id,
+      @RequestBody PostsCommentsDto postsCommentsDto) {
+    return ResponseEntity.ok(postsCommentsService.save(id, postsCommentsDto));
   }
   
   @PutMapping({"/posts/{postId}/comments/{commentsId}"}) //댓글 수정
   public ResponseEntity update(@PathVariable("postId") Long postId,
       @PathVariable("commentsId") Long commentsId,
-      @RequestBody CommentsDto commentsDto) {
-    return ResponseEntity.ok(postsCommentsService.update(postId, commentsId, commentsDto));
+      @RequestBody PostsCommentsDto postsCommentsDto) {
+    return ResponseEntity.ok(postsCommentsService.update(postId, commentsId, postsCommentsDto));
   }
 
   @DeleteMapping("/comments/{id}") //댓글 삭제

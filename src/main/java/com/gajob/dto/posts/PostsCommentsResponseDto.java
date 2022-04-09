@@ -6,7 +6,7 @@ import java.time.format.DateTimeFormatter;
 import lombok.Data;
 
 @Data
-public class CommentsResponseDto {
+public class PostsCommentsResponseDto {
 
   private Long id;
   private String comment;
@@ -17,7 +17,7 @@ public class CommentsResponseDto {
   private String nickname;
   private Long postsId;
 
-  public CommentsResponseDto(PostsComments postsComments) {
+  public PostsCommentsResponseDto(PostsComments postsComments) {
     this.id = postsComments.getId();
     this.comment = postsComments.getComment();
     this.createdDate = postsComments.getCreatedDate();
