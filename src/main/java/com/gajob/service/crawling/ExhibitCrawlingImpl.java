@@ -25,11 +25,10 @@ public class ExhibitCrawlingImpl implements ExhibitCrawling {
     private final ExhibitRepository exhibitRepository;
 
     private final String URL = "https://www.work.go.kr/empSpt/exhibit/exhibit/exhibitPicList.do";
-    private final String PAGE = "";
 
     @Override
     public String getExhibitUrl(int page) {
-        return URL + "?" + PAGE + page;
+        return URL + "?" + "pageIndex=" + page;
     }
 
     // Jsoup을 이용하여 사이트 내 데이터 추출
