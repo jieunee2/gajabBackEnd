@@ -25,11 +25,10 @@ public class ExhibitCrawlingImpl implements ExhibitCrawling {
     private final ExhibitRepository exhibitRepository;
 
     private final String URL = "https://www.work.go.kr/empSpt/exhibit/exhibit/exhibitPicList.do";
-    private final String PAGE = "";
 
     @Override
     public String getExhibitUrl(int page) {
-        return URL + "?" + PAGE + page;
+        return URL + "?" + "pageIndex=" + page;
     }
 
     // Jsoup을 이용하여 사이트 내 데이터 추출
@@ -42,40 +41,47 @@ public class ExhibitCrawlingImpl implements ExhibitCrawling {
 
         // 공모전 이름 가져오기
         Elements titleElements = document.select("div.gallery-list p.tit");
-
-        // 공모전 주최기관명 가져오기
-        Elements organizationElements = document.select("div.gallery-list p.source");
-
         // 공모전 진행상태 가져오기
         Elements stateElements = document.select("div.gallery-list i.ico-state.blue");
-
         // 공모전 오늘의 진행상태 가져오기
         Elements todayStateElements = document.select("div.gallery-list p.d-day");
-
-        // 공모전 URL 가져오기
-        Elements urlElements = document.select("div.caption.a-c p.tit a");
-
+        // 공모전 URL이 포함된 html 코드 가져오기
+        Elements htmlUrlElements = document.select("div.caption.a-c p.tit a");
         // 공모전 이미지 URL 가져오기
         Elements imgUrlElements = document.select("div.gallery-list p.img img");
 
         for (int i = 0; i < titleElements.size(); i++) {
             // titleElements 추출
             String title = titleElements.get(i).text();
-            // organization 추출
-            String organization = organizationElements.get(i).text();
             // state 추출
             String state = stateElements.get(i).text();
             // todayState 추출
             String todayState = todayStateElements.get(i).text();
-            // 공모전 URL 추출
-            String url = urlElements.get(i).getElementsByAttribute("onClick").attr("onClick");
+            // 공모전 URL이 포함된 html 코드 추출
+            String htmlUrl = htmlUrlElements.get(i).getElementsByAttribute("onClick").attr("onClick");
+            // url이 포함된 html 코드 내에서 숫자 추출
+            String number = htmlUrl.replaceAll("[^0-9]", "");
+            // 'http://'를 제거한 공모전 url 생성
+            String url = "www.work.go.kr/empSpt/exhibit/exhibit/exhibitDtl.do?contestSeq=" + number;
+            // 'http://'를 포함한 공모전 url 생성
+            String entireUrl = "http://" + url;
             // 공모전 이미지 URL 추출
             String imgUrl = imgUrlElements.get(i).getElementsByAttribute("src").attr("src");
 
-            // 크롤링한 url을 포함한 html 코드 내에서 숫자 축출
-            String number = url.replaceAll("[^0-9]", "");
+            // 각각의 공모전 정보가 담긴 전체 html 코드
+            Document exhibitDocument = Jsoup.connect(entireUrl).get();
 
-            Exhibit exhibit = new Exhibit(title, organization, state, todayState, "www.work.go.kr/empSpt/exhibit/exhibit/exhibitDtl.do?contestSeq=" +  number, imgUrl);
+            // 현재 해당 공모전 정보 가져오기
+            Elements exhibitElements = exhibitDocument.select("div.cont-area ul li p");
+
+            // organization 추출
+            String organization = exhibitElements.get(3).text();
+            // category 추출
+            String category = exhibitElements.get(5).text();
+            // target 추출
+            String target = exhibitElements.get(7).text();
+
+            Exhibit exhibit = new Exhibit(title, organization, category, target, state, todayState, url, imgUrl);
             exhibitList.add(exhibit);
         }
         return exhibitList;
