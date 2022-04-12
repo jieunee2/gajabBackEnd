@@ -92,7 +92,7 @@ public class NewsCrawlingImpl implements NewsCrawling {
   }
 
   // DB에 저장한 뉴스 정보 읽어오기
-  @Transactional
+  @Transactional(readOnly = true)
   @Override
   public List<NewsResponseDto> getNews() {
     List<NewsResponseDto> newsResponseDtos = new ArrayList<>();

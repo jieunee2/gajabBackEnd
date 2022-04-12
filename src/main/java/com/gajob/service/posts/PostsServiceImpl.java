@@ -31,7 +31,7 @@ public class PostsServiceImpl implements PostsService {
   }
 
   // 게시물 낱개 조회 및 조회수 증가
-  @Transactional
+  @Transactional(readOnly = true)
   public PostsReadDto getPosts(Long id) {
     postsRepository.updateView(id);
 
@@ -44,8 +44,9 @@ public class PostsServiceImpl implements PostsService {
   }
 
   // 게시물 전체 조회 (이때는 조회수 증가 안함)
-  @Transactional
+  @Transactional(readOnly = true)
   public List<PostsReadDto> getAllPosts() {
+    // postsRepository로 결과로 넘어온 Posts의 Stream을 map을 통해 PostsReadDto로 변환
     return postsRepository.findAll().stream().map(PostsReadDto::new).collect(Collectors.toList());
   }
 

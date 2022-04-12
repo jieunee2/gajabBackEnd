@@ -42,6 +42,16 @@ public class UserService {
     return userRepository.save(user);
   }
 
+  @Transactional
+  public void findByEmail(UserDto userDto) {
+    User user = userRepository.findOneWithAuthoritiesByEmail(userDto.getEmail())
+        .orElseThrow(() -> new IllegalArgumentException("가입되지 않은 이메일입니다."));
+
+    if (!passwordEncoder.matches(userDto.getPassword(), user.getPassword())) {
+      throw new IllegalArgumentException("잘못된 패스워드입니다.");
+    }
+  }
+
   // username을 파라미터로 받아 해당 유저의 정보 및 권한 정보를 리턴
   @Transactional(readOnly = true)
   public Optional<User> getUserWithAuthorities(String email) {
