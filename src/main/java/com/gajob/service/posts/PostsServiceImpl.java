@@ -31,7 +31,7 @@ public class PostsServiceImpl implements PostsService {
   }
 
   // 게시물 낱개 조회 및 조회수 증가
-  @Transactional(readOnly = true)
+  @Transactional
   public PostsReadDto getPosts(Long id) {
     postsRepository.updateView(id);
 
