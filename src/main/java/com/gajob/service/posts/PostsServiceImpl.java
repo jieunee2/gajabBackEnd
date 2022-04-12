@@ -8,6 +8,8 @@ import com.gajob.entity.user.User;
 import com.gajob.repository.posts.PostsRepository;
 import com.gajob.repository.user.UserRepository;
 import com.gajob.util.SecurityUtil;
+import java.util.List;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,7 +32,7 @@ public class PostsServiceImpl implements PostsService {
 
   // 게시물 낱개 조회 및 조회수 증가
   @Transactional
-  public PostsReadDto updateView(Long id) {
+  public PostsReadDto getPosts(Long id) {
     postsRepository.updateView(id);
 
     Posts posts = postsRepository.findById(id)
@@ -41,13 +43,19 @@ public class PostsServiceImpl implements PostsService {
     return postsReadDto;
   }
 
+  // 게시물 전체 조회 (이때는 조회수 증가 안함)
+  @Transactional
+  public List<PostsReadDto> getAllPosts() {
+    return postsRepository.findAll().stream().map(PostsReadDto::new).collect(Collectors.toList());
+  }
+
 
   // 게시물 수정
   @Transactional
   public PostsReadDto update(Long id, PostsDto postsDto) {
     Posts posts = postsRepository.findById(id)
         .orElseThrow(() -> new IllegalArgumentException("해당 게시물이 존재하지 않습니다."));
-    posts.update(postsDto.getTitle(), postsDto.getContent(), postsDto.getCategory());
+    posts.update(postsDto.getTitle(), postsDto.getContent(), postsDto.getPostCategory());
 
     PostsReadDto postsReadDto = new PostsReadDto(posts);
 

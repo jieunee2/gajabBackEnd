@@ -1,12 +1,12 @@
 package com.gajob.dto.posts;
 
-import com.gajob.entity.posts.Comments;
+import com.gajob.entity.posts.PostsComments;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import lombok.Data;
 
 @Data
-public class CommentsResponseDto {
+public class PostsCommentsResponseDto {
 
   private Long id;
   private String comment;
@@ -17,12 +17,12 @@ public class CommentsResponseDto {
   private String nickname;
   private Long postsId;
 
-  public CommentsResponseDto(Comments comments) {
-    this.id = comments.getId();
-    this.comment = comments.getComment();
-    this.createdDate = comments.getCreatedDate();
-    this.modifiedDate = comments.getModifiedDate();
-    this.nickname = comments.getUser().getNickname();
-    this.postsId = comments.getPosts().getId();
+  public PostsCommentsResponseDto(PostsComments postsComments) {
+    this.id = postsComments.getId();
+    this.comment = postsComments.getComment();
+    this.createdDate = postsComments.getCreatedDate();
+    this.modifiedDate = postsComments.getModifiedDate();
+    this.nickname = postsComments.getUser().getNickname();
+    this.postsId = postsComments.getPosts().getId();
   }
 }

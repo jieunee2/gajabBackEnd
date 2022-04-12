@@ -1,11 +1,11 @@
 package com.gajob.service.posts;
 
-import com.gajob.dto.posts.CommentsDto;
-import com.gajob.dto.posts.CommentsResponseDto;
-import com.gajob.entity.posts.Comments;
+import com.gajob.dto.posts.PostsCommentsDto;
+import com.gajob.dto.posts.PostsCommentsResponseDto;
+import com.gajob.entity.posts.PostsComments;
 import com.gajob.entity.posts.Posts;
 import com.gajob.entity.user.User;
-import com.gajob.repository.posts.CommentsRepository;
+import com.gajob.repository.posts.PostsCommentsRepository;
 import com.gajob.repository.posts.PostsRepository;
 import com.gajob.repository.user.UserRepository;
 import com.gajob.util.SecurityUtil;
@@ -15,45 +15,46 @@ import org.springframework.transaction.annotation.Transactional;
 
 @RequiredArgsConstructor
 @Service
-public class CommentsServiceImpl implements CommentsService {
+public class PostsCommentsServiceImpl implements PostsCommentsService {
 
   private final UserRepository userRepository;
   private final PostsRepository postsRepository;
-  private final CommentsRepository commentsRepository;
+  private final PostsCommentsRepository postsCommentsRepository;
 
   // 사용자가 등록한 댓글을 DB에 저장
   @Transactional
-  public CommentsResponseDto save(Long id, CommentsDto commentsDto) {
+  public PostsCommentsResponseDto save(Long id, PostsCommentsDto postsCommentsDto) {
     User user = userRepository.findOneWithAuthoritiesByEmail(
         SecurityUtil.getCurrentUsername().get()).get();
     Posts posts = postsRepository.findById(id)
         .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 존재하지 않습니다."));
 
-    return new CommentsResponseDto(commentsRepository.save(commentsDto.toEntity(user, posts)));
+    return new PostsCommentsResponseDto(postsCommentsRepository.save(
+        postsCommentsDto.toEntity(user, posts)));
   }
 
   // 댓글 수정
   @Transactional
-  public CommentsResponseDto update(Long postId, Long commentsId, CommentsDto commentsDto) {
+  public PostsCommentsResponseDto update(Long postId, Long commentsId, PostsCommentsDto postsCommentsDto) {
     Posts posts = postsRepository.findById(postId)
         .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 존재하지 않습니다." + postId));
 
-    Comments comments = commentsRepository.findById(commentsId)
+    PostsComments postsComments = postsCommentsRepository.findById(commentsId)
         .orElseThrow(() -> new IllegalArgumentException("해당 댓글이 존재하지 않습니다. " + commentsId));
 
-    comments.update(commentsDto.getComment());
+    postsComments.update(postsCommentsDto.getComment());
 
-    CommentsResponseDto commentsResponseDto = new CommentsResponseDto(comments);
+    PostsCommentsResponseDto postsCommentsResponseDto = new PostsCommentsResponseDto(postsComments);
 
-    return commentsResponseDto;
+    return postsCommentsResponseDto;
   }
 
   // 댓글 삭제
   @Transactional
   public String delete(Long id) {
-    Comments comments = commentsRepository.findById(id)
+    PostsComments postsComments = postsCommentsRepository.findById(id)
         .orElseThrow(() -> new IllegalArgumentException("해당 댓글이 존재하지 않습니다."));
-    commentsRepository.delete(comments);
+    postsCommentsRepository.delete(postsComments);
 
     return "comments-delete";
   }

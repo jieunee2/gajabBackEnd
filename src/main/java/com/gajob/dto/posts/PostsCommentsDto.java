@@ -1,6 +1,6 @@
 package com.gajob.dto.posts;
 
-import com.gajob.entity.posts.Comments;
+import com.gajob.entity.posts.PostsComments;
 import com.gajob.entity.posts.Posts;
 import com.gajob.entity.user.User;
 import java.time.LocalDateTime;
@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class CommentsDto {
+public class PostsCommentsDto {
 
   private Long id;
   private String comment;
@@ -28,10 +28,10 @@ public class CommentsDto {
   private User user;
   private Posts posts;
 
-  public Comments toEntity(User user, Posts posts) {
-    Comments comments = Comments.builder().id(id).comment(comment).createdDate(createdDate)
+  public PostsComments toEntity(User user, Posts posts) {
+    PostsComments postsComments = PostsComments.builder().id(id).comment(comment).createdDate(createdDate)
         .modifiedDate(modifiedDate).user(user).posts(posts).build();
-    return comments;
+    return postsComments;
   }
 
 }

@@ -28,8 +28,13 @@ public class PostsController {
   }
 
   @GetMapping("/posts/{id}") // 게시물 조회(조회시 조회수 증가)
-  public ResponseEntity updateView(@PathVariable Long id) {
-    return ResponseEntity.ok(postsService.updateView(id));
+  public ResponseEntity getPosts(@PathVariable Long id) {
+    return ResponseEntity.ok(postsService.getPosts(id));
+  }
+
+  @GetMapping("/posts") // 게시물 전체 조회
+  public ResponseEntity getAllPosts() {
+    return ResponseEntity.ok(postsService.getAllPosts());
   }
 
   @PutMapping({"/posts/{id}"}) // 게시물 수정
