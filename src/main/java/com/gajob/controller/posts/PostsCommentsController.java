@@ -24,22 +24,22 @@ public class PostsCommentsController {
   private final PostsCommentsService postsCommentsService;
 
 
-  @PostMapping("/comments/{id}") // 댓글 저장
-  public ResponseEntity<PostsCommentsResponseDto> save(@PathVariable Long id,
+  @PostMapping("/comments/{postId}") // 댓글 저장
+  public ResponseEntity<PostsCommentsResponseDto> save(@PathVariable Long postId,
       @RequestBody PostsCommentsDto postsCommentsDto) {
-    return ResponseEntity.ok(postsCommentsService.save(id, postsCommentsDto));
-  }
-  
-  @PutMapping({"/posts/{postId}/comments/{commentsId}"}) //댓글 수정
-  public ResponseEntity update(@PathVariable("postId") Long postId,
-      @PathVariable("commentsId") Long commentsId,
-      @RequestBody PostsCommentsDto postsCommentsDto) {
-    return ResponseEntity.ok(postsCommentsService.update(postId, commentsId, postsCommentsDto));
+    return ResponseEntity.ok(postsCommentsService.save(postId, postsCommentsDto));
   }
 
-  @DeleteMapping("/comments/{id}") //댓글 삭제
-  public ResponseEntity delete(@PathVariable Long id) {
-    return ResponseEntity.ok(postsCommentsService.delete(id));
+  @PutMapping({"/posts/{postId}/comments/{commentId}"}) //댓글 수정
+  public ResponseEntity update(@PathVariable("postId") Long postId,
+      @PathVariable("commentId") Long commentId,
+      @RequestBody PostsCommentsDto postsCommentsDto) {
+    return ResponseEntity.ok(postsCommentsService.update(postId, commentId, postsCommentsDto));
+  }
+
+  @DeleteMapping("/comments/{commentId}") //댓글 삭제
+  public ResponseEntity delete(@PathVariable Long commentId) {
+    return ResponseEntity.ok(postsCommentsService.delete(commentId));
   }
 
 
