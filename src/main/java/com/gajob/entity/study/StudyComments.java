@@ -39,8 +39,6 @@ public class StudyComments {
   @LastModifiedDate
   private String modifiedDate; //수정일
 
-  private boolean secret; //비밀 댓글 여부
-
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "study_id")
   private Study study;
@@ -48,7 +46,6 @@ public class StudyComments {
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "user_id")
   private User user;
-
 
   // 댓글 수정
   public void update(String comment) {
