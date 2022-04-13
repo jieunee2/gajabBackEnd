@@ -5,6 +5,8 @@ import com.gajob.dto.posts.PostsCommentsResponseDto;
 import com.gajob.entity.posts.PostsComments;
 import com.gajob.entity.posts.Posts;
 import com.gajob.entity.user.User;
+import com.gajob.enumtype.ErrorCode;
+import com.gajob.exception.CustomException;
 import com.gajob.repository.posts.PostsCommentsRepository;
 import com.gajob.repository.posts.PostsRepository;
 import com.gajob.repository.user.UserRepository;
@@ -23,11 +25,11 @@ public class PostsCommentsServiceImpl implements PostsCommentsService {
 
   // 사용자가 등록한 댓글을 DB에 저장
   @Transactional
-  public PostsCommentsResponseDto save(Long id, PostsCommentsDto postsCommentsDto) {
+  public PostsCommentsResponseDto save(Long postId, PostsCommentsDto postsCommentsDto) {
     User user = userRepository.findOneWithAuthoritiesByEmail(
         SecurityUtil.getCurrentUsername().get()).get();
-    Posts posts = postsRepository.findById(id)
-        .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 존재하지 않습니다."));
+    Posts posts = postsRepository.findById(postId)
+        .orElseThrow(() -> new CustomException(ErrorCode.POST_ID_NOT_EXIST));
 
     return new PostsCommentsResponseDto(postsCommentsRepository.save(
         postsCommentsDto.toEntity(user, posts)));
@@ -35,12 +37,13 @@ public class PostsCommentsServiceImpl implements PostsCommentsService {
 
   // 댓글 수정
   @Transactional
-  public PostsCommentsResponseDto update(Long postId, Long commentsId, PostsCommentsDto postsCommentsDto) {
+  public PostsCommentsResponseDto update(Long postId, Long commentId,
+      PostsCommentsDto postsCommentsDto) {
     Posts posts = postsRepository.findById(postId)
-        .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 존재하지 않습니다." + postId));
+        .orElseThrow(() -> new CustomException(ErrorCode.POST_ID_NOT_EXIST));
 
-    PostsComments postsComments = postsCommentsRepository.findById(commentsId)
-        .orElseThrow(() -> new IllegalArgumentException("해당 댓글이 존재하지 않습니다. " + commentsId));
+    PostsComments postsComments = postsCommentsRepository.findById(commentId)
+        .orElseThrow(() -> new CustomException(ErrorCode.COMMENT_ID_NOT_EXIST));
 
     postsComments.update(postsCommentsDto.getComment());
 
@@ -51,9 +54,9 @@ public class PostsCommentsServiceImpl implements PostsCommentsService {
 
   // 댓글 삭제
   @Transactional
-  public String delete(Long id) {
-    PostsComments postsComments = postsCommentsRepository.findById(id)
-        .orElseThrow(() -> new IllegalArgumentException("해당 댓글이 존재하지 않습니다."));
+  public String delete(Long commentId) {
+    PostsComments postsComments = postsCommentsRepository.findById(commentId)
+        .orElseThrow(() -> new CustomException(ErrorCode.COMMENT_ID_NOT_EXIST));
     postsCommentsRepository.delete(postsComments);
 
     return "comments-delete";

@@ -27,9 +27,9 @@ public class PostsController {
     return ResponseEntity.ok(postsService.save(postsDto));
   }
 
-  @GetMapping("/posts/{id}") // 게시물 조회(조회시 조회수 증가)
-  public ResponseEntity getPosts(@PathVariable Long id) {
-    return ResponseEntity.ok(postsService.getPosts(id));
+  @GetMapping("/posts/{postId}") // 게시물 조회(조회시 조회수 증가)
+  public ResponseEntity getPosts(@PathVariable Long postId) {
+    return ResponseEntity.ok(postsService.getPosts(postId));
   }
 
   @GetMapping("/posts") // 게시물 전체 조회
@@ -37,14 +37,14 @@ public class PostsController {
     return ResponseEntity.ok(postsService.getAllPosts());
   }
 
-  @PutMapping({"/posts/{id}"}) // 게시물 수정
-  public ResponseEntity update(@PathVariable Long id, @RequestBody PostsDto postsDto) {
-    return ResponseEntity.ok(postsService.update(id, postsDto));
+  @PutMapping({"/posts/{postId}"}) // 게시물 수정
+  public ResponseEntity update(@PathVariable Long postId, @RequestBody PostsDto postsDto) {
+    return ResponseEntity.ok(postsService.update(postId, postsDto));
   }
 
-  @DeleteMapping("/posts/{id}")
-  public ResponseEntity delete(@PathVariable Long id) {
-    return ResponseEntity.ok(postsService.delete(id));
+  @DeleteMapping("/posts/{postId}")
+  public ResponseEntity delete(@PathVariable Long postId) {
+    return ResponseEntity.ok(postsService.delete(postId));
   }
 
 }

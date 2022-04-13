@@ -5,6 +5,8 @@ import com.gajob.dto.posts.PostsReadDto;
 import com.gajob.dto.posts.PostsResponseDto;
 import com.gajob.entity.posts.Posts;
 import com.gajob.entity.user.User;
+import com.gajob.enumtype.ErrorCode;
+import com.gajob.exception.CustomException;
 import com.gajob.repository.posts.PostsRepository;
 import com.gajob.repository.user.UserRepository;
 import com.gajob.util.SecurityUtil;
@@ -32,11 +34,11 @@ public class PostsServiceImpl implements PostsService {
 
   // 게시물 낱개 조회 및 조회수 증가
   @Transactional
-  public PostsReadDto getPosts(Long id) {
-    postsRepository.updateView(id);
+  public PostsReadDto getPosts(Long postId) {
+    postsRepository.updateView(postId);
 
-    Posts posts = postsRepository.findById(id)
-        .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 존재하지 않습니다."));
+    Posts posts = postsRepository.findById(postId)
+        .orElseThrow(() -> new CustomException(ErrorCode.POST_ID_NOT_EXIST));
 
     PostsReadDto postsReadDto = new PostsReadDto(posts);
 
@@ -53,9 +55,9 @@ public class PostsServiceImpl implements PostsService {
 
   // 게시물 수정
   @Transactional
-  public PostsReadDto update(Long id, PostsDto postsDto) {
-    Posts posts = postsRepository.findById(id)
-        .orElseThrow(() -> new IllegalArgumentException("해당 게시물이 존재하지 않습니다."));
+  public PostsReadDto update(Long postId, PostsDto postsDto) {
+    Posts posts = postsRepository.findById(postId)
+        .orElseThrow(() -> new CustomException(ErrorCode.POST_ID_NOT_EXIST));
     posts.update(postsDto.getTitle(), postsDto.getContent(), postsDto.getPostCategory());
 
     PostsReadDto postsReadDto = new PostsReadDto(posts);
@@ -65,9 +67,9 @@ public class PostsServiceImpl implements PostsService {
 
   // 게시물 삭제
   @Transactional
-  public String delete(Long id) {
-    Posts posts = postsRepository.findById(id)
-        .orElseThrow(() -> new IllegalArgumentException("해당 게시물이 존재하지 않습니다."));
+  public String delete(Long postId) {
+    Posts posts = postsRepository.findById(postId)
+        .orElseThrow(() -> new CustomException(ErrorCode.POST_ID_NOT_EXIST));
     postsRepository.delete(posts);
 
     return "posts-delete";
