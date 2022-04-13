@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.gajob.entity.posts.BaseTimeEntity;
 import com.gajob.entity.user.User;
 import com.gajob.enumtype.Area;
+import com.gajob.enumtype.Status;
 import com.gajob.enumtype.StudyCategory;
 import java.time.LocalDate;
 import java.util.List;
@@ -24,12 +25,14 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @Getter
+@Setter
 @Entity
 public class Study extends BaseTimeEntity {
 
@@ -73,6 +76,10 @@ public class Study extends BaseTimeEntity {
   @Column
   @Enumerated(EnumType.STRING)
   private Area area; //지역
+
+  @Column
+  @Enumerated(EnumType.STRING)
+  private Status status; //모집상태
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "user_id")
