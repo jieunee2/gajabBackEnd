@@ -34,6 +34,7 @@ public class StudyController {
 
   @GetMapping("/posts") // 게시물 전체 조회
   public ResponseEntity getAllPosts() {
+    studyService.statusChange(); //
     return ResponseEntity.ok(studyService.getAllPosts());
   }
 
