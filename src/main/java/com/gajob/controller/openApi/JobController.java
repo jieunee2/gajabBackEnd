@@ -16,12 +16,12 @@ public class JobController {
 
     private final JobService jobService;
 
-    @PostMapping("/job")
+    @PostMapping("/job-posting")
     public ResponseEntity<JobDto> saveJob() throws Exception {
         return ResponseEntity.ok(jobService.saveJob(new JobDto(Job.builder().build())));
     }
 
-    @GetMapping("/job")
+    @GetMapping("/job-posting")
     public ResponseEntity<JobDto> getJob() {
         return new ResponseEntity(jobService.getJob(), HttpStatus.OK);
     }
