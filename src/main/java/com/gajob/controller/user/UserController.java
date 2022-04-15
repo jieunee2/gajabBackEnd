@@ -61,6 +61,7 @@ public class UserController {
     return new ResponseEntity<>(new TokenDto(jwt), httpHeaders, HttpStatus.OK);
   }
 
+
   @GetMapping("/user") // 현재 로그인 한 유저 정보 조회
   @PreAuthorize("hasAnyRole('USER','ADMIN')")
   public ResponseEntity<User> getMyUserInfo() {
