@@ -3,6 +3,8 @@ package com.gajob.service.user;
 import com.gajob.dto.user.UserDto;
 import com.gajob.entity.user.Authority;
 import com.gajob.entity.user.User;
+import com.gajob.enumtype.ErrorCode;
+import com.gajob.exception.CustomException;
 import com.gajob.repository.user.UserRepository;
 import com.gajob.util.SecurityUtil;
 import java.util.Collections;
@@ -23,7 +25,7 @@ public class UserService {
   public User signup(UserDto userDto) {
     if (userRepository.findOneWithAuthoritiesByEmail(userDto.getEmail()).orElse(null)
         != null) {
-      throw new RuntimeException("이미 가입되어 있는 유저입니다.");
+      throw new CustomException(ErrorCode.DUPLICATE_USER);
     }
 
     Authority authority = Authority.builder()
@@ -48,7 +50,7 @@ public class UserService {
         .orElseThrow(() -> new IllegalArgumentException("가입되지 않은 이메일입니다."));
 
     if (!passwordEncoder.matches(userDto.getPassword(), user.getPassword())) {
-      throw new IllegalArgumentException("잘못된 패스워드입니다.");
+      throw new CustomException(ErrorCode.BAD_CREDENTIALS);
     }
   }
 
