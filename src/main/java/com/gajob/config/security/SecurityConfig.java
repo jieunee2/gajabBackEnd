@@ -13,6 +13,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.cors.CorsUtils;
 
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
@@ -50,6 +51,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
   @Override
   protected void configure(HttpSecurity http) throws Exception {
     http
+        .cors().and()
         .csrf().disable()
 
         .exceptionHandling()
@@ -67,11 +69,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         .and()
         .authorizeRequests()
+        // 브라우저의 preflight는 인증없이 options 메소드로 헤더를 확인하여 통신할 수 있도록 해주는 설정
+        .requestMatchers(CorsUtils::isPreFlightRequest)
         // 아래 API는 Token이 없어도 호출 가능
+        .permitAll()
         .antMatchers("/signup").permitAll()
         .antMatchers("/login").permitAll()
         .antMatchers("/issue/news").permitAll()
         .antMatchers("/issue/exhibit").permitAll()
+        .antMatchers("/issue/job").permitAll()
         .anyRequest().authenticated()
 
         .and()
