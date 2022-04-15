@@ -7,10 +7,12 @@ import com.gajob.entity.study.Study;
 import com.gajob.entity.user.User;
 
 import com.gajob.enumtype.ErrorCode;
+import com.gajob.enumtype.Status;
 import com.gajob.exception.CustomException;
 import com.gajob.repository.study.StudyRepository;
 import com.gajob.repository.user.UserRepository;
 import com.gajob.util.SecurityUtil;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +25,21 @@ public class StudyServiceImpl implements StudyService {
 
   private final StudyRepository studyRepository;
   private final UserRepository userRepository;
+
+  @Transactional
+  public void statusChange() {
+    List<Study> study = studyRepository.findAll();
+
+    LocalDate nowDate = LocalDate.now();//현재 날짜 가져오기
+
+    // 현재 날짜가 스터디 종료 날짜보다 지났을 경우 Status의 상태를 모집종료로 변경
+    for (Study studyList : study) {
+      if (nowDate.isAfter(studyList.getEndDate())) {
+        studyList.setStatus(Status.모집종료);
+        studyRepository.save(studyList);
+      }
+    }
+  }
 
   // 게시물을 DB에 저장
   @Transactional
@@ -40,6 +57,8 @@ public class StudyServiceImpl implements StudyService {
 
     Study study = studyRepository.findById(postId)
         .orElseThrow(() -> new CustomException(ErrorCode.POST_ID_NOT_EXIST));
+
+//    statusChange(postId);
 
     StudyReadDto studyReadDto = new StudyReadDto(study);
 
@@ -59,8 +78,9 @@ public class StudyServiceImpl implements StudyService {
     Study study = studyRepository.findById(postId)
         .orElseThrow(() -> new CustomException(ErrorCode.POST_ID_NOT_EXIST));
     study.update(studyDto.getTitle(), studyDto.getContent(), studyDto.getStudyCategory(),
-        studyDto.getArea(),
-        studyDto.getMinPeople(), study.getMaxPeople());
+        studyDto.getArea(), studyDto.getMinPeople(), studyDto.getMaxPeople(),
+        studyDto.getStartDate(),
+        studyDto.getEndDate());
 
     StudyReadDto studyReadDto = new StudyReadDto(study);
 
