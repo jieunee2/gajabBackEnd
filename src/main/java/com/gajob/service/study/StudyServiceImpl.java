@@ -78,7 +78,9 @@ public class StudyServiceImpl implements StudyService {
     Study study = studyRepository.findById(postId)
         .orElseThrow(() -> new CustomException(ErrorCode.POST_ID_NOT_EXIST));
     study.update(studyDto.getTitle(), studyDto.getContent(), studyDto.getStudyCategory(),
-        studyDto.getArea(), studyDto.getMinPeople(), study.getMaxPeople());
+        studyDto.getArea(), studyDto.getMinPeople(), studyDto.getMaxPeople(),
+        studyDto.getStartDate(),
+        studyDto.getEndDate());
 
     StudyReadDto studyReadDto = new StudyReadDto(study);
 

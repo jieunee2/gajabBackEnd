@@ -6,7 +6,6 @@ import com.gajob.enumtype.Area;
 import com.gajob.enumtype.Status;
 import com.gajob.enumtype.StudyCategory;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
