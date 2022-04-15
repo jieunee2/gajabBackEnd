@@ -27,6 +27,7 @@ public class StudyReadDto {
   private LocalDateTime createdDate, modifiedDate;
   //   List 타입을 DTO 클래스로해서 엔티티간 무한 참조를 방지
   private List<StudyCommentsResponseDto> comments;
+  private int likes;
 
   public StudyReadDto(Study study) {
     this.id = study.getId();
@@ -45,6 +46,6 @@ public class StudyReadDto {
     this.modifiedDate = study.getModifiedDate();
     this.comments = study.getStudyCommentsList().stream().map(StudyCommentsResponseDto::new)
         .collect(Collectors.toList());
+    this.likes = study.getLikeList().size();
   }
-
 }
