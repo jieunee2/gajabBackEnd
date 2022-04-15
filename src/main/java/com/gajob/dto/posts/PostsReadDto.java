@@ -9,6 +9,7 @@ import lombok.Data;
 
 @Data
 public class PostsReadDto {
+
   private Long id;
   private String title;
   private String content;
