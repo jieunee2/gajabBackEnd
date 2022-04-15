@@ -42,7 +42,7 @@ public class ExhibitCrawlingImpl implements ExhibitCrawling {
         // 공모전 이름 가져오기
         Elements titleElements = document.select("div.gallery-list p.tit");
         // 공모전 진행상태 가져오기
-        Elements stateElements = document.select("div.gallery-list i.ico-state.blue");
+        Elements stateElements = document.select("div.gallery-list i.ico-state");
         // 공모전 오늘의 진행상태 가져오기
         Elements todayStateElements = document.select("div.gallery-list p.d-day");
         // 공모전 URL이 포함된 html 코드 가져오기
@@ -51,7 +51,7 @@ public class ExhibitCrawlingImpl implements ExhibitCrawling {
         Elements imgUrlElements = document.select("div.gallery-list p.img img");
 
         for (int i = 0; i < titleElements.size(); i++) {
-            // titleElements 추출
+            // title 추출
             String title = titleElements.get(i).text();
             // state 추출
             String state = stateElements.get(i).text();
