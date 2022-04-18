@@ -21,6 +21,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
 
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -61,6 +62,7 @@ public class UserController {
     return new ResponseEntity<>(new TokenDto(jwt), httpHeaders, HttpStatus.OK);
   }
 
+
   @GetMapping("/user") // 현재 로그인 한 유저 정보 조회
   @PreAuthorize("hasAnyRole('USER','ADMIN')")
   public ResponseEntity<User> getMyUserInfo() {
@@ -71,5 +73,11 @@ public class UserController {
   @PreAuthorize("hasAnyRole('ADMIN')")
   public ResponseEntity<User> getUserInfo(@PathVariable String username) {
     return ResponseEntity.ok(userService.getUserWithAuthorities(username).get());
+  }
+
+  @DeleteMapping("/user/{username}") //회원정보 삭제
+  @PreAuthorize("hasAnyRole('USER','ADMIN')")
+  public ResponseEntity deleteUserWithAuthorities(@PathVariable String username) {
+    return ResponseEntity.ok(userService.deleteUserWithAuthorities(username));
   }
 }
