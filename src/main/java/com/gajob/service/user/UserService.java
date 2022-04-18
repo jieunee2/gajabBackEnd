@@ -21,6 +21,7 @@ public class UserService {
   private final UserRepository userRepository;
   private final PasswordEncoder passwordEncoder;
 
+  // 회원가입
   @Transactional
   public User signup(UserDto userDto) {
     if (userRepository.findOneWithAuthoritiesByEmail(userDto.getEmail()).orElse(null)
@@ -65,5 +66,16 @@ public class UserService {
   public Optional<User> getMyUserWithAuthorities() {
     return SecurityUtil.getCurrentUsername()
         .flatMap(userRepository::findOneWithAuthoritiesByEmail);
+  }
+
+  //회원정보 삭제
+  @Transactional
+  public String deleteUserWithAuthorities(String email) {
+    User user = userRepository.findOneWithAuthoritiesByEmail(
+        SecurityUtil.getCurrentUsername().get()).get();
+
+    userRepository.delete(user);
+
+    return "delete-user";
   }
 }
