@@ -69,15 +69,15 @@ public class UserController {
     return ResponseEntity.ok(userService.getMyUserWithAuthorities().get());
   }
 
-  @GetMapping("/user/{username}")
+  @GetMapping("/user/{email}")
   @PreAuthorize("hasAnyRole('ADMIN')")
-  public ResponseEntity<User> getUserInfo(@PathVariable String username) {
-    return ResponseEntity.ok(userService.getUserWithAuthorities(username).get());
+  public ResponseEntity<User> getUserInfo(@PathVariable String email) {
+    return ResponseEntity.ok(userService.getUserWithAuthorities(email).get());
   }
 
-  @DeleteMapping("/user/{username}") //회원정보 삭제
+  @DeleteMapping("/user/{email}") //회원정보 삭제
   @PreAuthorize("hasAnyRole('USER','ADMIN')")
-  public ResponseEntity deleteUserWithAuthorities(@PathVariable String username) {
-    return ResponseEntity.ok(userService.deleteUserWithAuthorities(username));
+  public ResponseEntity deleteUserWithAuthorities(@PathVariable String email) {
+    return ResponseEntity.ok(userService.deleteUserWithAuthorities(email));
   }
 }
