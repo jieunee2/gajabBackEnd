@@ -58,7 +58,8 @@ public class PostsServiceImpl implements PostsService {
   public PostsReadDto update(Long postId, PostsDto postsDto) {
     Posts posts = postsRepository.findById(postId)
         .orElseThrow(() -> new CustomException(ErrorCode.POST_ID_NOT_EXIST));
-    posts.update(postsDto.getTitle(), postsDto.getContent(), postsDto.getPostCategory());
+    posts.update(postsDto.getTitle(), postsDto.getContent(), postsDto.getPostCategory(),
+        postsDto.getJobCategory());
 
     PostsReadDto postsReadDto = new PostsReadDto(posts);
 
