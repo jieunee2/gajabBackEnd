@@ -83,6 +83,9 @@ public class Study extends BaseTimeEntity {
   @Enumerated(EnumType.STRING)
   private Status status; //모집상태
 
+  @Column
+  private String openTalkUrl; //오픈카톡 URL
+
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "user_id")
   private User user;

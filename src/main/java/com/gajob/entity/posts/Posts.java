@@ -1,6 +1,7 @@
 package com.gajob.entity.posts;
 
 import com.gajob.entity.user.User;
+import com.gajob.enumtype.JobCategory;
 import com.gajob.enumtype.PostCategory;
 import java.util.List;
 import javax.persistence.CascadeType;
@@ -46,7 +47,11 @@ public class Posts extends BaseTimeEntity {
 
   @Column
   @Enumerated(EnumType.STRING)
-  private PostCategory postCategory; //카테고리
+  private PostCategory postCategory; //게시물 카테고리
+
+  @Column
+  @Enumerated(EnumType.STRING)
+  private JobCategory jobCategory; //직군별 카테고리
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "user_id")
@@ -57,10 +62,12 @@ public class Posts extends BaseTimeEntity {
   private List<PostsComments> postsCommentsList;
 
   //게시글 수정
-  public void update(String title, String content, PostCategory postCategory) {
+  public void update(String title, String content, PostCategory postCategory,
+      JobCategory jobCategory) {
     this.title = title;
     this.content = content;
     this.postCategory = postCategory;
+    this.jobCategory = jobCategory;
 
   }
 

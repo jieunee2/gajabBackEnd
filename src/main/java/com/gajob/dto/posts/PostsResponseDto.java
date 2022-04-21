@@ -1,6 +1,7 @@
 package com.gajob.dto.posts;
 
 import com.gajob.entity.posts.Posts;
+import com.gajob.enumtype.JobCategory;
 import com.gajob.enumtype.PostCategory;
 import java.time.LocalDateTime;
 import lombok.Data;
@@ -12,6 +13,7 @@ public class PostsResponseDto {
   private String title;
   private String content;
   private PostCategory postCategory;
+  private JobCategory jobCategory;
   private String writer;
   private int view;
   private LocalDateTime createdDate, modifiedDate;
@@ -21,6 +23,7 @@ public class PostsResponseDto {
     this.title = posts.getTitle();
     this.content = posts.getContent();
     this.postCategory = posts.getPostCategory();
+    this.jobCategory = posts.getJobCategory();
     this.writer = posts.getUser().getNickname();
     this.view = posts.getView();
     this.createdDate = posts.getCreatedDate();
