@@ -26,12 +26,13 @@ public class StudyDto {
   private LocalDate startDate;
   private LocalDate endDate;
   private Status status;
+  private String openTalkUrl;
   private User user;
 
   public Study toEntity(User user) {
     Study study = Study.builder().title(title).content(content).studyCategory(studyCategory)
         .area(area).maxPeople(maxPeople).minPeople(minPeople).startDate(startDate).endDate(endDate)
-        .view(0).writer(user.getNickname()).status(Status.모집중)
+        .view(0).writer(user.getNickname()).status(Status.모집중).openTalkUrl(openTalkUrl)
         .user(user).build();
 
     return study;

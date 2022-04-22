@@ -25,6 +25,7 @@ public class StudyReadDto {
   private String writer;
   private int view;
   private LocalDateTime createdDate, modifiedDate;
+  private String openTalkUrl;
   //   List 타입을 DTO 클래스로해서 엔티티간 무한 참조를 방지
   private List<StudyCommentsResponseDto> comments;
   private int likes;
@@ -44,6 +45,7 @@ public class StudyReadDto {
     this.view = study.getView();
     this.createdDate = study.getCreatedDate();
     this.modifiedDate = study.getModifiedDate();
+    this.openTalkUrl = study.getOpenTalkUrl();
     this.comments = study.getStudyCommentsList().stream().map(StudyCommentsResponseDto::new)
         .collect(Collectors.toList());
     this.likes = study.getLikeList().size();
