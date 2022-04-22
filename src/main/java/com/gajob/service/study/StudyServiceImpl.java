@@ -80,7 +80,7 @@ public class StudyServiceImpl implements StudyService {
     study.update(studyDto.getTitle(), studyDto.getContent(), studyDto.getStudyCategory(),
         studyDto.getArea(), studyDto.getMinPeople(), studyDto.getMaxPeople(),
         studyDto.getStartDate(),
-        studyDto.getEndDate());
+        studyDto.getEndDate(), studyDto.getOpenTalkUrl());
 
     StudyReadDto studyReadDto = new StudyReadDto(study);
 

@@ -100,7 +100,7 @@ public class Study extends BaseTimeEntity {
 
   //게시글 수정
   public void update(String title, String content, StudyCategory studyCategory, Area area,
-      int minPeople, int maxPeople, LocalDate startDate, LocalDate endDate) {
+      int minPeople, int maxPeople, LocalDate startDate, LocalDate endDate, String openTalkUrl) {
     this.title = title;
     this.content = content;
     this.studyCategory = studyCategory;
@@ -109,5 +109,6 @@ public class Study extends BaseTimeEntity {
     this.maxPeople = maxPeople;
     this.startDate = startDate;
     this.endDate = endDate;
+    this.openTalkUrl = openTalkUrl;
   }
 }

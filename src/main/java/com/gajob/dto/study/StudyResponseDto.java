@@ -23,6 +23,7 @@ public class StudyResponseDto {
   private String writer;
   private int view;
   private LocalDateTime createdDate, modifiedDate;
+  private String openTalkUrl;
 
   public StudyResponseDto(Study study) {
     this.id = study.getId();
@@ -39,6 +40,7 @@ public class StudyResponseDto {
     this.view = study.getView();
     this.createdDate = study.getCreatedDate();
     this.modifiedDate = study.getModifiedDate();
+    this.openTalkUrl = study.getOpenTalkUrl();
   }
 
 }

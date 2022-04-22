@@ -25,10 +25,10 @@ public class StudyCommentsServiceImpl implements StudyCommentsService {
 
   // 사용자가 등록한 댓글을 DB에 저장
   @Transactional
-  public StudyCommentsResponseDto save(Long id, StudyCommentsDto studyCommentsDto) {
+  public StudyCommentsResponseDto save(Long postId, StudyCommentsDto studyCommentsDto) {
     User user = userRepository.findOneWithAuthoritiesByEmail(
         SecurityUtil.getCurrentUsername().get()).get();
-    Study study = studyRepository.findById(id)
+    Study study = studyRepository.findById(postId)
         .orElseThrow(() -> new CustomException(ErrorCode.POST_ID_NOT_EXIST));
 
     return new StudyCommentsResponseDto(studyCommentsRepository.save(
