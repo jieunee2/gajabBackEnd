@@ -22,10 +22,10 @@ public class StudyCommentsController {
 
   private final StudyCommentsService studyCommentsService;
 
-  @PostMapping("/comments/{id}") // 댓글 저장
-  public ResponseEntity<StudyCommentsResponseDto> save(@PathVariable Long id,
+  @PostMapping("/comments/{postId}") // 댓글 저장
+  public ResponseEntity<StudyCommentsResponseDto> save(@PathVariable Long postId,
       @RequestBody StudyCommentsDto studyCommentsDto) {
-    return ResponseEntity.ok(studyCommentsService.save(id, studyCommentsDto));
+    return ResponseEntity.ok(studyCommentsService.save(postId, studyCommentsDto));
   }
 
   @PutMapping({"/posts/{postId}/comments/{commentId}"}) //댓글 수정
