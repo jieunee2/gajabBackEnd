@@ -1,7 +1,6 @@
-package com.gajob.dto.study;
+package com.gajob.entity.study;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.gajob.entity.study.Study;
 import com.gajob.entity.user.User;
 import javax.persistence.Column;
 import javax.persistence.Entity;

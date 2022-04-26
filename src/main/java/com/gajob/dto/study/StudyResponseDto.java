@@ -5,7 +5,6 @@ import com.gajob.enumtype.Area;
 import com.gajob.enumtype.Status;
 import com.gajob.enumtype.StudyCategory;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import lombok.Data;
 
 @Data
@@ -22,7 +21,7 @@ public class StudyResponseDto {
   private Status status;
   private String writer;
   private int view;
-  private LocalDateTime createdDate, modifiedDate;
+  private String createdDate, modifiedDate;
   private String openTalkUrl;
 
   public StudyResponseDto(Study study) {

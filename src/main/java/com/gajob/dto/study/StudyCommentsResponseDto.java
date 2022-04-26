@@ -1,9 +1,6 @@
 package com.gajob.dto.study;
 
-import com.gajob.entity.posts.PostsComments;
 import com.gajob.entity.study.StudyComments;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import lombok.Data;
 
 @Data
@@ -11,10 +8,7 @@ public class StudyCommentsResponseDto {
 
   private Long id;
   private String comment;
-  private String createdDate = LocalDateTime.now().format(
-      DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm"));
-  private String modifiedDate = LocalDateTime.now()
-      .format(DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm"));
+  private String createdDate, modifiedDate;
   private String nickname;
   private Long studyId;
 

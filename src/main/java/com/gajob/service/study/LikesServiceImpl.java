@@ -1,6 +1,6 @@
 package com.gajob.service.study;
 
-import com.gajob.dto.study.Likes;
+import com.gajob.entity.study.Likes;
 import com.gajob.entity.study.Study;
 import com.gajob.entity.user.User;
 import com.gajob.repository.study.LikesRepository;

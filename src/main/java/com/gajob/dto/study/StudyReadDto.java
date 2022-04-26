@@ -5,7 +5,6 @@ import com.gajob.enumtype.Area;
 import com.gajob.enumtype.Status;
 import com.gajob.enumtype.StudyCategory;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.Data;
@@ -24,7 +23,7 @@ public class StudyReadDto {
   private Status status;
   private String writer;
   private int view;
-  private LocalDateTime createdDate, modifiedDate;
+  private String createdDate, modifiedDate;
   private String openTalkUrl;
   //   List 타입을 DTO 클래스로해서 엔티티간 무한 참조를 방지
   private List<StudyCommentsResponseDto> comments;
