@@ -28,6 +28,7 @@ public class StudyReadDto {
   private String openTalkUrl;
   //   List 타입을 DTO 클래스로해서 엔티티간 무한 참조를 방지
   private List<StudyCommentsResponseDto> comments;
+  private int commentsCnt; //댓글 개수
   private int likes;
 
   public StudyReadDto(Study study) {
@@ -48,6 +49,7 @@ public class StudyReadDto {
     this.openTalkUrl = study.getOpenTalkUrl();
     this.comments = study.getStudyCommentsList().stream().map(StudyCommentsResponseDto::new)
         .collect(Collectors.toList());
+    this.commentsCnt = comments.size();
     this.likes = study.getLikeList().size();
   }
 }
