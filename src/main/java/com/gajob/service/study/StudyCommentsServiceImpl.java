@@ -39,11 +39,19 @@ public class StudyCommentsServiceImpl implements StudyCommentsService {
   @Transactional
   public StudyCommentsResponseDto update(Long postId, Long commentId,
       StudyCommentsDto studyCommentsDto) {
+    User user = userRepository.findOneWithAuthoritiesByEmail(
+        SecurityUtil.getCurrentUsername().get()).get();
+
     Study study = studyRepository.findById(postId)
         .orElseThrow(() -> new CustomException(ErrorCode.POST_ID_NOT_EXIST));
 
     StudyComments studyComments = studyCommentsRepository.findById(commentId)
         .orElseThrow(() -> new CustomException(ErrorCode.COMMENT_ID_NOT_EXIST));
+
+    // 현재 로그인한 유저와 댓글 작성자의 이메일이 일치하지 않을 경우, 에러 발생
+    if (!(studyComments.getUser().getEmail().equals(user.getEmail()))) {
+      throw new CustomException(ErrorCode.NO_ACCESS_RIGHTS);
+    }
 
     studyComments.update(studyCommentsDto.getComment());
 
@@ -55,8 +63,17 @@ public class StudyCommentsServiceImpl implements StudyCommentsService {
   // 댓글 삭제
   @Transactional
   public String delete(Long commentId) {
+    User user = userRepository.findOneWithAuthoritiesByEmail(
+        SecurityUtil.getCurrentUsername().get()).get();
+
     StudyComments studyComments = studyCommentsRepository.findById(commentId)
         .orElseThrow(() -> new CustomException(ErrorCode.COMMENT_ID_NOT_EXIST));
+
+    // 현재 로그인한 유저와 댓글 작성자의 이메일이 일치하지 않을 경우, 에러 발생
+    if (!(studyComments.getUser().getEmail().equals(user.getEmail()))) {
+      throw new CustomException(ErrorCode.NO_ACCESS_RIGHTS);
+    }
+
     studyCommentsRepository.delete(studyComments);
 
     return "comments-delete";

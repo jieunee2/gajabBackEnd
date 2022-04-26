@@ -39,11 +39,19 @@ public class PostsCommentsServiceImpl implements PostsCommentsService {
   @Transactional
   public PostsCommentsResponseDto update(Long postId, Long commentId,
       PostsCommentsDto postsCommentsDto) {
+    User user = userRepository.findOneWithAuthoritiesByEmail(
+        SecurityUtil.getCurrentUsername().get()).get();
+
     Posts posts = postsRepository.findById(postId)
         .orElseThrow(() -> new CustomException(ErrorCode.POST_ID_NOT_EXIST));
 
     PostsComments postsComments = postsCommentsRepository.findById(commentId)
         .orElseThrow(() -> new CustomException(ErrorCode.COMMENT_ID_NOT_EXIST));
+
+    // 현재 로그인한 유저와 댓글 작성자의 이메일이 일치하지 않을 경우, 에러 발생
+    if (!(postsComments.getUser().getEmail().equals(user.getEmail()))) {
+      throw new CustomException(ErrorCode.NO_ACCESS_RIGHTS);
+    }
 
     postsComments.update(postsCommentsDto.getComment());
 
@@ -55,8 +63,17 @@ public class PostsCommentsServiceImpl implements PostsCommentsService {
   // 댓글 삭제
   @Transactional
   public String delete(Long commentId) {
+    User user = userRepository.findOneWithAuthoritiesByEmail(
+        SecurityUtil.getCurrentUsername().get()).get();
+
     PostsComments postsComments = postsCommentsRepository.findById(commentId)
         .orElseThrow(() -> new CustomException(ErrorCode.COMMENT_ID_NOT_EXIST));
+
+    // 현재 로그인한 유저와 댓글 작성자의 이메일이 일치하지 않을 경우, 에러 발생
+    if (!(postsComments.getUser().getEmail().equals(user.getEmail()))) {
+      throw new CustomException(ErrorCode.NO_ACCESS_RIGHTS);
+    }
+
     postsCommentsRepository.delete(postsComments);
 
     return "comments-delete";
