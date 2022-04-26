@@ -24,9 +24,14 @@ public class UserService {
   // 회원가입
   @Transactional
   public User signup(UserDto userDto) {
+    // 종복된 아이디(이메일)가 있을 경우, 에러 처리
     if (userRepository.findOneWithAuthoritiesByEmail(userDto.getEmail()).orElse(null)
         != null) {
       throw new CustomException(ErrorCode.DUPLICATE_USER);
+    }
+    // 중복된 닉네임이 있을 경우, 에러 처리
+    if (userRepository.existsByNickname(userDto.getNickname())) {
+      throw new CustomException(ErrorCode.DUPLICATE_NICKNAME);
     }
 
     Authority authority = Authority.builder()
