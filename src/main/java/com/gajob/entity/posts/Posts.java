@@ -1,5 +1,6 @@
 package com.gajob.entity.posts;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.gajob.entity.user.User;
 import com.gajob.enumtype.JobCategory;
 import com.gajob.enumtype.PostCategory;
@@ -26,7 +27,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @Getter
 @Entity
-public class Posts extends BaseTimeEntity {
+public class Posts extends TimeEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -57,6 +58,10 @@ public class Posts extends BaseTimeEntity {
   @JoinColumn(name = "user_id")
   private User user;
 
+  @JsonIgnoreProperties({"posts"})
+  @OneToMany(mappedBy = "posts", cascade = CascadeType.ALL)
+  private List<PostsScrap> postsScrapList;
+
   //게시글이 삭제될 경우 댓글도 삭제되어야 하기 때문에 CascadeType.REMOVE 를 사용
   @OneToMany(mappedBy = "posts", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
   private List<PostsComments> postsCommentsList;
@@ -70,6 +75,5 @@ public class Posts extends BaseTimeEntity {
     this.jobCategory = jobCategory;
 
   }
-
 
 }

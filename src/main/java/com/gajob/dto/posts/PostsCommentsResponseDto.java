@@ -10,10 +10,7 @@ public class PostsCommentsResponseDto {
 
   private Long id;
   private String comment;
-  private String createdDate = LocalDateTime.now().format(
-      DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm"));
-  private String modifiedDate = LocalDateTime.now()
-      .format(DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm"));
+  private String createdDate, modifiedDate;
   private String nickname;
   private Long postsId;
 

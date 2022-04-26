@@ -3,8 +3,7 @@ package com.gajob.entity.study;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.gajob.dto.study.Likes;
-import com.gajob.entity.posts.BaseTimeEntity;
+import com.gajob.entity.posts.TimeEntity;
 import com.gajob.entity.user.User;
 import com.gajob.enumtype.Area;
 import com.gajob.enumtype.Status;
@@ -36,7 +35,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Getter
 @Setter
 @Entity
-public class Study extends BaseTimeEntity {
+public class Study extends TimeEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
