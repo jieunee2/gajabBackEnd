@@ -56,8 +56,17 @@ public class PostsServiceImpl implements PostsService {
   // 게시물 수정
   @Transactional
   public PostsReadDto update(Long postId, PostsDto postsDto) {
+    User user = userRepository.findOneWithAuthoritiesByEmail(
+        SecurityUtil.getCurrentUsername().get()).get();
+
     Posts posts = postsRepository.findById(postId)
         .orElseThrow(() -> new CustomException(ErrorCode.POST_ID_NOT_EXIST));
+
+    // 현재 로그인한 유저와 게시물 작성자의 이메일이 일치하지 않을 경우, 에러 발생
+    if (!(posts.getUser().getEmail().equals(user.getEmail()))) {
+      throw new CustomException(ErrorCode.NO_ACCESS_RIGHTS);
+    }
+
     posts.update(postsDto.getTitle(), postsDto.getContent(), postsDto.getPostCategory(),
         postsDto.getJobCategory());
 
@@ -69,8 +78,17 @@ public class PostsServiceImpl implements PostsService {
   // 게시물 삭제
   @Transactional
   public String delete(Long postId) {
+    User user = userRepository.findOneWithAuthoritiesByEmail(
+        SecurityUtil.getCurrentUsername().get()).get();
+
     Posts posts = postsRepository.findById(postId)
         .orElseThrow(() -> new CustomException(ErrorCode.POST_ID_NOT_EXIST));
+
+    // 현재 로그인한 유저와 게시물 작성자의 이메일이 일치하지 않을 경우, 에러 발생
+    if (!(posts.getUser().getEmail().equals(user.getEmail()))) {
+      throw new CustomException(ErrorCode.NO_ACCESS_RIGHTS);
+    }
+
     postsRepository.delete(posts);
 
     return "posts-delete";
