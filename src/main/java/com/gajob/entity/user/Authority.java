@@ -24,4 +24,5 @@ public class Authority {
   private String authorityName;
 
 
+
 }
