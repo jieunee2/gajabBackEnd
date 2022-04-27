@@ -1,6 +1,6 @@
 package com.gajob.entity.portfolio;
 
-import com.gajob.entity.posts.TimeEntity;
+import com.gajob.entity.basetime.TimeEntity;
 import com.gajob.entity.user.User;
 import lombok.*;
 
