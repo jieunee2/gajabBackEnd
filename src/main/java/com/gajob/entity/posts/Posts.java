@@ -61,6 +61,10 @@ public class Posts extends TimeEntity {
 
   @JsonIgnoreProperties({"posts"})
   @OneToMany(mappedBy = "posts", cascade = CascadeType.ALL)
+  private List<PostsLikes> likeList;
+
+  @JsonIgnoreProperties({"posts"})
+  @OneToMany(mappedBy = "posts", cascade = CascadeType.ALL)
   private List<PostsScrap> postsScrapList;
 
   //게시글이 삭제될 경우 댓글도 삭제되어야 하기 때문에 CascadeType.REMOVE 를 사용

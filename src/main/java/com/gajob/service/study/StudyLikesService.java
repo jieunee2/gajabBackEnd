@@ -1,6 +1,6 @@
 package com.gajob.service.study;
 
-public interface LikesService {
+public interface StudyLikesService {
 
   String likes(Long postId);
 
