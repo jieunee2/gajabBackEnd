@@ -20,7 +20,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @Getter
 @Entity
-public class Likes {
+public class StudyLikes {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,7 +36,7 @@ public class Likes {
   @JsonIgnoreProperties({"study"})
   private User user;
 
-  public Likes(Study study, User user) {
+  public StudyLikes(Study study, User user) {
     this.study = study;
     this.user = user;
   }

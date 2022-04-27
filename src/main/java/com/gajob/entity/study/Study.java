@@ -91,7 +91,7 @@ public class Study extends TimeEntity {
 
   @JsonIgnoreProperties({"study"})
   @OneToMany(mappedBy = "study", cascade = CascadeType.ALL)
-  private List<Likes> likeList;
+  private List<StudyLikes> likeList;
 
   @JsonIgnoreProperties({"study"})
   @OneToMany(mappedBy = "study", cascade = CascadeType.ALL)

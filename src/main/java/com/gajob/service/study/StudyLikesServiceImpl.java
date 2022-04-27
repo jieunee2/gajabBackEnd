@@ -1,6 +1,6 @@
 package com.gajob.service.study;
 
-import com.gajob.entity.study.Likes;
+import com.gajob.entity.study.StudyLikes;
 import com.gajob.entity.study.Study;
 import com.gajob.entity.user.User;
 import com.gajob.repository.study.StudyLikesRepository;
@@ -30,7 +30,7 @@ public class StudyLikesServiceImpl implements StudyLikesService {
     // 중복 좋아요 방지
     if (
         isNotAlreadyLike(user, study)) {
-      studyLikesRepository.save(new Likes(study, user));
+      studyLikesRepository.save(new StudyLikes(study, user));
       return "increase-likes";
     }
     // 이미 좋아요를 눌렀던 게시물일 경우, 다시 좋아요 기능을 요청할 경우 좋아요 해제
