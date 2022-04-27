@@ -1,4 +1,4 @@
-package com.gajob.entity.posts;
+package com.gajob.entity.study;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.gajob.entity.basetime.TimeEntity;
@@ -21,7 +21,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @Getter
 @Entity
-public class PostsScrap extends TimeEntity {
+public class StudyScrap extends TimeEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,17 +30,16 @@ public class PostsScrap extends TimeEntity {
 
 
   @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "post_id")
-  private Posts posts;
+  @JoinColumn(name = "study_id")
+  private Study study;
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "user_id")
-  @JsonIgnoreProperties({"posts"})
+  @JsonIgnoreProperties({"study"})
   private User user;
 
-  public PostsScrap(Posts posts, User user) {
-    this.posts = posts;
+  public StudyScrap(Study study, User user) {
+    this.study = study;
     this.user = user;
   }
-
 }
