@@ -1,6 +1,7 @@
 package com.gajob.entity.posts;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.gajob.entity.basetime.TimeEntity;
 import com.gajob.entity.user.User;
 import com.gajob.enumtype.JobCategory;
 import com.gajob.enumtype.PostCategory;

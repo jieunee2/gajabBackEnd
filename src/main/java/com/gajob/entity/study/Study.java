@@ -3,7 +3,7 @@ package com.gajob.entity.study;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.gajob.entity.posts.TimeEntity;
+import com.gajob.entity.basetime.TimeEntity;
 import com.gajob.entity.user.User;
 import com.gajob.enumtype.Area;
 import com.gajob.enumtype.Status;
@@ -92,6 +92,10 @@ public class Study extends TimeEntity {
   @JsonIgnoreProperties({"study"})
   @OneToMany(mappedBy = "study", cascade = CascadeType.ALL)
   private List<Likes> likeList;
+
+  @JsonIgnoreProperties({"study"})
+  @OneToMany(mappedBy = "study", cascade = CascadeType.ALL)
+  private List<StudyScrap> studyScrapList;
 
   //게시글이 삭제될 경우 댓글도 삭제되어야 하기 때문에 CascadeType.REMOVE 를 사용
   @OneToMany(mappedBy = "study", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)

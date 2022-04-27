@@ -29,6 +29,7 @@ public class StudyReadDto {
   private List<StudyCommentsResponseDto> comments;
   private int commentsCnt; //댓글 개수
   private int likes;
+  private int scrap; //스크랩 수
 
   public StudyReadDto(Study study) {
     this.id = study.getId();
@@ -50,5 +51,6 @@ public class StudyReadDto {
         .collect(Collectors.toList());
     this.commentsCnt = comments.size();
     this.likes = study.getLikeList().size();
+    this.scrap = study.getStudyScrapList().size();
   }
 }

@@ -1,4 +1,4 @@
-package com.gajob.entity.posts;
+package com.gajob.entity.basetime;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
