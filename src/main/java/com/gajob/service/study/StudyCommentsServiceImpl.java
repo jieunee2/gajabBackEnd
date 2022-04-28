@@ -11,6 +11,8 @@ import com.gajob.repository.study.StudyCommentsRepository;
 import com.gajob.repository.study.StudyRepository;
 import com.gajob.repository.user.UserRepository;
 import com.gajob.util.SecurityUtil;
+import java.util.List;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,6 +35,20 @@ public class StudyCommentsServiceImpl implements StudyCommentsService {
 
     return new StudyCommentsResponseDto(studyCommentsRepository.save(
         studyCommentsDto.toEntity(user, study)));
+  }
+
+
+  // 게시물 별로 댓글 조회
+  @Transactional(readOnly = true)
+  public List<StudyCommentsResponseDto> getStudyComments(Long postId) {
+    Study study = studyRepository.findById(postId)
+        .orElseThrow(() -> new CustomException(ErrorCode.POST_ID_NOT_EXIST));
+
+    // studyCommentsRepository로 결과로 넘어온 StudyComments의 Stream을 map을 통해 StudyCommentsResponseDto로 변환
+    return studyCommentsRepository.findAllByStudyId(postId).stream()
+        .map(StudyCommentsResponseDto::new)
+        .collect(
+            Collectors.toList());
   }
 
   // 댓글 수정
