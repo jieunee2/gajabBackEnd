@@ -2,8 +2,8 @@ package com.gajob.service.posts;
 
 import com.gajob.dto.posts.PostsCommentsDto;
 import com.gajob.dto.posts.PostsCommentsResponseDto;
-import com.gajob.entity.posts.PostsComments;
 import com.gajob.entity.posts.Posts;
+import com.gajob.entity.posts.PostsComments;
 import com.gajob.entity.user.User;
 import com.gajob.enumtype.ErrorCode;
 import com.gajob.exception.CustomException;
@@ -11,6 +11,8 @@ import com.gajob.repository.posts.PostsCommentsRepository;
 import com.gajob.repository.posts.PostsRepository;
 import com.gajob.repository.user.UserRepository;
 import com.gajob.util.SecurityUtil;
+import java.util.List;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,6 +35,19 @@ public class PostsCommentsServiceImpl implements PostsCommentsService {
 
     return new PostsCommentsResponseDto(postsCommentsRepository.save(
         postsCommentsDto.toEntity(user, posts)));
+  }
+
+  // 게시물 별로 댓글 조회
+  @Transactional(readOnly = true)
+  public List<PostsCommentsResponseDto> getPostsComments(Long postId) {
+    Posts posts = postsRepository.findById(postId)
+        .orElseThrow(() -> new CustomException(ErrorCode.POST_ID_NOT_EXIST));
+
+    // postsCommentsRepository로 결과로 넘어온 PostsComments의 Stream을 map을 통해 PostsCommentsResponseDto로 변환
+    return postsCommentsRepository.findAllByPostsId(postId).stream()
+        .map(PostsCommentsResponseDto::new)
+        .collect(
+            Collectors.toList());
   }
 
   // 댓글 수정
