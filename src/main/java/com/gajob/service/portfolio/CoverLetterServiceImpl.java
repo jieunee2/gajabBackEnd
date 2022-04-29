@@ -37,7 +37,7 @@ public class CoverLetterServiceImpl implements CoverLetterService {
     @Transactional
     public CoverLetterReadDto getCoverLetter(Long coverLetterId) {
         CoverLetter coverLetter = coverLetterRepository.findById(coverLetterId)
-                .orElseThrow(() -> new CustomException(ErrorCode.POST_ID_NOT_EXIST));
+                .orElseThrow(() -> new CustomException(ErrorCode.COVER_LETTER_ID_NOT_EXIST));
 
         CoverLetterReadDto coverLetterReadDto = new CoverLetterReadDto(coverLetter);
 
@@ -53,7 +53,7 @@ public class CoverLetterServiceImpl implements CoverLetterService {
     @Transactional
     public CoverLetterReadDto update(Long coverLetterId, CoverLetterDto coverLetterDto) {
         CoverLetter coverLetter = coverLetterRepository.findById(coverLetterId)
-                .orElseThrow(() -> new CustomException(ErrorCode.POST_ID_NOT_EXIST));
+                .orElseThrow(() -> new CustomException(ErrorCode.COVER_LETTER_ID_NOT_EXIST));
 
         coverLetter.update(coverLetterDto.getTitle());
 
@@ -69,7 +69,7 @@ public class CoverLetterServiceImpl implements CoverLetterService {
                 SecurityUtil.getCurrentUsername().get()).get();
 
         CoverLetter coverLetter = coverLetterRepository.findById(coverLetterId)
-                .orElseThrow(() -> new CustomException(ErrorCode.POST_ID_NOT_EXIST));
+                .orElseThrow(() -> new CustomException(ErrorCode.COVER_LETTER_ID_NOT_EXIST));
 
         if (!(coverLetter.getUser().getEmail().equals(user.getEmail()))) {
             throw new CustomException(ErrorCode.NO_ACCESS_RIGHTS);
