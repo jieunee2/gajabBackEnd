@@ -23,7 +23,7 @@ public class CoverLetterItemServiceImpl implements CoverLetterItemService {
     @Transactional
     public CoverLetterItemResponseDto save(Long coverLetterId, CoverLetterItemDto coverLetterItemDto) {
         CoverLetter coverLetter = coverLetterRepository.findById(coverLetterId)
-                .orElseThrow(() -> new CustomException(ErrorCode.POST_ID_NOT_EXIST));
+                .orElseThrow(() -> new CustomException(ErrorCode.COVER_LETTER_ID_NOT_EXIST));
 
         return new CoverLetterItemResponseDto(coverLetterItemRepository.save(
                 coverLetterItemDto.toEntity(coverLetter)));
@@ -34,10 +34,10 @@ public class CoverLetterItemServiceImpl implements CoverLetterItemService {
     public CoverLetterItemResponseDto update(Long coverLetterId, Long itemId,
                                              CoverLetterItemDto coverLetterItemDto) {
         CoverLetter coverLetter = coverLetterRepository.findById(coverLetterId)
-                .orElseThrow(() -> new CustomException(ErrorCode.POST_ID_NOT_EXIST));
+                .orElseThrow(() -> new CustomException(ErrorCode.COVER_LETTER_ID_NOT_EXIST));
 
         CoverLetterItem coverLetterItem = coverLetterItemRepository.findById(itemId)
-                .orElseThrow(() -> new CustomException(ErrorCode.COMMENT_ID_NOT_EXIST));
+                .orElseThrow(() -> new CustomException(ErrorCode.ITEM_ID_NOT_EXIST));
 
         coverLetterItem.update(coverLetterItemDto.getQuestion(), coverLetterItemDto.getAnswer());
 
@@ -50,7 +50,7 @@ public class CoverLetterItemServiceImpl implements CoverLetterItemService {
     @Transactional
     public String delete(Long itemId) {
         CoverLetterItem coverLetterItem = coverLetterItemRepository.findById(itemId)
-                .orElseThrow(() -> new CustomException(ErrorCode.COMMENT_ID_NOT_EXIST));
+                .orElseThrow(() -> new CustomException(ErrorCode.ITEM_ID_NOT_EXIST));
 
         coverLetterItemRepository.delete(coverLetterItem);
 

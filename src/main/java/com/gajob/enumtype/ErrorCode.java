@@ -30,7 +30,9 @@ public enum ErrorCode {
   DUPLICATE_NICKNAME(INTERNAL_SERVER_ERROR, "중복된 닉네임이 존재합니다."),
   POST_ID_NOT_EXIST(INTERNAL_SERVER_ERROR, "해당 게시글이 존재하지 않습니다."),
   COMMENT_ID_NOT_EXIST(INTERNAL_SERVER_ERROR, "해당 댓글이 존재하지 않습니다"),
-  NO_ACCESS_RIGHTS(INTERNAL_SERVER_ERROR, "접근 권한이 없습니다.");
+  NO_ACCESS_RIGHTS(INTERNAL_SERVER_ERROR, "접근 권한이 없습니다."),
+  COVER_LETTER_ID_NOT_EXIST(INTERNAL_SERVER_ERROR, "해당 자기소개서가 존재하지 않습니다"),
+  ITEM_ID_NOT_EXIST(INTERNAL_SERVER_ERROR, "해당 항목이 존재하지 않습니다");
 
   private final HttpStatus httpStatus;
   private final String detail;
