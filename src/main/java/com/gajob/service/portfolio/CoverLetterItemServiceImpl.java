@@ -39,7 +39,7 @@ public class CoverLetterItemServiceImpl implements CoverLetterItemService {
         CoverLetterItem coverLetterItem = coverLetterItemRepository.findById(itemId)
                 .orElseThrow(() -> new CustomException(ErrorCode.ITEM_ID_NOT_EXIST));
 
-        coverLetterItem.update(coverLetterItemDto.getQuestion(), coverLetterItemDto.getAnswer());
+        coverLetterItem.update(coverLetterItemDto.getQuestion(), coverLetterItemDto.getAnswer(), coverLetterItemDto.getModifiedDate());
 
         CoverLetterItemResponseDto coverLetterItemResponseDto = new CoverLetterItemResponseDto(coverLetterItem);
 
