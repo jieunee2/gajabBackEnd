@@ -37,9 +37,10 @@ public class CoverLetterItem {
     private CoverLetter coverLetter;
 
     // 자소서 문항 수정
-    public void update(String question, String answer) {
+    public void update(String question, String answer, String modifiedDate) {
         this.question = question;
         this.answer = answer;
+        this.modifiedDate = modifiedDate;
     }
 
 }
