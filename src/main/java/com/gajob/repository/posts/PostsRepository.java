@@ -1,6 +1,7 @@
 package com.gajob.repository.posts;
 
 import com.gajob.entity.posts.Posts;
+import com.gajob.entity.user.User;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -14,4 +15,6 @@ public interface PostsRepository extends JpaRepository<Posts, Long> {
 
   @Query("select p from Posts p")
   List<Posts> findAll();
+
+  List<Posts> findAllByUser(User user);
 }
