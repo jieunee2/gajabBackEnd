@@ -14,11 +14,13 @@ import lombok.NoArgsConstructor;
 public class CoverLetterDto {
 
     private String title;
+    private String totalModifiedDate;
     private User user;
 
     public CoverLetter toEntity(User user) {
-        CoverLetter coverLetter = CoverLetter.builder().title(title).user(user).build();
+        CoverLetter coverLetter = CoverLetter.builder().title(title).totalModifiedDate(totalModifiedDate).user(user).build();
 
         return coverLetter;
     }
+
 }

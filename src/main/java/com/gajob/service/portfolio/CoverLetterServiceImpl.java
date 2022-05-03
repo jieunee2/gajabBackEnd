@@ -55,8 +55,7 @@ public class CoverLetterServiceImpl implements CoverLetterService {
         CoverLetter coverLetter = coverLetterRepository.findById(coverLetterId)
                 .orElseThrow(() -> new CustomException(ErrorCode.COVER_LETTER_ID_NOT_EXIST));
 
-        coverLetter.update(coverLetterDto.getTitle());
-        coverLetter.update(coverLetter.getModifiedDate());
+        coverLetter.update(coverLetterDto.getTitle(), coverLetter.getModifiedDate());
 
         CoverLetterReadDto coverLetterReadDto = new CoverLetterReadDto(coverLetter);
 
