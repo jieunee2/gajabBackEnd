@@ -15,7 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @RequiredArgsConstructor
 @Service
-public class MyPageServiceImpl implements MyPageService {
+public class  MyPageServiceImpl implements MyPageService {
 
   private final UserRepository userRepository;
   private final PostsRepository postsRepository;
