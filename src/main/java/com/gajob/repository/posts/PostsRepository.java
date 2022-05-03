@@ -17,4 +17,9 @@ public interface PostsRepository extends JpaRepository<Posts, Long> {
   List<Posts> findAll();
 
   List<Posts> findAllByUser(User user);
+
+  @Query("SELECT p FROM Posts p ORDER BY p.likes DESC")
+  List<Posts> findAllDesc();
+
+
 }

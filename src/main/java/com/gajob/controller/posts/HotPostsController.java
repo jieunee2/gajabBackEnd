@@ -1,10 +1,10 @@
 package com.gajob.controller.posts;
 
-import com.gajob.service.posts.PostsLikesService;
+import com.gajob.service.posts.HotPostsService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -12,14 +12,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/community")
 @CrossOrigin(origins = "http://localhost:3000/")
-public class PostsLikesController {
+public class HotPostsController {
 
-  private final PostsLikesService postsLikesService;
+  private final HotPostsService hotPostsService;
 
-  @PostMapping("/likes/{postId}")
-  public String likes(@PathVariable Long postId) {
-    return postsLikesService.likes(postId);
+  @GetMapping("/hotPosts")
+  public ResponseEntity getHotPosts() {
+    return ResponseEntity.ok(hotPostsService.getHotPosts());
   }
-
 
 }

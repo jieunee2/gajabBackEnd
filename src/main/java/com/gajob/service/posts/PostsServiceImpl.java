@@ -23,6 +23,7 @@ public class PostsServiceImpl implements PostsService {
   private final PostsRepository postsRepository;
   private final UserRepository userRepository;
 
+
   // 게시물을 DB에 저장
   @Transactional
   public PostsResponseDto save(PostsDto postsDto) {
@@ -42,14 +43,28 @@ public class PostsServiceImpl implements PostsService {
 
     PostsReadDto postsReadDto = new PostsReadDto(posts);
 
+    // 게시물 조회시 Posts 테이블이 likes 컬럼 업데이트
+    posts.likeUpdate(postsReadDto.getLikes());
+
     return postsReadDto;
   }
 
   // 게시물 전체 조회 (이때는 조회수 증가 안함)
-  @Transactional(readOnly = true)
+  @Transactional
   public List<PostsReadDto> getAllPosts() {
+    List<Posts> posts = postsRepository.findAll();
+
+    // 게시물 조회시 Posts 테이블이 likes 컬럼 업데이트
+    for (Posts postList : posts) {
+      PostsReadDto postsReadDto = new PostsReadDto(postList);
+      postList.likeUpdate(postsReadDto.getLikes());
+    }
+
     // postsRepository로 결과로 넘어온 Posts의 Stream을 map을 통해 PostsReadDto로 변환
-    return postsRepository.findAll().stream().map(PostsReadDto::new).collect(Collectors.toList());
+    return postsRepository.findAll().
+        stream().
+        map(PostsReadDto::new).
+        collect(Collectors.toList());
   }
 
 
