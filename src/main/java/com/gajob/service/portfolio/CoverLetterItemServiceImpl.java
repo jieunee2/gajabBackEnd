@@ -25,6 +25,8 @@ public class CoverLetterItemServiceImpl implements CoverLetterItemService {
         CoverLetter coverLetter = coverLetterRepository.findById(coverLetterId)
                 .orElseThrow(() -> new CustomException(ErrorCode.COVER_LETTER_ID_NOT_EXIST));
 
+        coverLetter.updateModifiedDate(coverLetterItemDto.getModifiedDate());   // 문항이 추가될 경우에도 전체 자소서 최종 수정일이 변경되어야함.
+
         return new CoverLetterItemResponseDto(coverLetterItemRepository.save(
                 coverLetterItemDto.toEntity(coverLetter)));
     }
