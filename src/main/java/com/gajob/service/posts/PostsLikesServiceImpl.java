@@ -45,4 +45,5 @@ public class PostsLikesServiceImpl implements PostsLikesService {
   private boolean isNotAlreadyLike(User user, Posts posts) {
     return postsLikesRepository.findByUserAndPosts(user, posts).isEmpty();
   }
+
 }
