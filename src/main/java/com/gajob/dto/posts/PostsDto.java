@@ -20,10 +20,11 @@ public class PostsDto {
   private PostCategory postCategory;
   private JobCategory jobCategory;
   private User user;
+//  private List<PostsLikes> likesList;
 
   public Posts toEntity(User user) {
     Posts posts = Posts.builder().title(title).content(content).postCategory(postCategory)
-        .jobCategory(jobCategory).view(0)
+        .jobCategory(jobCategory).view(0).likes(0)
         .writer(user.getNickname()).user(user).build();
 
     return posts;

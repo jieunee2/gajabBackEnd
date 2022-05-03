@@ -59,6 +59,9 @@ public class Posts extends TimeEntity {
   @JoinColumn(name = "user_id")
   private User user;
 
+  @Column(columnDefinition = "integer default 0") // 초기 0으로 세팅
+  private int likes; //조회수
+
   @JsonIgnoreProperties({"posts"})
   @OneToMany(mappedBy = "posts", cascade = CascadeType.ALL)
   private List<PostsLikes> likeList;
@@ -78,7 +81,10 @@ public class Posts extends TimeEntity {
     this.content = content;
     this.postCategory = postCategory;
     this.jobCategory = jobCategory;
+  }
 
+  public void likeUpdate(int likes) {
+    this.likes = likes;
   }
 
 }
