@@ -22,6 +22,9 @@ public class CoverLetter extends TimeEntity {
     @Column(nullable = false)
     private String title;                       // 자소서 제목
 
+    @Column(name = "total_modified_date")
+    private String totalModifiedDate;           // 자소서(틀+문항) 최종 수정일
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
@@ -29,9 +32,15 @@ public class CoverLetter extends TimeEntity {
     @OneToMany(mappedBy = "coverLetter", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
     private List<CoverLetterItem> CoverLetterItemList;
 
-    // 자소서 수정
-    public void update(String title) {
+    // 자소서(title + totalModifiedDate) 수정
+    public void update(String title, String totalModifiedDate) {
         this.title = title;
+        this.totalModifiedDate = totalModifiedDate;
+    }
+
+    // 자소서(totalModifiedDate) 수정
+    public void updateModifiedDate(String totalModifiedDate) {
+        this.totalModifiedDate = totalModifiedDate;
     }
 
 }

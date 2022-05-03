@@ -41,6 +41,8 @@ public class CoverLetterItemServiceImpl implements CoverLetterItemService {
 
         coverLetterItem.update(coverLetterItemDto.getQuestion(), coverLetterItemDto.getAnswer(), coverLetterItemDto.getModifiedDate());
 
+        coverLetter.updateModifiedDate(coverLetterItemDto.getModifiedDate());   // 전체 자소서 최종 수정일 변경
+
         CoverLetterItemResponseDto coverLetterItemResponseDto = new CoverLetterItemResponseDto(coverLetterItem);
 
         return coverLetterItemResponseDto;
