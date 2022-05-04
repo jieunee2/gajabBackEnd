@@ -1,15 +1,24 @@
 package com.gajob.service.user;
 
+import com.gajob.dto.user.LoginDto;
 import com.gajob.dto.user.UserDto;
 import com.gajob.entity.user.Authority;
 import com.gajob.entity.user.User;
 import com.gajob.enumtype.ErrorCode;
 import com.gajob.exception.CustomException;
+import com.gajob.jwt.JwtFilter;
+import com.gajob.jwt.TokenProvider;
 import com.gajob.repository.user.UserRepository;
 import com.gajob.util.SecurityUtil;
 import java.util.Collections;
 import java.util.Optional;
+import javax.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpHeaders;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,6 +29,8 @@ public class UserService {
 
   private final UserRepository userRepository;
   private final PasswordEncoder passwordEncoder;
+  private final TokenProvider tokenProvider;
+  private final AuthenticationManagerBuilder authenticationManagerBuilder;
 
   // 회원가입
   @Transactional
@@ -50,15 +61,42 @@ public class UserService {
     return userRepository.save(user);
   }
 
+  // 로그인
   @Transactional
-  public void findByEmail(UserDto userDto) {
-    User user = userRepository.findOneWithAuthoritiesByEmail(userDto.getEmail())
+  public User login(LoginDto loginDto, HttpServletResponse httpServletResponse) {
+    User user = userRepository.findOneWithAuthoritiesByEmail(loginDto.getEmail())
         .orElseThrow(() -> new IllegalArgumentException("가입되지 않은 이메일입니다."));
 
-    if (!passwordEncoder.matches(userDto.getPassword(), user.getPassword())) {
+    if (!passwordEncoder.matches(loginDto.getPassword(), user.getPassword())) {
       throw new CustomException(ErrorCode.BAD_CREDENTIALS);
     }
+
+    UsernamePasswordAuthenticationToken authenticationToken =
+        new UsernamePasswordAuthenticationToken(loginDto.getEmail(), loginDto.getPassword());
+
+    Authentication authentication = authenticationManagerBuilder.getObject()
+        .authenticate(authenticationToken);
+    SecurityContextHolder.getContext().
+
+        setAuthentication(authentication);
+
+    String jwt = tokenProvider.createToken(authentication);
+
+    HttpHeaders httpHeaders = new HttpHeaders();
+    httpHeaders.add(JwtFilter.AUTHORIZATION_HEADER, "Bearer " + jwt);
+
+    return userRepository.findOneWithAuthoritiesByEmail(loginDto.getEmail()).get();
   }
+
+//  @Transactional
+//  public void findByEmail(UserDto userDto) {
+//    User user = userRepository.findOneWithAuthoritiesByEmail(userDto.getEmail())
+//        .orElseThrow(() -> new IllegalArgumentException("가입되지 않은 이메일입니다."));
+//
+//    if (!passwordEncoder.matches(userDto.getPassword(), user.getPassword())) {
+//      throw new CustomException(ErrorCode.BAD_CREDENTIALS);
+//    }
+//  }
 
   // username을 파라미터로 받아 해당 유저의 정보 및 권한 정보를 리턴
   @Transactional(readOnly = true)
