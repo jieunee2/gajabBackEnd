@@ -18,8 +18,13 @@ public interface PostsRepository extends JpaRepository<Posts, Long> {
 
   List<Posts> findAllByUser(User user);
 
-  @Query("SELECT p FROM Posts p ORDER BY p.likes DESC")
-  List<Posts> findAllDesc();
+  // 우선 좋아요 수를 기준으로 내림차순 정렬하고, 그 다음 조회수를 기준으로 내림차순으로 다중정렬
+  @Query("SELECT p FROM Posts p ORDER BY p.likes DESC, p.view DESC")
+  List<Posts> findAllDescByLikesAndView();
+
+//  // 조회수를 기준으로 내림차순 정렬
+//  @Query("SELECT p FROM Posts p ORDER BY p.view DESC")
+//  List<Posts> findAllDescByView();
 
 
 }
