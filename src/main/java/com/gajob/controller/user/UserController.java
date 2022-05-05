@@ -1,11 +1,11 @@
 package com.gajob.controller.user;
 
 
+import com.gajob.dto.user.JwtResponseDto;
 import com.gajob.dto.user.LoginDto;
 import com.gajob.dto.user.UserDto;
 import com.gajob.entity.user.User;
 import com.gajob.jwt.TokenProvider;
-import com.gajob.repository.user.UserRepository;
 import com.gajob.service.user.UserService;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
@@ -30,9 +30,8 @@ public class UserController {
 
   private final TokenProvider tokenProvider;
   private final AuthenticationManagerBuilder authenticationManagerBuilder;
-  private final UserService userService;
-  private final UserRepository userRepository;
   private final PasswordEncoder passwordEncoder;
+  private final UserService userService;
 
   @PostMapping("/signup") //회원가입
   public ResponseEntity<User> signup(
@@ -42,13 +41,14 @@ public class UserController {
   }
 
   @PostMapping("/login") //로그인
-  public ResponseEntity<User> login(@Valid @RequestBody LoginDto loginDto,
+  public ResponseEntity<JwtResponseDto> login(@Valid @RequestBody LoginDto loginDto,
       HttpServletResponse httpServletResponse) {
+
     return ResponseEntity.ok(userService.login(loginDto, httpServletResponse));
   }
 
 //  @PostMapping("/login") //로그인
-//  public ResponseEntity<TokenDto> authorize(@Valid @RequestBody LoginDto loginDto) {
+//  public ResponseEntity<JwtResponseDto> authorize(@Valid @RequestBody LoginDto loginDto) {
 //    UsernamePasswordAuthenticationToken authenticationToken =
 //        new UsernamePasswordAuthenticationToken(loginDto.getEmail(), loginDto.getPassword());
 //
@@ -61,38 +61,11 @@ public class UserController {
 //    HttpHeaders httpHeaders = new HttpHeaders();
 //    httpHeaders.add(JwtFilter.AUTHORIZATION_HEADER, "Bearer " + jwt);
 //
-//    return new ResponseEntity<>(new TokenDto(jwt), httpHeaders,
+//    User user = userRepository.findOneWithAuthoritiesByEmail(loginDto.getEmail()).get();
+//
+//    return new ResponseEntity<>(new JwtResponseDto(jwt, user.getNickname()), httpHeaders,
 //        HttpStatus.OK);
 //  }
-
-//  @PostMapping("/login")
-//  public ResponseEntity<User> login(@Valid @RequestBody LoginDto loginDto,
-//      HttpServletResponse response) {
-//    User user = userRepository.findOneWithAuthoritiesByEmail(loginDto.getEmail())
-//        .orElseThrow(() -> new IllegalArgumentException("가입되지 않은 이메일입니다."));
-//
-//    if (!passwordEncoder.matches(loginDto.getPassword(), user.getPassword())) {
-//      throw new CustomException(ErrorCode.BAD_CREDENTIALS);
-//    }
-//
-//    UsernamePasswordAuthenticationToken authenticationToken =
-//        new UsernamePasswordAuthenticationToken(loginDto.getEmail(), loginDto.getPassword());
-//
-//    Authentication authentication = authenticationManagerBuilder.getObject()
-//        .authenticate(authenticationToken);
-//    SecurityContextHolder.getContext().
-//
-//        setAuthentication(authentication);
-//
-//    String jwt = tokenProvider.createToken(authentication);
-//
-//    HttpHeaders httpHeaders = new HttpHeaders();
-//    httpHeaders.add(JwtFilter.AUTHORIZATION_HEADER, "Bearer " + jwt);
-//
-//    return new ResponseEntity<>(userService.getMyUserWithAuthorities().get(), httpHeaders,
-//        HttpStatus.OK);
-//  }
-
 
   @GetMapping("/user") // 현재 로그인 한 유저 정보 조회
   @PreAuthorize("hasAnyRole('USER','ADMIN')")
