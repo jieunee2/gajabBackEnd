@@ -1,5 +1,6 @@
 package com.gajob.service.user;
 
+import com.gajob.dto.user.JwtResponseDto;
 import com.gajob.dto.user.LoginDto;
 import com.gajob.dto.user.UserDto;
 import com.gajob.entity.user.Authority;
@@ -63,10 +64,13 @@ public class UserService {
 
   // 로그인
   @Transactional
-  public User login(LoginDto loginDto, HttpServletResponse httpServletResponse) {
+  public JwtResponseDto login(LoginDto loginDto,
+      HttpServletResponse httpServletResponse) {
+    // 가입되지 않은 이메일일 경우 에러문 출력
     User user = userRepository.findOneWithAuthoritiesByEmail(loginDto.getEmail())
         .orElseThrow(() -> new IllegalArgumentException("가입되지 않은 이메일입니다."));
 
+    // 비밀번호가 일치하지 않을 경우 에러문 출력
     if (!passwordEncoder.matches(loginDto.getPassword(), user.getPassword())) {
       throw new CustomException(ErrorCode.BAD_CREDENTIALS);
     }
@@ -85,18 +89,11 @@ public class UserService {
     HttpHeaders httpHeaders = new HttpHeaders();
     httpHeaders.add(JwtFilter.AUTHORIZATION_HEADER, "Bearer " + jwt);
 
-    return userRepository.findOneWithAuthoritiesByEmail(loginDto.getEmail()).get();
-  }
+    user = userRepository.findOneWithAuthoritiesByEmail(loginDto.getEmail()).get();
 
-//  @Transactional
-//  public void findByEmail(UserDto userDto) {
-//    User user = userRepository.findOneWithAuthoritiesByEmail(userDto.getEmail())
-//        .orElseThrow(() -> new IllegalArgumentException("가입되지 않은 이메일입니다."));
-//
-//    if (!passwordEncoder.matches(userDto.getPassword(), user.getPassword())) {
-//      throw new CustomException(ErrorCode.BAD_CREDENTIALS);
-//    }
-//  }
+    // Token과 User의 닉네임을 동시에 출력
+    return new JwtResponseDto(jwt, user.getNickname());
+  }
 
   // username을 파라미터로 받아 해당 유저의 정보 및 권한 정보를 리턴
   @Transactional(readOnly = true)
