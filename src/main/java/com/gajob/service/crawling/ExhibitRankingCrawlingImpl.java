@@ -13,7 +13,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @RequiredArgsConstructor
 @Service
@@ -99,6 +101,22 @@ public class ExhibitRankingCrawlingImpl implements ExhibitRankingCrawling {
                     target = textElements.get(j).text();                // target 추출
             }
 
+            // 추출한 category를 분류하여 배열에 저장
+            String[] categoryArr = category.split(",");
+
+            // 분류한 category를 Set에 저장
+            Set<String> categories = new HashSet<>();
+            for (int j = 0; j < categoryArr.length; j++)
+                categories.add(categoryArr[j]);
+
+            // 추출한 target을 분류하여 배열에 저장
+            String[] targetArr = target.split(",");
+
+            // 분류한 target을 Set에 저장
+            Set<String> targets = new HashSet<>();
+            for (int j = 0; j < targetArr.length; j++)
+                targets.add(targetArr[j]);
+
             // d-day가 포함된 text 내에서 d-day만 뽑아내기 위한 조건문
             String dDay;
             if (dDayText.contains("오늘마감")) dDay = dDayText.substring(0, 4);
@@ -106,7 +124,7 @@ public class ExhibitRankingCrawlingImpl implements ExhibitRankingCrawling {
                     .replaceAll(" ", "");
 
             ExhibitRanking exhibitRanking = new ExhibitRanking(title, ranking, rankingState,
-                    host, perks, category, target, dDay, state, url, imgUrl);
+                    host, perks, categories, targets, dDay, state, url, imgUrl);
 
             exhibitRankingList.add(exhibitRanking);
         }
