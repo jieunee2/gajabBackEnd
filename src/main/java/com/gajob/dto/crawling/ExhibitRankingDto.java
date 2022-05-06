@@ -3,6 +3,8 @@ package com.gajob.dto.crawling;
 import com.gajob.entity.crawling.ExhibitRanking;
 import lombok.Data;
 
+import java.util.Set;
+
 @Data
 public class ExhibitRankingDto {
 
@@ -11,8 +13,8 @@ public class ExhibitRankingDto {
     private String rankingState;
     private String host;
     private String perks;
-    private String category;
-    private String target;
+    private Set categories;
+    private Set targets;
     private String dDay;
     private String state;
     private String url;
@@ -24,8 +26,8 @@ public class ExhibitRankingDto {
         this.rankingState = exhibitRanking.getRankingState();
         this.host = exhibitRanking.getHost();
         this.perks = exhibitRanking.getPerks();
-        this.category = exhibitRanking.getCategory();
-        this.target = exhibitRanking.getTarget();
+        this.categories = exhibitRanking.getCategories();
+        this.targets = exhibitRanking.getTargets();
         this.dDay = exhibitRanking.getDDay();
         this.state = exhibitRanking.getState();
         this.url = exhibitRanking.getUrl();
