@@ -15,7 +15,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @RequiredArgsConstructor
 @Service
@@ -81,7 +83,15 @@ public class ExhibitCrawlingImpl implements ExhibitCrawling {
             // target 추출
             String target = exhibitElements.get(7).text();
 
-            Exhibit exhibit = new Exhibit(title, organization, category, target, state, todayState, url, imgUrl);
+            // 추출한 카테고리들을 분류하여 배열에 저장
+            String[] categoryArr = category.split(",");
+
+            // 분류한 카테고리들을 set에 저장
+            Set<String> categories = new HashSet<>();
+            for (int j = 0; j < categoryArr.length; j++)
+                categories.add(categoryArr[j]);
+
+            Exhibit exhibit = new Exhibit(title, organization, categories, target, state, todayState, url, imgUrl);
             exhibitList.add(exhibit);
         }
         return exhibitList;
@@ -93,14 +103,11 @@ public class ExhibitCrawlingImpl implements ExhibitCrawling {
     public ExhibitDto saveExhibit(ExhibitDto exhibitDto) throws Exception {
         List<Exhibit> list = new ArrayList<>();
 
-        //    int page = 5;
-
-        // 반복문을 통해서 5페이지까지의 정보를 가져온다. (20페이지까지 있으나 너무 많은 데이터를 가져올 필요가 없으므로 적당량만 추출)
         for (int i = 1; i <= 5; i++) {
             String url = getExhibitUrl(i);
             System.out.println("->" + url);
             List<Exhibit> exhibitData = getExhibitData(url);
-            // for 문을 통해서 getNewsData 메소드를 통해 받아온 데이터들을 newsRepository에 저장한다.
+
             for (Exhibit exhibit : exhibitData) {
                 exhibitRepository.save(exhibit);
             }
