@@ -28,7 +28,10 @@ public class Exhibit {
     @Column(name = "category_name")
     private Set<String> categories = new HashSet<>();   // 공모전 카테고리
 
-    private String target;                              // 공모전 참가대상
+    @ElementCollection
+    @CollectionTable(name = "exhibit_target", joinColumns = @JoinColumn(name = "exhibit_id"))
+    @Column(name = "target_name")
+    private Set<String> targets = new HashSet<>();      // 공모전 참가대상
 
     private String state;                               // 공모전 진행상태
 
@@ -38,11 +41,11 @@ public class Exhibit {
 
     private String imgUrl;                              // 공모전 이미지 URL
 
-    public Exhibit(String title, String organization, Set categories, String target, String state, String todayState, String url, String imgUrl) {
+    public Exhibit(String title, String organization, Set categories, Set targets, String state, String todayState, String url, String imgUrl) {
         this.title = title;
         this.organization = organization;
         this.categories = categories;
-        this.target = target;
+        this.targets = targets;
         this.state = state;
         this.todayState = todayState;
         this.url = url;

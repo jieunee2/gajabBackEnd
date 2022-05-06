@@ -83,15 +83,23 @@ public class ExhibitCrawlingImpl implements ExhibitCrawling {
             // target 추출
             String target = exhibitElements.get(7).text();
 
-            // 추출한 카테고리들을 분류하여 배열에 저장
+            // 추출한 category를 분류하여 배열에 저장
             String[] categoryArr = category.split(",");
 
-            // 분류한 카테고리들을 set에 저장
+            // 분류한 category를 Set에 저장
             Set<String> categories = new HashSet<>();
             for (int j = 0; j < categoryArr.length; j++)
                 categories.add(categoryArr[j]);
 
-            Exhibit exhibit = new Exhibit(title, organization, categories, target, state, todayState, url, imgUrl);
+            // 추출한 target을 분류하여 배열에 저장
+            String[] targetArr = target.split(",");
+
+            // 분류한 target을 Set에 저장
+            Set<String> targets = new HashSet<>();
+            for (int j = 0; j < targetArr.length; j++)
+                targets.add(targetArr[j]);
+
+            Exhibit exhibit = new Exhibit(title, organization, categories, targets, state, todayState, url, imgUrl);
             exhibitList.add(exhibit);
         }
         return exhibitList;

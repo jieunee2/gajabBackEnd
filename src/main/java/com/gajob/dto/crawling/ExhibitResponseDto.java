@@ -12,7 +12,7 @@ public class ExhibitResponseDto {
     private String title;
     private String organization;
     private Set categories;
-    private String target;
+    private Set targets;
     private String state;
     private String todayState;
     private String url;
@@ -23,7 +23,7 @@ public class ExhibitResponseDto {
         this.title = exhibit.getTitle();
         this.organization = exhibit.getOrganization();
         this.categories = exhibit.getCategories();
-        this.target = exhibit.getTarget();
+        this.targets = exhibit.getTargets();
         this.state = exhibit.getState();
         this.todayState = exhibit.getTodayState();
         this.url = exhibit.getUrl();
