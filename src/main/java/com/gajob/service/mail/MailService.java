@@ -24,7 +24,7 @@ public class MailService {
   @Transactional
   public MailDto createMailAndUpdatePassword(String email) {
     MailDto mailDto = new MailDto();
-    mailDto.setAddress(mailDto.getAddress());
+    mailDto.setEmail(mailDto.getEmail());
     return mailDto;
 
   }
@@ -33,10 +33,10 @@ public class MailService {
   @Transactional
   public void mailSend(MailDto mailDto) {
     // 임시 비밀번호 가져오기
-    String tempPassword = updateToTempPassword(mailDto.getAddress());
+    String tempPassword = updateToTempPassword(mailDto.getEmail());
 
     SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
-    simpleMailMessage.setTo(mailDto.getAddress());
+    simpleMailMessage.setTo(mailDto.getEmail());
     simpleMailMessage.setSubject("GA-JOB에서 회원님 임시 비밀번호를 알려드립니다.");
     simpleMailMessage.setText(
         "안녕하세요. GA-JOB 입니다. 저희 사이트를 방문해 주셔서 감사합니다." + "\n" + "회원님의 임시 비밀번호를 알려드립니다." + "\n"
