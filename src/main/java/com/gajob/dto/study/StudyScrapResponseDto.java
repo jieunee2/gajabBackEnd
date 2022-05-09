@@ -16,7 +16,9 @@ public class StudyScrapResponseDto {
   private Status status;
   private String writer;
   private String scrapDate;
-  private String postUrl;
+  private Long studyId;
+//  private String postUrl;
+
 
   public StudyScrapResponseDto(StudyScrap studyScrap) {
     this.id = studyScrap.getId();
@@ -26,7 +28,8 @@ public class StudyScrapResponseDto {
     this.status = studyScrap.getStudy().getStatus();
     this.writer = studyScrap.getStudy().getWriter();
     this.scrapDate = studyScrap.getCreatedDate();
-    this.postUrl = "http://localhost:3000/study/posts/" + studyScrap.getStudy().getId();
+    this.studyId = studyScrap.getStudy().getId();
+//    this.postUrl = "http://localhost:3000/study/posts/" + studyScrap.getStudy().getId();
   }
 
 }
