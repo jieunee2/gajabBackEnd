@@ -14,7 +14,8 @@ public class PostsScrapResponseDto {
   private JobCategory jobCategory;
   private String writer;
   private String scrapDate;
-  private String postUrl;
+  //  private String postUrl;
+  private Long postId;
 
   public PostsScrapResponseDto(PostsScrap postsScrap) {
     this.id = postsScrap.getId();
@@ -23,7 +24,8 @@ public class PostsScrapResponseDto {
     this.jobCategory = postsScrap.getPosts().getJobCategory();
     this.writer = postsScrap.getPosts().getWriter();
     this.scrapDate = postsScrap.getCreatedDate();
-    this.postUrl = "http://localhost:3000/community/posts/" + postsScrap.getPosts().getId();
+    this.postId = postsScrap.getPosts().getId();
+//    this.postUrl = "http://localhost:3000/community/posts/" + postsScrap.getPosts().getId();
   }
 
 }
