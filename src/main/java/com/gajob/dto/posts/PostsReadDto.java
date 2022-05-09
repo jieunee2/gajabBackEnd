@@ -21,7 +21,8 @@ public class PostsReadDto {
   //   List 타입을 DTO 클래스로해서 엔티티간 무한 참조를 방지
   private List<PostsCommentsResponseDto> comments;
   private int commentsCnt; //댓글 개수
-  private int likes;
+  private int likes; //좋아요 수
+  private List<PostsLikesResponseDto> likesList; //좋아요를 누른 유저들 목록
   private int scrap; //스크랩 수
 
   public PostsReadDto(Posts posts) {
@@ -38,6 +39,8 @@ public class PostsReadDto {
         .collect(Collectors.toList());
     this.commentsCnt = comments.size();
     this.likes = posts.getLikeList().size();
+    this.likesList = posts.getLikeList().stream().map(PostsLikesResponseDto::new).collect(
+        Collectors.toList());
     this.scrap = posts.getPostsScrapList().size();
   }
 

@@ -1,5 +1,6 @@
 package com.gajob.entity.posts;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.gajob.entity.basetime.TimeEntity;
 import com.gajob.entity.user.User;
@@ -55,6 +56,7 @@ public class Posts extends TimeEntity {
   @Enumerated(EnumType.STRING)
   private JobCategory jobCategory; //직군별 카테고리
 
+  @JsonIgnore
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "user_id")
   private User user;
@@ -63,6 +65,7 @@ public class Posts extends TimeEntity {
   private int likes; //조회수
 
   @JsonIgnoreProperties({"posts"})
+  @JsonIgnore
   @OneToMany(mappedBy = "posts", cascade = CascadeType.ALL)
   private List<PostsLikes> likeList;
 

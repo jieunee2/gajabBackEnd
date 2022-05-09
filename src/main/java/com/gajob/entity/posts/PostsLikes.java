@@ -1,5 +1,6 @@
 package com.gajob.entity.posts;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.gajob.entity.user.User;
 import javax.persistence.Column;
@@ -27,6 +28,7 @@ public class PostsLikes {
   @Column(name = "like_id")
   private Long id;
 
+  @JsonIgnore
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "post_id")
   private Posts posts;
