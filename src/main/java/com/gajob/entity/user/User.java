@@ -44,6 +44,12 @@ public class User {
   @Column(nullable = false, name = "nickname", length = 50)
   private String nickname; //닉네임
 
+  @Column(nullable = false)
+  private String studentId; //학번
+
+  @Column(nullable = false)
+  private String schoolEmail; //학교 이메일
+
   @Column(name = "activated")
   private boolean activated; //활성화여부
 
