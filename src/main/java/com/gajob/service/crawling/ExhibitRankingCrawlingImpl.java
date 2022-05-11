@@ -68,7 +68,7 @@ public class ExhibitRankingCrawlingImpl implements ExhibitRankingCrawling {
             String partUrl = partUrlElements.get(i).getElementsByAttribute("href").attr("href");
 
             // 전체 url 생성
-            String url = "http://campusmon.jobkorea.co.kr/" + partUrl;
+            String url = "http://campusmon.jobkorea.co.kr" + partUrl;
 
             // 개별 공모전 전체 html 코드
             Document exhibitDocument = Jsoup.connect(url).get();
