@@ -46,6 +46,15 @@ public class UserService {
       throw new CustomException(ErrorCode.DUPLICATE_NICKNAME);
     }
 
+    // 중복된 학번이 있을 경우, 에러 처리
+    if (userRepository.existsByStudentId(userDto.getStudentId())) {
+      throw new CustomException(ErrorCode.DUPLICATE_STUDENT_ID);
+    }
+    // 잘못된 형식의 학번을 입력할 경우, 에러 처리(교내 기준, 학번 9자리)
+    else if (!(userDto.getStudentId().length() == 9)) {
+      throw new CustomException(ErrorCode.INVALID_STUDENT_ID);
+    }
+
     Authority authority = Authority.builder()
         .authorityName("ROLE_USER")
         .build();
@@ -55,6 +64,8 @@ public class UserService {
         .password(passwordEncoder.encode(userDto.getPassword()))
         .name((userDto.getName()))
         .nickname(userDto.getNickname())
+        .studentId(userDto.getStudentId())
+        .schoolEmail(userDto.getStudentEmail())
         .authorities(Collections.singleton(authority))
         .activated(true)
         .build();
