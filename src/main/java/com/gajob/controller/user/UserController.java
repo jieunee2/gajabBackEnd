@@ -79,9 +79,9 @@ public class UserController {
     return ResponseEntity.ok(userService.getUserWithAuthorities(email).get());
   }
 
-  @DeleteMapping("/user/{email}") //회원정보 삭제
+  @DeleteMapping("/user") //회원정보 삭제
   @PreAuthorize("hasAnyRole('USER','ADMIN')")
-  public ResponseEntity deleteUserWithAuthorities(@PathVariable String email) {
-    return ResponseEntity.ok(userService.deleteUserWithAuthorities(email));
+  public ResponseEntity deleteUserWithAuthorities() {
+    return ResponseEntity.ok(userService.deleteUserWithAuthorities());
   }
 }

@@ -126,7 +126,7 @@ public class UserService {
 
   //회원정보 삭제
   @Transactional
-  public String deleteUserWithAuthorities(String email) {
+  public String deleteUserWithAuthorities() {
     User user = userRepository.findOneWithAuthoritiesByEmail(
         SecurityUtil.getCurrentUsername().get()).get();
 
