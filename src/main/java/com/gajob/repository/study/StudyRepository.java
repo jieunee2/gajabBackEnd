@@ -3,6 +3,7 @@ package com.gajob.repository.study;
 import com.gajob.entity.study.Study;
 import com.gajob.entity.user.User;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -17,5 +18,7 @@ public interface StudyRepository extends JpaRepository<Study, Long> {
   List<Study> findAll();
 
   List<Study> findAllByUser(User user);
+
+  Optional<Study> deleteAllByUser(User user);
 
 }

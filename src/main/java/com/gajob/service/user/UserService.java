@@ -9,6 +9,8 @@ import com.gajob.enumtype.ErrorCode;
 import com.gajob.exception.CustomException;
 import com.gajob.jwt.JwtFilter;
 import com.gajob.jwt.TokenProvider;
+import com.gajob.repository.posts.PostsRepository;
+import com.gajob.repository.study.StudyRepository;
 import com.gajob.repository.user.UserRepository;
 import com.gajob.util.SecurityUtil;
 import java.util.Collections;
@@ -32,6 +34,9 @@ public class UserService {
   private final PasswordEncoder passwordEncoder;
   private final TokenProvider tokenProvider;
   private final AuthenticationManagerBuilder authenticationManagerBuilder;
+
+  private final PostsRepository postsRepository;
+  private final StudyRepository studyRepository;
 
   // 회원가입
   @Transactional
@@ -103,7 +108,7 @@ public class UserService {
     user = userRepository.findOneWithAuthoritiesByEmail(loginDto.getEmail()).get();
 
     // Token과 User의 닉네임을 동시에 출력
-    return new JwtResponseDto(jwt, user.getNickname());
+    return new JwtResponseDto(jwt, user.getNickname(), user.getEmail());
   }
 
   // username을 파라미터로 받아 해당 유저의 정보 및 권한 정보를 리턴
@@ -124,6 +129,9 @@ public class UserService {
   public String deleteUserWithAuthorities(String email) {
     User user = userRepository.findOneWithAuthoritiesByEmail(
         SecurityUtil.getCurrentUsername().get()).get();
+
+    postsRepository.deleteAllByUser(user);
+    studyRepository.deleteAllByUser(user);
 
     userRepository.delete(user);
 
