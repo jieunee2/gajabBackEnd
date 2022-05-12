@@ -48,7 +48,7 @@ public class User {
   private String studentId; //학번
 
   @Column(nullable = false)
-  private String schoolEmail; //학교 이메일
+  private String studentEmail; //학교 이메일
 
   @Column(name = "activated")
   private boolean activated; //활성화여부

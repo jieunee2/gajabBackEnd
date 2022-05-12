@@ -70,7 +70,7 @@ public class UserService {
         .name((userDto.getName()))
         .nickname(userDto.getNickname())
         .studentId(userDto.getStudentId())
-        .schoolEmail(userDto.getStudentEmail())
+        .studentEmail(userDto.getStudentEmail())
         .authorities(Collections.singleton(authority))
         .activated(true)
         .build();
@@ -126,7 +126,7 @@ public class UserService {
 
   //회원정보 삭제
   @Transactional
-  public String deleteUserWithAuthorities(String email) {
+  public String deleteUserWithAuthorities() {
     User user = userRepository.findOneWithAuthoritiesByEmail(
         SecurityUtil.getCurrentUsername().get()).get();
 
