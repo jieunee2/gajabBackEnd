@@ -2,6 +2,7 @@ package com.gajob.service.user;
 
 import com.gajob.dto.user.JwtResponseDto;
 import com.gajob.dto.user.LoginDto;
+import com.gajob.dto.user.PasswordUpdateDto;
 import com.gajob.dto.user.UserDto;
 import com.gajob.entity.user.Authority;
 import com.gajob.entity.user.User;
@@ -110,6 +111,43 @@ public class UserService {
 
     // Token과 User의 닉네임을 동시에 출력
     return new JwtResponseDto(jwt, user.getNickname(), user.getEmail());
+  }
+
+  // 회원 정보 수정
+  @Transactional
+  public User update(UserDto userDto) {
+    User user = userRepository.findOneWithAuthoritiesByEmail(
+        SecurityUtil.getCurrentUsername().get()).get();
+
+    // 중복된 닉네임이 존재할 경우, 에러 처리
+    if (userRepository.existsByNickname(userDto.getNickname())) {
+      throw new CustomException(ErrorCode.DUPLICATE_NICKNAME);
+    } else {
+      user.update(userDto.getNickname(), userDto.getDepartment());
+    }
+
+    return userRepository.save(user);
+  }
+
+  // 회원 비밀번호 수정
+  @Transactional
+  public String updatePassword(PasswordUpdateDto passwordUpdateDto) {
+    User user = userRepository.findOneWithAuthoritiesByEmail(
+        SecurityUtil.getCurrentUsername().get()).get();
+
+    //기존의 비밀번호와 수정하려는 비밀번호가 같을 경우, 에러 처리
+    if (passwordEncoder.matches(passwordUpdateDto.getNewPassword(), user.getPassword())) {
+      throw new CustomException(ErrorCode.DUPLICATE_PASSWORD);
+    }
+    // 입력한 기존 비밀번호가 DB에 있는 기존 비밀번호와 일치하지 않을 경우, 에러 처리
+    else if (!passwordEncoder.matches(passwordUpdateDto.getOldPassword(), user.getPassword())) {
+      throw new CustomException(ErrorCode.NOT_MATCH_PASSWORD);
+    }
+
+    //수정된 비밀번호를 암호화 하여 DB에 저장
+    user.passwordUpdate(passwordEncoder.encode(passwordUpdateDto.getNewPassword()));
+
+    return "password-change-successful";
   }
 
   // username을 파라미터로 받아 해당 유저의 정보 및 권한 정보를 리턴
