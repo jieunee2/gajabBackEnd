@@ -1,9 +1,12 @@
 package com.gajob.entity.user;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.gajob.enumtype.Department;
 import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -48,7 +51,11 @@ public class User {
   private String studentId; //학번
 
   @Column(nullable = false)
-  private String studentEmail; //학교 이메일
+  private String studentEmail; //학교이메일
+
+  @Column(nullable = false)
+  @Enumerated(EnumType.STRING)
+  private Department department; //학부
 
   @Column(name = "activated")
   private boolean activated; //활성화여부

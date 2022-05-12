@@ -71,6 +71,7 @@ public class UserService {
         .nickname(userDto.getNickname())
         .studentId(userDto.getStudentId())
         .studentEmail(userDto.getStudentEmail())
+        .department(userDto.getDepartment())
         .authorities(Collections.singleton(authority))
         .activated(true)
         .build();
