@@ -70,7 +70,7 @@ public class UserService {
         .name((userDto.getName()))
         .nickname(userDto.getNickname())
         .studentId(userDto.getStudentId())
-        .schoolEmail(userDto.getStudentEmail())
+        .studentEmail(userDto.getStudentEmail())
         .authorities(Collections.singleton(authority))
         .activated(true)
         .build();
