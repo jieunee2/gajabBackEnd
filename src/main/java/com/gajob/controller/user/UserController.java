@@ -3,6 +3,7 @@ package com.gajob.controller.user;
 
 import com.gajob.dto.user.JwtResponseDto;
 import com.gajob.dto.user.LoginDto;
+import com.gajob.dto.user.PasswordUpdateDto;
 import com.gajob.dto.user.UserDto;
 import com.gajob.entity.user.User;
 import com.gajob.jwt.TokenProvider;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -47,25 +49,15 @@ public class UserController {
     return ResponseEntity.ok(userService.login(loginDto, httpServletResponse));
   }
 
-//  @PostMapping("/login") //로그인
-//  public ResponseEntity<JwtResponseDto> authorize(@Valid @RequestBody LoginDto loginDto) {
-//    UsernamePasswordAuthenticationToken authenticationToken =
-//        new UsernamePasswordAuthenticationToken(loginDto.getEmail(), loginDto.getPassword());
-//
-//    Authentication authentication = authenticationManagerBuilder.getObject()
-//        .authenticate(authenticationToken);
-//    SecurityContextHolder.getContext().setAuthentication(authentication);
-//
-//    String jwt = tokenProvider.createToken(authentication);
-//
-//    HttpHeaders httpHeaders = new HttpHeaders();
-//    httpHeaders.add(JwtFilter.AUTHORIZATION_HEADER, "Bearer " + jwt);
-//
-//    User user = userRepository.findOneWithAuthoritiesByEmail(loginDto.getEmail()).get();
-//
-//    return new ResponseEntity<>(new JwtResponseDto(jwt, user.getNickname()), httpHeaders,
-//        HttpStatus.OK);
-//  }
+  @PutMapping({"/user"}) // 회원 정보 수정
+  public ResponseEntity update(@RequestBody UserDto userDto) {
+    return ResponseEntity.ok(userService.update(userDto));
+  }
+
+  @PutMapping({"/update-password"}) // 회원 비밀번호 수정
+  public ResponseEntity updatePassword(@RequestBody PasswordUpdateDto passwordUpdateDto) {
+    return ResponseEntity.ok(userService.updatePassword(passwordUpdateDto));
+  }
 
   @GetMapping("/user") // 현재 로그인 한 유저 정보 조회
   @PreAuthorize("hasAnyRole('USER','ADMIN')")
