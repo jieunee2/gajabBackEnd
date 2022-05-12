@@ -147,7 +147,7 @@ public class UserService {
     //수정된 비밀번호를 암호화 하여 DB에 저장
     user.passwordUpdate(passwordEncoder.encode(passwordUpdateDto.getNewPassword()));
 
-    return "success";
+    return "password-change-successful";
   }
 
   // username을 파라미터로 받아 해당 유저의 정보 및 권한 정보를 리턴
