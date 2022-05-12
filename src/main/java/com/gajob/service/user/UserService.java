@@ -9,6 +9,8 @@ import com.gajob.enumtype.ErrorCode;
 import com.gajob.exception.CustomException;
 import com.gajob.jwt.JwtFilter;
 import com.gajob.jwt.TokenProvider;
+import com.gajob.repository.posts.PostsRepository;
+import com.gajob.repository.study.StudyRepository;
 import com.gajob.repository.user.UserRepository;
 import com.gajob.util.SecurityUtil;
 import java.util.Collections;
@@ -32,6 +34,9 @@ public class UserService {
   private final PasswordEncoder passwordEncoder;
   private final TokenProvider tokenProvider;
   private final AuthenticationManagerBuilder authenticationManagerBuilder;
+
+  private final PostsRepository postsRepository;
+  private final StudyRepository studyRepository;
 
   // 회원가입
   @Transactional
@@ -124,6 +129,9 @@ public class UserService {
   public String deleteUserWithAuthorities(String email) {
     User user = userRepository.findOneWithAuthoritiesByEmail(
         SecurityUtil.getCurrentUsername().get()).get();
+
+    postsRepository.deleteAllByUser(user);
+    studyRepository.deleteAllByUser(user);
 
     userRepository.delete(user);
 
