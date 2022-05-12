@@ -108,7 +108,7 @@ public class UserService {
     user = userRepository.findOneWithAuthoritiesByEmail(loginDto.getEmail()).get();
 
     // Token과 User의 닉네임을 동시에 출력
-    return new JwtResponseDto(jwt, user.getNickname());
+    return new JwtResponseDto(jwt, user.getNickname(), user.getEmail());
   }
 
   // username을 파라미터로 받아 해당 유저의 정보 및 권한 정보를 리턴

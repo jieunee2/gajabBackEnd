@@ -14,9 +14,12 @@ public class JwtResponseDto {
   private String token;
   private String nickname;
 
-  public JwtResponseDto(String token, String nickname) {
+  private String email;
+
+  public JwtResponseDto(String token, String nickname, String email) {
     this.token = token;
     this.nickname = nickname;
+    this.email = email;
   }
 
 }
