@@ -53,6 +53,9 @@ public class User {
   @Column(nullable = false)
   private String studentEmail; //학교이메일
 
+  @Column
+  private String introduction; //소개글
+
   @Column(nullable = false)
   @Enumerated(EnumType.STRING)
   private Department department; //학부
@@ -69,9 +72,10 @@ public class User {
   private Set<Authority> authorities;
 
   //회원의 닉네임과 학부 수정
-  public void update(String nickname, Department department) {
+  public void update(String nickname, Department department, String introduction) {
     this.nickname = nickname;
     this.department = department;
+    this.introduction = introduction;
   }
 
   //비밀번호 수정
