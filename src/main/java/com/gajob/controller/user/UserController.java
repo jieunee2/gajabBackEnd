@@ -73,7 +73,7 @@ public class UserController {
 
   @DeleteMapping("/user") //회원정보 삭제
   @PreAuthorize("hasAnyRole('USER','ADMIN')")
-  public ResponseEntity deleteUserWithAuthorities() {
-    return ResponseEntity.ok(userService.deleteUserWithAuthorities());
+  public ResponseEntity deleteUserWithAuthorities(@RequestBody UserDto userDto) {
+    return ResponseEntity.ok(userService.deleteUserWithAuthorities(userDto));
   }
 }

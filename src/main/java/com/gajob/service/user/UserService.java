@@ -165,9 +165,14 @@ public class UserService {
 
   //회원정보 삭제
   @Transactional
-  public String deleteUserWithAuthorities() {
+  public String deleteUserWithAuthorities(UserDto userDto) {
     User user = userRepository.findOneWithAuthoritiesByEmail(
         SecurityUtil.getCurrentUsername().get()).get();
+
+    // 탈퇴를 하는 경우 사용자에게 비밀번호를 입력받고, 입력받은 비밀번호가 틀릴 시 에러 처리
+    if (!passwordEncoder.matches(userDto.getPassword(), user.getPassword())) {
+      throw new CustomException(ErrorCode.NOT_MATCH_PASSWORD);
+    }
 
     postsRepository.deleteAllByUser(user);
     studyRepository.deleteAllByUser(user);
