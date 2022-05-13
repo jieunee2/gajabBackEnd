@@ -45,4 +45,6 @@ public class UserDto {
   @NotNull
   private Department department;
 
+  private String introduction;
+
 }

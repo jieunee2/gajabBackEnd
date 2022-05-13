@@ -123,7 +123,7 @@ public class UserService {
     if (userRepository.existsByNickname(userDto.getNickname())) {
       throw new CustomException(ErrorCode.DUPLICATE_NICKNAME);
     } else {
-      user.update(userDto.getNickname(), userDto.getDepartment());
+      user.update(userDto.getNickname(), userDto.getDepartment(), userDto.getIntroduction());
     }
 
     return userRepository.save(user);
