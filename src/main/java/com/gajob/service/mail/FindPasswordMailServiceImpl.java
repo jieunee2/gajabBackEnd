@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @RequiredArgsConstructor
 @Service
-public class MailService {
+public class FindPasswordMailServiceImpl implements FindPasswordMailService {
 
   private final UserRepository userRepository;
   private final JavaMailSender javaMailSender;
