@@ -29,7 +29,7 @@ public class MailController {
   }
 
   // 교내 이메일 인증 코드 전송
-  @PostMapping("/email")
+  @PostMapping("/student-email")
   public String emailAuth(@RequestBody MailDto mailDto) throws Exception {
     emailVerificationMailService.createMessage(mailDto);
     emailVerificationMailService.sendSimpleMessage(mailDto);
@@ -38,7 +38,7 @@ public class MailController {
   }
 
   //  // 교내 이메일 인증 코드 검증
-  @PostMapping("/verifyCode")
+  @PostMapping("/studen-email-verify")
   public String verifyCode(@RequestBody Map<String, String> code) {
     if (EmailVerificationMailServiceImpl.num.equals(code.get("code"))) {
       return "authentication-success";
