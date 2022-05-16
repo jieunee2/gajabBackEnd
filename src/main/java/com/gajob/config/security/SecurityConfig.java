@@ -79,6 +79,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .antMatchers("/issue/exhibit").permitAll()
         .antMatchers("/issue/job").permitAll()
         .antMatchers("/find-password").permitAll()
+        .antMatchers("/student-email").permitAll()
+        .antMatchers("/studen-email-verify").permitAll()
         .anyRequest().authenticated()
 
         .and()
