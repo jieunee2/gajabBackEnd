@@ -1,6 +1,7 @@
 package com.gajob.service.posts;
 
 import com.gajob.dto.posts.PostsDto;
+import com.gajob.dto.posts.PostsLikesResponseDto;
 import com.gajob.dto.posts.PostsReadDto;
 import com.gajob.dto.posts.PostsResponseDto;
 import com.gajob.entity.posts.Posts;
@@ -10,6 +11,7 @@ import com.gajob.exception.CustomException;
 import com.gajob.repository.posts.PostsRepository;
 import com.gajob.repository.user.UserRepository;
 import com.gajob.util.SecurityUtil;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
@@ -43,28 +45,51 @@ public class PostsServiceImpl implements PostsService {
 
     PostsReadDto postsReadDto = new PostsReadDto(posts);
 
-    // 게시물 조회시 Posts 테이블이 likes 컬럼 업데이트
+    // 게시물 조회시 Posts 테이블이 likes 컬럼 업데이트 및 유저의 게시물 좋아요 상태 변경
     posts.likeUpdate(postsReadDto.getLikes());
+    postsReadDto.setLikeStatus(isLikeStatus(posts));
 
     return postsReadDto;
   }
 
-  // 게시물 전체 조회 (이때는 조회수 증가 안함)
   @Transactional
   public List<PostsReadDto> getAllPosts() {
     List<Posts> posts = postsRepository.findAll();
 
-    // 게시물 조회시 Posts 테이블이 likes 컬럼 업데이트
+    ArrayList<PostsReadDto> postsReadDtos = new ArrayList<PostsReadDto>();
+
+    // 게시물 조회시 Posts 테이블이 likes 컬럼 업데이트 및 유저의 게시물 좋아요 상태 변경
     for (Posts postList : posts) {
       PostsReadDto postsReadDto = new PostsReadDto(postList);
       postList.likeUpdate(postsReadDto.getLikes());
+      postsReadDto.setLikeStatus(isLikeStatus(postList));
+
+      // 변경된 데이터들을 postsReadDtos에 저장
+      postsReadDtos.add(postsReadDto);
     }
 
-    // postsRepository로 결과로 넘어온 Posts의 Stream을 map을 통해 PostsReadDto로 변환
-    return postsRepository.findAll().
-        stream().
-        map(PostsReadDto::new).
-        collect(Collectors.toList());
+    return postsReadDtos;
+  }
+
+  // 좋아요 여부 확인
+  @Transactional
+  public boolean isLikeStatus(Posts posts) {
+    User user = userRepository.findOneWithAuthoritiesByEmail(
+        SecurityUtil.getCurrentUsername().get()).get();
+
+    List<PostsLikesResponseDto> likesList = posts.getLikeList().stream()
+        .map(PostsLikesResponseDto::new).collect(Collectors.toList());
+
+    for (PostsLikesResponseDto postsLikesResponseDto : likesList) {
+      // PostsLikesResponseDto 내에 현재 로그인 한 유저의 닉네임이 포함되어 있으면 likeStatus의 값을 true로 변환
+      if (postsLikesResponseDto.getNickname()
+          .equals(user.getNickname())) {
+        PostsReadDto postsReadDto = new PostsReadDto(posts);
+        postsReadDto.setLikeStatus(true);
+        return true;
+      }
+    }
+    return false;
   }
 
 
