@@ -23,6 +23,8 @@ public class PostsReadDto {
   private int commentsCnt; //댓글 개수
   private int likes; //좋아요 수
   private List<PostsLikesResponseDto> likesList; //좋아요를 누른 유저들 목록
+
+  private boolean likeStatus; // 현재 로그인 한 유저의 좋아요 여부
   private int scrap; //스크랩 수
 
   public PostsReadDto(Posts posts) {
@@ -43,5 +45,6 @@ public class PostsReadDto {
         Collectors.toList());
     this.scrap = posts.getPostsScrapList().size();
   }
+
 
 }
