@@ -1,4 +1,4 @@
-package com.gajob.service.mail;
+package com.gajob.service.verification;
 
 import com.gajob.dto.mail.MailDto;
 import com.gajob.repository.user.UserRepository;

@@ -1,4 +1,4 @@
-package com.gajob.service.mail;
+package com.gajob.service.findInfo;
 
 import com.gajob.dto.mail.MailDto;
 
