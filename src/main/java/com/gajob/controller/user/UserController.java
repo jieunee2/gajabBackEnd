@@ -7,6 +7,7 @@ import com.gajob.dto.user.PasswordUpdateDto;
 import com.gajob.dto.user.UserDto;
 import com.gajob.entity.user.User;
 import com.gajob.jwt.TokenProvider;
+import com.gajob.service.user.ProfileImageService;
 import com.gajob.service.user.UserService;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
@@ -22,7 +23,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 @RequiredArgsConstructor
 @RestController
@@ -34,6 +37,7 @@ public class UserController {
   private final AuthenticationManagerBuilder authenticationManagerBuilder;
   private final PasswordEncoder passwordEncoder;
   private final UserService userService;
+  private final ProfileImageService profileImageService;
 
   @PostMapping("/signup") //회원가입
   public ResponseEntity<User> signup(
@@ -47,6 +51,13 @@ public class UserController {
       HttpServletResponse httpServletResponse) {
 
     return ResponseEntity.ok(userService.login(loginDto, httpServletResponse));
+  }
+
+  @PostMapping("/profile") //프로필 이미지 사진 업로드
+  public String upload(
+      @RequestParam(value = "profileImg", required = false) MultipartFile multipartFile) {
+    profileImageService.upload(multipartFile);
+    return "upload-success";
   }
 
   @PutMapping({"/user"}) // 회원 정보 수정
