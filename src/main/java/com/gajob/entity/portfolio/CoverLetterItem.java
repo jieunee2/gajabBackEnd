@@ -1,5 +1,6 @@
 package com.gajob.entity.portfolio;
 
+import com.gajob.entity.user.User;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -35,6 +36,10 @@ public class CoverLetterItem {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cover_letter_id")
     private CoverLetter coverLetter;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
 
     // 자소서 문항 수정
     public void update(String question, String answer, String modifiedDate) {

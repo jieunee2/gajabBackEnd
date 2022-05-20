@@ -7,6 +7,7 @@ import com.gajob.dto.user.PasswordUpdateDto;
 import com.gajob.dto.user.UserDto;
 import com.gajob.entity.user.User;
 import com.gajob.jwt.TokenProvider;
+import com.gajob.service.user.ProfileImageService;
 import com.gajob.service.user.UserService;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
@@ -22,7 +23,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 @RequiredArgsConstructor
 @RestController
@@ -34,6 +37,7 @@ public class UserController {
   private final AuthenticationManagerBuilder authenticationManagerBuilder;
   private final PasswordEncoder passwordEncoder;
   private final UserService userService;
+  private final ProfileImageService profileImageService;
 
   @PostMapping("/signup") //회원가입
   public ResponseEntity<User> signup(
@@ -48,30 +52,42 @@ public class UserController {
 
     return ResponseEntity.ok(userService.login(loginDto, httpServletResponse));
   }
+  
+  @PostMapping("/profile") //프로필 이미지 사진 업로드
+  public String upload(
+      @RequestParam(value = "profileImg", required = false) MultipartFile multipartFile) {
+    profileImageService.upload(multipartFile);
+    return "upload-success";
+  }
 
-  @PutMapping({"/user"}) // 회원 정보 수정(소개글 및 학부)
+ @DeleteMapping("/profile-delete") //프로필 이미지 삭제
+  public String delete() {
+    profileImageService.delete();
+    return "delete-success";
+  }
+
+@PutMapping({"/user"}) //회원 정보 수정(소개글 및 학부)
   public ResponseEntity update(@RequestBody UserDto userDto) {
     return ResponseEntity.ok(userService.update(userDto));
   }
 
-  // 회원 정보 수정(닉네임)
-  @PutMapping("/user-nickname")
-  public ResponseEntity updateNickname(@RequestBody UserDto userDto) {
-    return ResponseEntity.ok(userService.updateNickname(userDto));
-  }
+ @PutMapping("/user-nickname") // 회원 정보 수정(닉네임)
+ public ResponseEntity updateNickname(@RequestBody UserDto userDto) {
+   return ResponseEntity.ok(userService.updateNickname(userDto));
+ }
 
+ @PutMapping({"/update-password"}) //회원 비밀번호 수정
+ public ResponseEntity updatePassword(@RequestBody PasswordUpdateDto passwordUpdateDto) {
+   return ResponseEntity.ok(userService.updatePassword(passwordUpdateDto));
+ }
 
-  @PutMapping({"/update-password"}) // 회원 비밀번호 수정
-  public ResponseEntity updatePassword(@RequestBody PasswordUpdateDto passwordUpdateDto) {
-    return ResponseEntity.ok(userService.updatePassword(passwordUpdateDto));
-  }
-
-  @GetMapping("/user") // 현재 로그인 한 유저 정보 조회
+  @GetMapping("/user") //현재 로그인 한 유저 정보 조회
   @PreAuthorize("hasAnyRole('USER','ADMIN')")
   public ResponseEntity<User> getMyUserInfo() {
     return ResponseEntity.ok(userService.getMyUserWithAuthorities().get());
   }
 
+  
   @GetMapping("/user/{email}")
   @PreAuthorize("hasAnyRole('ADMIN')")
   public ResponseEntity<User> getUserInfo(@PathVariable String email) {

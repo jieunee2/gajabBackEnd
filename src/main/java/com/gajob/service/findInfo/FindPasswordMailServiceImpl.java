@@ -1,4 +1,4 @@
-package com.gajob.service.mail;
+package com.gajob.service.findInfo;
 
 import com.gajob.dto.mail.MailDto;
 import com.gajob.entity.user.User;
@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @RequiredArgsConstructor
 @Service
-public class MailService {
+public class FindPasswordMailServiceImpl implements FindPasswordMailService {
 
   private final UserRepository userRepository;
   private final JavaMailSender javaMailSender;

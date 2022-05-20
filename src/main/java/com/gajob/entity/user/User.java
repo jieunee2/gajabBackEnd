@@ -60,6 +60,9 @@ public class User {
   @Enumerated(EnumType.STRING)
   private Department department; //학부
 
+  @Column
+  private String profileImg; //프로필 이미지
+
   @Column(name = "activated")
   private boolean activated; //활성화여부
 
@@ -86,6 +89,11 @@ public class User {
   //비밀번호 수정
   public void passwordUpdate(String password) {
     this.password = password;
+  }
+
+  // 이미지 수정
+  public void profileImgUpdate(String profileImg) {
+    this.profileImg = profileImg;
   }
 
 
