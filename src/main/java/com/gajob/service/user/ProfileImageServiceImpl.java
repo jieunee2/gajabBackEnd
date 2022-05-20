@@ -45,14 +45,19 @@ public class ProfileImageServiceImpl implements ProfileImageService {
     }
   }
 
-//  @Transactional
-//  public void delete() {
-//    User user = userRepository.findOneWithAuthoritiesByEmail(
-//        SecurityUtil.getCurrentUsername().get()).get();
-//
-//    if (!(user.getProfileImg() == null)) {
-//      userRepository.deleteProfileImg(user.getProfileImg());
-//    }
+  // 프로필 사진 삭제
+  @Transactional
+  public void delete() {
+    User user = userRepository.findOneWithAuthoritiesByEmail(
+        SecurityUtil.getCurrentUsername().get()).get();
+
+    // 프로필 사진이 존재할 경우, file을 먼저 삭제 후 user의 프로필 데이터를 null 로 변경
+    if (!(user.getProfileImg() == null)) {
+      File file = new File(uploadFolder + user.getProfileImg());
+      file.delete();
+      user.setProfileImg(null);
+    }
+  }
 }
 
 
