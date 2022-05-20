@@ -113,19 +113,33 @@ public class UserService {
     return new JwtResponseDto(jwt, user.getNickname(), user.getEmail());
   }
 
-  // 회원 정보 수정
+  // 회원 정보 수정(소개글 및 학부)
   @Transactional
   public User update(UserDto userDto) {
     User user = userRepository.findOneWithAuthoritiesByEmail(
         SecurityUtil.getCurrentUsername().get()).get();
 
+    user.update(userDto.getDepartment(), userDto.getIntroduction());
+
+    return userRepository.save(user);
+  }
+
+  // 회원 정보 수정(닉네임)
+  @Transactional
+  public User updateNickname(UserDto userDto) {
+    User user = userRepository.findOneWithAuthoritiesByEmail(
+        SecurityUtil.getCurrentUsername().get()).get();
+
+    // 변경하려는 닉네임이 기존의 닉네임과 동일할 경우, 에러 처리
+    if (user.getNickname().equals(userDto.getNickname())) {
+      throw new CustomException(ErrorCode.DUPLICATE_OLD_NICKNAME);
+    }
     // 중복된 닉네임이 존재할 경우, 에러 처리
-    if (userRepository.existsByNickname(userDto.getNickname())) {
+    else if (userRepository.existsByNickname(userDto.getNickname())) {
       throw new CustomException(ErrorCode.DUPLICATE_NICKNAME);
     } else {
-      user.update(userDto.getNickname(), userDto.getDepartment(), userDto.getIntroduction());
+      user.updateNickname(userDto.getNickname());
     }
-
     return userRepository.save(user);
   }
 

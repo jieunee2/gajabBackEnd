@@ -49,10 +49,17 @@ public class UserController {
     return ResponseEntity.ok(userService.login(loginDto, httpServletResponse));
   }
 
-  @PutMapping({"/user"}) // 회원 정보 수정
+  @PutMapping({"/user"}) // 회원 정보 수정(소개글 및 학부)
   public ResponseEntity update(@RequestBody UserDto userDto) {
     return ResponseEntity.ok(userService.update(userDto));
   }
+
+  // 회원 정보 수정(닉네임)
+  @PutMapping("/user-nickname")
+  public ResponseEntity updateNickname(@RequestBody UserDto userDto) {
+    return ResponseEntity.ok(userService.updateNickname(userDto));
+  }
+
 
   @PutMapping({"/update-password"}) // 회원 비밀번호 수정
   public ResponseEntity updatePassword(@RequestBody PasswordUpdateDto passwordUpdateDto) {
