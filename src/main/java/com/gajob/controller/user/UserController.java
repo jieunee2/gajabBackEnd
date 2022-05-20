@@ -60,17 +60,23 @@ public class UserController {
     return "upload-success";
   }
 
-  @PutMapping({"/user"}) // 회원 정보 수정
+  @DeleteMapping("/profile-delete") //프로필 이미지 삭제
+  public String delete() {
+    profileImageService.delete();
+    return "delete-success";
+  }
+
+  @PutMapping({"/user"}) //회원 정보 수정
   public ResponseEntity update(@RequestBody UserDto userDto) {
     return ResponseEntity.ok(userService.update(userDto));
   }
 
-  @PutMapping({"/update-password"}) // 회원 비밀번호 수정
+  @PutMapping({"/update-password"}) //회원 비밀번호 수정
   public ResponseEntity updatePassword(@RequestBody PasswordUpdateDto passwordUpdateDto) {
     return ResponseEntity.ok(userService.updatePassword(passwordUpdateDto));
   }
 
-  @GetMapping("/user") // 현재 로그인 한 유저 정보 조회
+  @GetMapping("/user") //현재 로그인 한 유저 정보 조회
   @PreAuthorize("hasAnyRole('USER','ADMIN')")
   public ResponseEntity<User> getMyUserInfo() {
     return ResponseEntity.ok(userService.getMyUserWithAuthorities().get());
