@@ -74,11 +74,16 @@ public class User {
           @JoinColumn(name = "authority_name", referencedColumnName = "authority_name")})
   private Set<Authority> authorities;
 
-  //회원의 닉네임과 학부 수정
-  public void update(String nickname, Department department, String introduction) {
+  //회원의 소개글과 학부 수정
+  public void update(Department department, String introduction) {
     this.nickname = nickname;
     this.department = department;
     this.introduction = introduction;
+  }
+
+  //회원의 닉네임 수정
+  public void updateNickname(String nickname) {
+    this.nickname = nickname;
   }
 
   //비밀번호 수정

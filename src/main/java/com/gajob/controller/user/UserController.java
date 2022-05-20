@@ -52,7 +52,7 @@ public class UserController {
 
     return ResponseEntity.ok(userService.login(loginDto, httpServletResponse));
   }
-
+  
   @PostMapping("/profile") //프로필 이미지 사진 업로드
   public String upload(
       @RequestParam(value = "profileImg", required = false) MultipartFile multipartFile) {
@@ -60,21 +60,26 @@ public class UserController {
     return "upload-success";
   }
 
-  @DeleteMapping("/profile-delete") //프로필 이미지 삭제
+ @DeleteMapping("/profile-delete") //프로필 이미지 삭제
   public String delete() {
     profileImageService.delete();
     return "delete-success";
   }
 
-  @PutMapping({"/user"}) //회원 정보 수정
+@PutMapping({"/user"}) //회원 정보 수정(소개글 및 학부)
   public ResponseEntity update(@RequestBody UserDto userDto) {
     return ResponseEntity.ok(userService.update(userDto));
   }
 
-  @PutMapping({"/update-password"}) //회원 비밀번호 수정
-  public ResponseEntity updatePassword(@RequestBody PasswordUpdateDto passwordUpdateDto) {
-    return ResponseEntity.ok(userService.updatePassword(passwordUpdateDto));
-  }
+ @PutMapping("/user-nickname") // 회원 정보 수정(닉네임)
+ public ResponseEntity updateNickname(@RequestBody UserDto userDto) {
+   return ResponseEntity.ok(userService.updateNickname(userDto));
+ }
+
+ @PutMapping({"/update-password"}) //회원 비밀번호 수정
+ public ResponseEntity updatePassword(@RequestBody PasswordUpdateDto passwordUpdateDto) {
+   return ResponseEntity.ok(userService.updatePassword(passwordUpdateDto));
+ }
 
   @GetMapping("/user") //현재 로그인 한 유저 정보 조회
   @PreAuthorize("hasAnyRole('USER','ADMIN')")
@@ -82,6 +87,7 @@ public class UserController {
     return ResponseEntity.ok(userService.getMyUserWithAuthorities().get());
   }
 
+  
   @GetMapping("/user/{email}")
   @PreAuthorize("hasAnyRole('ADMIN')")
   public ResponseEntity<User> getUserInfo(@PathVariable String email) {
