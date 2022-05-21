@@ -19,10 +19,10 @@ public class CoverLetterItem {
     @Column(name = "item_id")
     private Long id;
 
-    @Column(columnDefinition = "TEXT", nullable = false)
+    @Column(columnDefinition = "TEXT", length = 3000, nullable = false)
     private String question;        // 자소서 문항 질문
 
-    @Column(columnDefinition = "TEXT", nullable = false)
+    @Column(columnDefinition = "TEXT", length = 3000, nullable = false)
     private String answer;          // 자소서 문항 응답
 
     @Column(name = "created_date")
