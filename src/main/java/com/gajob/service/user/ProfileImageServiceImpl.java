@@ -4,10 +4,14 @@ import com.gajob.entity.user.User;
 import com.gajob.repository.user.UserRepository;
 import com.gajob.util.SecurityUtil;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -43,6 +47,22 @@ public class ProfileImageServiceImpl implements ProfileImageService {
       }
       user.profileImgUpdate(imageFileName);
     }
+  }
+
+  // 프로필 사진 조회
+  @Transactional
+  public byte[] getProfile() throws IOException {
+    User user = userRepository.findOneWithAuthoritiesByEmail(
+        SecurityUtil.getCurrentUsername().get()).get();
+
+    // 유저의 프로필 사진의 경로를 찾아서 조회
+    InputStream imageStram = new FileInputStream(uploadFolder + user.getProfileImg());
+
+    byte[] imageByteArray = IOUtils.toByteArray(imageStram);
+    imageStram.close();
+
+    return imageByteArray;
+
   }
 
   // 프로필 사진 삭제
