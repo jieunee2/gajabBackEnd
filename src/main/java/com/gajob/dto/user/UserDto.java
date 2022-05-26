@@ -47,4 +47,7 @@ public class UserDto {
 
   private String introduction;
 
+  private String profileFilePath;
+
+
 }

@@ -164,17 +164,12 @@ public class UserService {
     return "password-change-successful";
   }
 
-  // username을 파라미터로 받아 해당 유저의 정보 및 권한 정보를 리턴
-  @Transactional(readOnly = true)
-  public Optional<User> getUserWithAuthorities(String email) {
-    return userRepository.findOneWithAuthoritiesByEmail(email);
-  }
-
-  // SecurityUtil의 getCurrentUsername() 메소드가 리턴하는 username의 유저 및 권한 정보를 리턴
+  // 회원 정보 조회
   @Transactional(readOnly = true)
   public Optional<User> getMyUserWithAuthorities() {
     return SecurityUtil.getCurrentUsername()
         .flatMap(userRepository::findOneWithAuthoritiesByEmail);
+
   }
 
   //회원정보 삭제
@@ -195,4 +190,18 @@ public class UserService {
 
     return "delete-user";
   }
+
+  //  // username을 파라미터로 받아 해당 유저의 정보 및 권한 정보를 리턴
+//  @Transactional(readOnly = true)
+//  public Optional<User> getUserWithAuthorities(String email) {
+//    return userRepository.findOneWithAuthoritiesByEmail(email);
+//  }
+
+  // SecurityUtil의 getCurrentUsername() 메소드가 리턴하는 username의 유저 및 권한 정보를 리턴
+//  @Transactional(readOnly = true)
+//  public Optional<User> getMyUserWithAuthorities() {
+//    return SecurityUtil.getCurrentUsername()
+//        .flatMap(userRepository::findOneWithAuthoritiesByEmail);
+//  }
+
 }
