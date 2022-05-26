@@ -9,11 +9,9 @@ import com.gajob.entity.user.User;
 import com.gajob.jwt.TokenProvider;
 import com.gajob.service.user.ProfileImageService;
 import com.gajob.service.user.UserService;
-import java.io.IOException;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -21,7 +19,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -63,18 +60,18 @@ public class UserController {
   }
 
 
-  @GetMapping(value = "/profile", produces = MediaType.IMAGE_JPEG_VALUE) //프로필 이미지 조회
-  public ResponseEntity<byte[]> getProfile()
-      throws IOException {
-    return ResponseEntity.ok(profileImageService.getProfile());
-  }
-
-
   @DeleteMapping("/profile-delete") //프로필 이미지 삭제
   public String delete() {
     profileImageService.delete();
     return "delete-success";
   }
+
+//  @GetMapping(value = "/profile", produces = MediaType.IMAGE_JPEG_VALUE) //프로필 이미지 조회
+//  public ResponseEntity<byte[]> getProfile()
+//      throws IOException {
+//    return ResponseEntity.ok(profileImageService.getProfile());
+//  }
+
 
   @PutMapping({"/user"}) //회원 정보 수정(소개글 및 학부)
   public ResponseEntity update(@RequestBody UserDto userDto) {
@@ -93,15 +90,8 @@ public class UserController {
 
   @GetMapping("/user") //현재 로그인 한 유저 정보 조회
   @PreAuthorize("hasAnyRole('USER','ADMIN')")
-  public ResponseEntity<User> getMyUserInfo() {
-    return ResponseEntity.ok(userService.getMyUserWithAuthorities().get());
-  }
-
-
-  @GetMapping("/user/{email}")
-  @PreAuthorize("hasAnyRole('ADMIN')")
-  public ResponseEntity<User> getUserInfo(@PathVariable String email) {
-    return ResponseEntity.ok(userService.getUserWithAuthorities(email).get());
+  public ResponseEntity getMyUserInfo() {
+    return ResponseEntity.ok(userService.getMyUserWithAuthorities());
   }
 
   @DeleteMapping("/user") //회원정보 삭제
@@ -109,4 +99,10 @@ public class UserController {
   public ResponseEntity deleteUserWithAuthorities(@RequestBody UserDto userDto) {
     return ResponseEntity.ok(userService.deleteUserWithAuthorities(userDto));
   }
+
+  //  @GetMapping("/user/{email}")
+//  @PreAuthorize("hasAnyRole('ADMIN')")
+//  public ResponseEntity<User> getUserInfo(@PathVariable String email) {
+//    return ResponseEntity.ok(userService.getUserWithAuthorities(email).get());
+//  }
 }
