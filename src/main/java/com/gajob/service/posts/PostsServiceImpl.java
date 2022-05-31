@@ -4,6 +4,7 @@ import com.gajob.dto.posts.PostsDto;
 import com.gajob.dto.posts.PostsLikesResponseDto;
 import com.gajob.dto.posts.PostsReadDto;
 import com.gajob.dto.posts.PostsResponseDto;
+import com.gajob.dto.posts.PostsScrapResponseDto;
 import com.gajob.entity.posts.Posts;
 import com.gajob.entity.user.User;
 import com.gajob.enumtype.ErrorCode;
@@ -48,6 +49,7 @@ public class PostsServiceImpl implements PostsService {
     // 게시물 조회시 Posts 테이블이 likes 컬럼 업데이트 및 유저의 게시물 좋아요 상태 변경
     posts.likeUpdate(postsReadDto.getLikes());
     postsReadDto.setLikeStatus(isLikeStatus(posts));
+    postsReadDto.setScrapStatus(isScrapStatus(posts));
 
     return postsReadDto;
   }
@@ -58,11 +60,12 @@ public class PostsServiceImpl implements PostsService {
 
     ArrayList<PostsReadDto> postsReadDtos = new ArrayList<PostsReadDto>();
 
-    // 게시물 조회시 Posts 테이블이 likes 컬럼 업데이트 및 유저의 게시물 좋아요 상태 변경
+    // 게시물 조회시 Posts 테이블이 likes 컬럼 업데이트 및 유저의 게시물 좋아요, 스크랩 상태 변경
     for (Posts postList : posts) {
       PostsReadDto postsReadDto = new PostsReadDto(postList);
       postList.likeUpdate(postsReadDto.getLikes());
       postsReadDto.setLikeStatus(isLikeStatus(postList));
+      postsReadDto.setScrapStatus(isScrapStatus(postList));
 
       // 변경된 데이터들을 postsReadDtos에 저장
       postsReadDtos.add(postsReadDto);
@@ -86,6 +89,27 @@ public class PostsServiceImpl implements PostsService {
           .equals(user.getNickname())) {
         PostsReadDto postsReadDto = new PostsReadDto(posts);
         postsReadDto.setLikeStatus(true);
+        return true;
+      }
+    }
+    return false;
+  }
+
+  // 스크랩 여부 확인
+  @Transactional
+  public boolean isScrapStatus(Posts posts) {
+    User user = userRepository.findOneWithAuthoritiesByEmail(
+        SecurityUtil.getCurrentUsername().get()).get();
+
+    List<PostsScrapResponseDto> scrapList = posts.getPostsScrapList().stream()
+        .map(PostsScrapResponseDto::new).collect(Collectors.toList());
+
+    for (PostsScrapResponseDto postsScrapResponseDto : scrapList) {
+      // PostsScrapResponseDto 내에 현재 로그인 한 유저의 닉네임이 포함되어 있으면 scrapStatus의 값을 true로 변환
+      if (postsScrapResponseDto.getNickname()
+          .equals(user.getNickname())) {
+        PostsReadDto postsReadDto = new PostsReadDto(posts);
+        postsReadDto.setScrapStatus(true);
         return true;
       }
     }

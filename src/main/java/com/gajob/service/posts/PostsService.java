@@ -16,6 +16,8 @@ public interface PostsService {
 
   boolean isLikeStatus(Posts posts); // 게시물 좋아요 여부
 
+  boolean isScrapStatus(Posts posts); // 게시물 스크랩 여부
+
   PostsReadDto update(Long postId, PostsDto postsDto); //게시물 수정
 
   String delete(Long postId); //게시물 삭제

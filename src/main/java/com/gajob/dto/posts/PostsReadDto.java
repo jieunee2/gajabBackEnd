@@ -25,7 +25,10 @@ public class PostsReadDto {
   private List<PostsLikesResponseDto> likesList; //좋아요를 누른 유저들 목록
 
   private boolean likeStatus; // 현재 로그인 한 유저의 좋아요 여부
+
   private int scrap; //스크랩 수
+
+  private boolean scrapStatus; // 현재 로그인 한 유저의 스크랩 여부
 
   public PostsReadDto(Posts posts) {
     this.id = posts.getId();
