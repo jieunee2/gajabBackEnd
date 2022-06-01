@@ -23,6 +23,8 @@ public class StudyScrapResponseDto {
 
   private int minPeople;
 
+  private LocalDate startDate;
+
   private LocalDate endDate;
   private Status status;
   private String writer;
@@ -38,6 +40,7 @@ public class StudyScrapResponseDto {
     this.nickname = studyScrap.getUser().getNickname();
     this.maxPeople = studyScrap.getStudy().getMaxPeople();
     this.minPeople = studyScrap.getStudy().getMinPeople();
+    this.startDate = studyScrap.getStudy().getStartDate();
     this.endDate = studyScrap.getStudy().getEndDate();
     this.status = studyScrap.getStudy().getStatus();
     this.writer = studyScrap.getStudy().getWriter();
