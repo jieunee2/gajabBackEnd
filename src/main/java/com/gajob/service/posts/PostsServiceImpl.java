@@ -46,7 +46,7 @@ public class PostsServiceImpl implements PostsService {
 
     PostsReadDto postsReadDto = new PostsReadDto(posts);
 
-    // 게시물 조회시 Posts 테이블이 likes 컬럼 업데이트 및 유저의 게시물 좋아요 상태 변경
+    // 게시물 조회시 Posts 테이블의 likes 컬럼 업데이트 및 유저의 게시물 좋아요 상태 변경
     posts.likeUpdate(postsReadDto.getLikes());
     postsReadDto.setLikeStatus(isLikeStatus(posts));
     postsReadDto.setScrapStatus(isScrapStatus(posts));
@@ -54,6 +54,7 @@ public class PostsServiceImpl implements PostsService {
     return postsReadDto;
   }
 
+  // 게시물 전체 조회
   @Transactional
   public List<PostsReadDto> getAllPosts() {
     List<Posts> posts = postsRepository.findAll();

@@ -17,6 +17,8 @@ public class StudyScrapResponseDto {
   private StudyCategory studyCategory;
   private Area area;
 
+  private String nickname;
+
   private int maxPeople;
 
   private int minPeople;
@@ -33,6 +35,7 @@ public class StudyScrapResponseDto {
     this.content = studyScrap.getStudy().getContent();
     this.studyCategory = studyScrap.getStudy().getStudyCategory();
     this.area = studyScrap.getStudy().getArea();
+    this.nickname = studyScrap.getUser().getNickname();
     this.maxPeople = studyScrap.getStudy().getMaxPeople();
     this.minPeople = studyScrap.getStudy().getMinPeople();
     this.endDate = studyScrap.getStudy().getEndDate();

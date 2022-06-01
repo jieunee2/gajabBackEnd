@@ -89,6 +89,9 @@ public class Study extends TimeEntity {
   @JoinColumn(name = "user_id")
   private User user;
 
+  @Column(columnDefinition = "integer default 0") // 초기 0으로 세팅
+  private int likes; //조회수
+
   @JsonIgnoreProperties({"study"})
   @OneToMany(mappedBy = "study", cascade = CascadeType.ALL)
   private List<StudyLikes> likeList;
@@ -113,5 +116,9 @@ public class Study extends TimeEntity {
     this.startDate = startDate;
     this.endDate = endDate;
     this.openTalkUrl = openTalkUrl;
+  }
+
+  public void likeUpdate(int likes) {
+    this.likes = likes;
   }
 }
