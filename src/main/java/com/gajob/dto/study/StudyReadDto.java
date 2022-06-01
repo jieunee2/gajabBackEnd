@@ -30,7 +30,11 @@ public class StudyReadDto {
   private int commentsCnt; //댓글 개수
   private int likes; //좋아요 수
   private List<StudyLikesResponseDto> likesList; //좋아요를 누른 유저들 목록
+
+  private boolean likeStatus; // 현재 로그인 한 유저의 좋아요 여부
   private int scrap; //스크랩 수
+
+  private boolean scrapStatus; // 현재 로그인 한 유저의 스크랩 여부
 
   public StudyReadDto(Study study) {
     this.id = study.getId();

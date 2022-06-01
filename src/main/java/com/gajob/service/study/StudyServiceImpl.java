@@ -1,11 +1,12 @@
 package com.gajob.service.study;
 
 import com.gajob.dto.study.StudyDto;
+import com.gajob.dto.study.StudyLikesResponseDto;
 import com.gajob.dto.study.StudyReadDto;
 import com.gajob.dto.study.StudyResponseDto;
+import com.gajob.dto.study.StudyScrapResponseDto;
 import com.gajob.entity.study.Study;
 import com.gajob.entity.user.User;
-
 import com.gajob.enumtype.ErrorCode;
 import com.gajob.enumtype.Status;
 import com.gajob.exception.CustomException;
@@ -13,6 +14,7 @@ import com.gajob.repository.study.StudyRepository;
 import com.gajob.repository.user.UserRepository;
 import com.gajob.util.SecurityUtil;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
@@ -58,9 +60,12 @@ public class StudyServiceImpl implements StudyService {
     Study study = studyRepository.findById(postId)
         .orElseThrow(() -> new CustomException(ErrorCode.POST_ID_NOT_EXIST));
 
-//    statusChange(postId);
-
     StudyReadDto studyReadDto = new StudyReadDto(study);
+
+    // 게시물 조회시 Study 테이블의 likes 컬럼 업데이트 및 유저의 게시물 좋아요 상태 변경
+    study.likeUpdate(studyReadDto.getLikes());
+    studyReadDto.setLikeStatus(isLikeStatus(study));
+    studyReadDto.setScrapStatus(isScrapStatus(study));
 
     return studyReadDto;
   }
@@ -68,8 +73,64 @@ public class StudyServiceImpl implements StudyService {
   // 게시물 전체 조회 (이때는 조회수 증가 안함)
   @Transactional(readOnly = true)
   public List<StudyReadDto> getAllPosts() {
-    // studyRepository로 결과로 넘어온 Study의 Stream을 map을 통해 StudyReadDto로 변환
-    return studyRepository.findAll().stream().map(StudyReadDto::new).collect(Collectors.toList());
+    List<Study> study = studyRepository.findAll();
+
+    ArrayList<StudyReadDto> studyReadDtos = new ArrayList<StudyReadDto>();
+
+    // 게시물 조회시 Study 테이블의 likes 컬럼 업데이트 및 유저의 게시물 좋아요, 스크랩 상태 변경
+    for (Study studyList : study) {
+      StudyReadDto studyReadDto = new StudyReadDto(studyList);
+      studyList.likeUpdate(studyReadDto.getLikes());
+      studyReadDto.setLikeStatus(isLikeStatus(studyList));
+      studyReadDto.setScrapStatus(isScrapStatus(studyList));
+
+      // 변경된 데이터들을 studyReadDtos에 저장
+      studyReadDtos.add(studyReadDto);
+    }
+
+    return studyReadDtos;
+  }
+
+  // 좋아요 여부 확인
+  @Transactional
+  public boolean isLikeStatus(Study study) {
+    User user = userRepository.findOneWithAuthoritiesByEmail(
+        SecurityUtil.getCurrentUsername().get()).get();
+
+    List<StudyLikesResponseDto> likesList = study.getLikeList().stream()
+        .map(StudyLikesResponseDto::new).collect(Collectors.toList());
+
+    for (StudyLikesResponseDto studyLikesResponseDto : likesList) {
+      // StudyLikesResponseDto 내에 현재 로그인 한 유저의 닉네임이 포함되어 있으면 likeStatus의 값을 true로 변환
+      if (studyLikesResponseDto.getNickname()
+          .equals(user.getNickname())) {
+        StudyReadDto studyReadDto = new StudyReadDto(study);
+        studyReadDto.setLikeStatus(true);
+        return true;
+      }
+    }
+    return false;
+  }
+
+  // 스크랩 여부 확인
+  @Transactional
+  public boolean isScrapStatus(Study study) {
+    User user = userRepository.findOneWithAuthoritiesByEmail(
+        SecurityUtil.getCurrentUsername().get()).get();
+
+    List<StudyScrapResponseDto> scrapList = study.getStudyScrapList().stream()
+        .map(StudyScrapResponseDto::new).collect(Collectors.toList());
+
+    for (StudyScrapResponseDto studyScrapResponseDto : scrapList) {
+      // StudyScrapResponseDto 내에 현재 로그인 한 유저의 닉네임이 포함되어 있으면 scrapStatus의 값을 true로 변환
+      if (studyScrapResponseDto.getNickname()
+          .equals(user.getNickname())) {
+        StudyReadDto studyReadDto = new StudyReadDto(study);
+        studyReadDto.setScrapStatus(true);
+        return true;
+      }
+    }
+    return false;
   }
 
   // 게시물 수정

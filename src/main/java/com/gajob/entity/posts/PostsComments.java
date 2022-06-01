@@ -1,6 +1,8 @@
 package com.gajob.entity.posts;
 
 import com.gajob.entity.user.User;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -9,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -38,6 +41,13 @@ public class PostsComments {
   @Column(name = "modified_date")
   @LastModifiedDate
   private String modifiedDate; //수정일
+
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "parent_id")
+  private PostsComments parent; // 계층형 댓글 생성을 위한 셀프조인
+
+  @OneToMany(mappedBy = "parent", orphanRemoval = true)
+  private List<PostsComments> children = new ArrayList<>();
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "posts_id")
