@@ -29,7 +29,7 @@ public class PostsScrapResponseDto {
   @JsonIgnore
   private List<PostsCommentsResponseDto> comments;
 
-  private int commentCnt;
+  private int commentsCnt;
 
   private int likes;
 
@@ -51,7 +51,7 @@ public class PostsScrapResponseDto {
     this.comments = postsScrap.getPosts().getPostsCommentsList().stream()
         .map(PostsCommentsResponseDto::new).collect(
             Collectors.toList());
-    this.commentCnt = comments.size();
+    this.commentsCnt = comments.size();
     this.likes = postsScrap.getPosts().getLikeList().size();
     this.scrapDate = postsScrap.getCreatedDate();
     this.postId = postsScrap.getPosts().getId();
