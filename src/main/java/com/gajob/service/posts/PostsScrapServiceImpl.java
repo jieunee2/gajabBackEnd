@@ -50,8 +50,10 @@ public class PostsScrapServiceImpl implements PostsScrapService {
   // 스크랩 목록 조회
   @Transactional(readOnly = true)
   public List<PostsScrapResponseDto> getScrap() {
-    return postsScrapRepository.findAll().stream().map(PostsScrapResponseDto::new).collect(
+    User user = userRepository.findOneWithAuthoritiesByEmail(
+        SecurityUtil.getCurrentUsername().get()).get();
+
+    return postsScrapRepository.findByUser(user).stream().map(PostsScrapResponseDto::new).collect(
         Collectors.toList());
   }
-
 }

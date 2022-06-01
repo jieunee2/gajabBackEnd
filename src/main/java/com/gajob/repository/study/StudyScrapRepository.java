@@ -15,6 +15,8 @@ public interface StudyScrapRepository extends JpaRepository<StudyScrap, Long> {
 
   Optional<StudyScrap> findByUserAndStudy(User user, Study study);
 
+  Optional<StudyScrap> findByUser(User user);
+
   Optional<StudyScrap> deleteByUserAndStudy(User user, Study study);
 
 }
