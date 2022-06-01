@@ -50,7 +50,10 @@ public class StudyScrapServiceImpl implements StudyScrapService {
   // 스크랩 목록 조회
   @Transactional(readOnly = true)
   public List<StudyScrapResponseDto> getScrap() {
-    return studyScrapRepository.findAll().stream().map(StudyScrapResponseDto::new).collect(
+    User user = userRepository.findOneWithAuthoritiesByEmail(
+        SecurityUtil.getCurrentUsername().get()).get();
+
+    return studyScrapRepository.findByUser(user).stream().map(StudyScrapResponseDto::new).collect(
         Collectors.toList());
   }
 
