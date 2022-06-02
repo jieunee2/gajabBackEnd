@@ -1,12 +1,13 @@
 package com.gajob.service.findInfo;
 
 import com.gajob.dto.mail.MailDto;
+import javax.mail.internet.MimeMessage;
 
 public interface FindPasswordMailService {
 
-  MailDto createMailAndUpdatePassword(String email);
+  void sendSimpleMessage(MailDto mailDto) throws Exception;
 
-  void mailSend(MailDto mailDto);
+  MimeMessage mailSend(MailDto mailDto) throws Exception;
 
   String updateToTempPassword(String email);
 

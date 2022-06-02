@@ -23,9 +23,9 @@ public class findInfoController {
 
   // 임시 비밀번호를 담은 메일 전송
   @PostMapping("/find-password")
-  public String sendEmail(@RequestBody MailDto mailDto) {
-    findPasswordMailService.createMailAndUpdatePassword(mailDto.getEmail());
+  public String sendEmail(@RequestBody MailDto mailDto) throws Exception {
     findPasswordMailService.mailSend(mailDto);
+    findPasswordMailService.sendSimpleMessage(mailDto);
 
     return "send-mail-successful";
   }
