@@ -15,7 +15,7 @@ public interface PostsScrapRepository extends JpaRepository<PostsScrap, Long> {
 
   Optional<PostsScrap> findByUserAndPosts(User user, Posts posts);
 
-  Optional<PostsScrap> findByUser(User user);
+  List<PostsScrap> findAllByUser(User user);
 
   Optional<PostsScrap> deleteByUserAndPosts(User user, Posts posts);
 
