@@ -69,7 +69,7 @@ public class StudyCommentsServiceImpl implements StudyCommentsService {
       throw new CustomException(ErrorCode.NO_ACCESS_RIGHTS);
     }
 
-    studyComments.update(studyCommentsDto.getComment());
+    studyComments.update(studyCommentsDto.getComment(), studyCommentsDto.getIsSecret());
 
     StudyCommentsResponseDto studyCommentsResponseDto = new StudyCommentsResponseDto(studyComments);
 

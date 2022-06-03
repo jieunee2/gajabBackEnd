@@ -68,7 +68,7 @@ public class PostsCommentsServiceImpl implements PostsCommentsService {
       throw new CustomException(ErrorCode.NO_ACCESS_RIGHTS);
     }
 
-    postsComments.update(postsCommentsDto.getComment());
+    postsComments.update(postsCommentsDto.getComment(), postsCommentsDto.getIsSecret());
 
     PostsCommentsResponseDto postsCommentsResponseDto = new PostsCommentsResponseDto(postsComments);
 

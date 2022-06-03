@@ -42,6 +42,9 @@ public class PostsComments {
   @LastModifiedDate
   private String modifiedDate; //수정일
 
+  @Column
+  private Boolean isSecret; //비밀 댓글 여부
+
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "parent_id")
   private PostsComments parent; // 계층형 댓글 생성을 위한 셀프조인
@@ -59,8 +62,9 @@ public class PostsComments {
 
 
   // 댓글 수정
-  public void update(String comment) {
+  public void update(String comment, Boolean isSecret) {
     this.comment = comment;
+    this.isSecret = isSecret;
   }
 
 }
