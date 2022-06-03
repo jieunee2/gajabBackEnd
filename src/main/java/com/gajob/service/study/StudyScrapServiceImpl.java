@@ -53,7 +53,7 @@ public class StudyScrapServiceImpl implements StudyScrapService {
     User user = userRepository.findOneWithAuthoritiesByEmail(
         SecurityUtil.getCurrentUsername().get()).get();
 
-    return studyScrapRepository.findByUser(user).stream().map(StudyScrapResponseDto::new).collect(
+    return studyScrapRepository.findAllByUser(user).stream().map(StudyScrapResponseDto::new).collect(
         Collectors.toList());
   }
 

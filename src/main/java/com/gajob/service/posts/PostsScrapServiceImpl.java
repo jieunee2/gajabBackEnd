@@ -53,7 +53,8 @@ public class PostsScrapServiceImpl implements PostsScrapService {
     User user = userRepository.findOneWithAuthoritiesByEmail(
         SecurityUtil.getCurrentUsername().get()).get();
 
-    return postsScrapRepository.findByUser(user).stream().map(PostsScrapResponseDto::new).collect(
-        Collectors.toList());
+    return postsScrapRepository.findAllByUser(user).stream().map(PostsScrapResponseDto::new)
+        .collect(
+            Collectors.toList());
   }
 }
