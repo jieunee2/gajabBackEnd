@@ -6,11 +6,7 @@ import com.gajob.service.crawling.ExhibitCrawling;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
 @RestController
@@ -18,18 +14,23 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/issue")
 public class ExhibitController {
 
-  private final ExhibitCrawling exhibitCrawling;
+    private final ExhibitCrawling exhibitCrawling;
 
 
-  @GetMapping("/exhibit") // 크롤링한 공모전 데이터 가져오기
-  public ResponseEntity<ExhibitDto> getExhibit() {
-    return new ResponseEntity(exhibitCrawling.getExhibit(),
-            HttpStatus.OK);
-  }
+    @GetMapping("/exhibits") // 크롤링한 공모전 정보 전체 조회
+    public ResponseEntity<ExhibitDto> getAllExhibit() {
+        return new ResponseEntity(exhibitCrawling.getAllExhibit(),
+                HttpStatus.OK);
+    }
 
-  @PostMapping("/exhibit") // 크롤링한 뉴스 데이터 DB 저장
-  public ResponseEntity<ExhibitDto> saveExhibit() throws Exception {
-    return ResponseEntity.ok(exhibitCrawling.saveExhibit(new ExhibitDto(Exhibit.builder().build())));
-  }
+    @GetMapping("/exhibits/{exhibitId}")  // 저장한 공모전 낱개 조회
+    public ResponseEntity getExhibit(@PathVariable Long exhibitId) {
+        return ResponseEntity.ok(exhibitCrawling.getExhibit(exhibitId));
+    }
+
+    @PostMapping("/exhibit") // 크롤링한 뉴스 데이터 DB 저장
+    public ResponseEntity<ExhibitDto> saveExhibit() throws Exception {
+        return ResponseEntity.ok(exhibitCrawling.saveExhibit(new ExhibitDto(Exhibit.builder().build())));
+    }
 
 }

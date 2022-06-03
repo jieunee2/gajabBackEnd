@@ -16,6 +16,7 @@ public interface ExhibitCrawling {
 
     ExhibitDto saveExhibit(ExhibitDto exhibitDto) throws Exception;   // 크롤링한 공모전 정보들을 DB에 저장
 
-    List<ExhibitResponseDto> getExhibit(); // 저장한 공모전 정보들 읽어오기
+    List<ExhibitResponseDto> getAllExhibit(); // 저장한 공모전 정보 전체 조회
 
+    ExhibitResponseDto getExhibit(Long exhibitId);  // 저장한 공모전 낱개 조회
 }

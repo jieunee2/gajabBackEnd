@@ -5,6 +5,8 @@ import com.gajob.dto.crawling.ExhibitDto;
 import com.gajob.dto.crawling.ExhibitResponseDto;
 
 import com.gajob.entity.crawling.Exhibit;
+import com.gajob.enumtype.ErrorCode;
+import com.gajob.exception.CustomException;
 import com.gajob.repository.crawling.ExhibitRepository;
 import lombok.RequiredArgsConstructor;
 import org.jsoup.Jsoup;
@@ -123,15 +125,26 @@ public class ExhibitCrawlingImpl implements ExhibitCrawling {
         return null;
     }
 
-    // DB에 저장한 공모전 정보 읽어오기
+    // DB에 저장한 공모전정보 전체 조회
     @Transactional
     @Override
-    public List<ExhibitResponseDto> getExhibit() {
+    public List<ExhibitResponseDto> getAllExhibit() {
         List<ExhibitResponseDto> exhibitResponseDtos = new ArrayList<>();
         for (Exhibit exhibit : exhibitRepository.findAll()) {
             ExhibitResponseDto exhibitResponseDto = new ExhibitResponseDto(exhibit);
             exhibitResponseDtos.add(exhibitResponseDto);
         }
         return exhibitResponseDtos;
+    }
+
+    // 공모전정보 낱개 조회
+    @Transactional
+    public ExhibitResponseDto getExhibit(Long exhibitId) {
+        Exhibit exhibit = exhibitRepository.findById(exhibitId)
+                .orElseThrow(() -> new CustomException(ErrorCode.COVER_LETTER_ID_NOT_EXIST));
+
+        ExhibitResponseDto exhibitResponseDto = new ExhibitResponseDto(exhibit);
+
+        return exhibitResponseDto;
     }
 }
