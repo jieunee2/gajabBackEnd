@@ -37,7 +37,10 @@ public enum ErrorCode {
   NO_ACCESS_RIGHTS(INTERNAL_SERVER_ERROR, "접근 권한이 없습니다."),
   COVER_LETTER_ID_NOT_EXIST(INTERNAL_SERVER_ERROR, "해당 자기소개서가 존재하지 않습니다"),
   ITEM_ID_NOT_EXIST(INTERNAL_SERVER_ERROR, "해당 항목이 존재하지 않습니다"),
-  INVALID_STUDENT_ID(INTERNAL_SERVER_ERROR, "잘못된 형식의 학번입니다.");
+  INVALID_STUDENT_ID(INTERNAL_SERVER_ERROR, "잘못된 형식의 학번입니다."),
+  JOB_POSTING_ID_NOT_EXIST(INTERNAL_SERVER_ERROR, "해당 채용정보가 존재하지 않습니다."),
+  EXHIBIT_ID_NOT_EXIST(INTERNAL_SERVER_ERROR, "해당 공모전 정보가 존재하지 않습니다."),
+  EXHIBIT_RANKING_ID_NOT_EXIST(INTERNAL_SERVER_ERROR,"해당 공모전랭킹 정보가 존재하지 않습니다.");
 
   private final HttpStatus httpStatus;
   private final String detail;
