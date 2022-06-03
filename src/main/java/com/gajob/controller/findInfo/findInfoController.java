@@ -30,7 +30,7 @@ public class findInfoController {
     return "send-mail-successful";
   }
 
-  @GetMapping("/find-id")
+  @PostMapping("/find-id")
   public ResponseEntity findId(@RequestBody UserDto userDto) {
     return ResponseEntity.ok(findIdService.findId(userDto));
   }
