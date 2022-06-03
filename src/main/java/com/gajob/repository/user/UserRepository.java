@@ -11,7 +11,13 @@ public interface UserRepository extends JpaRepository<User, Long> {
   @EntityGraph(attributePaths = "authorities")
   Optional<User> findOneWithAuthoritiesByEmail(String email);
 
+  Optional<User> findByStudentId(String studentId);
+
+  Optional<User> findByStudentEmailAndName(String studentEmail, String name);
+
   // 중복인 값이 들어올 경우 true, 아니면 false 리턴
   boolean existsByNickname(String nickname);
+
+  boolean existsByStudentId(String studentId);
 
 }

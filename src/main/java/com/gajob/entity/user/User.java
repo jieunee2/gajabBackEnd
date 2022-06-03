@@ -1,9 +1,12 @@
 package com.gajob.entity.user;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.gajob.enumtype.Department;
 import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -44,6 +47,22 @@ public class User {
   @Column(nullable = false, name = "nickname", length = 50)
   private String nickname; //닉네임
 
+  @Column(nullable = false)
+  private String studentId; //학번
+
+  @Column(nullable = false)
+  private String studentEmail; //학교이메일
+
+  @Column
+  private String introduction; //소개글
+
+  @Column(nullable = false)
+  @Enumerated(EnumType.STRING)
+  private Department department; //학부
+
+  @Column
+  private String profileImg; //프로필 이미지
+
   @Column(name = "activated")
   private boolean activated; //활성화여부
 
@@ -54,5 +73,28 @@ public class User {
       inverseJoinColumns = {
           @JoinColumn(name = "authority_name", referencedColumnName = "authority_name")})
   private Set<Authority> authorities;
+
+  //회원의 소개글과 학부 수정
+  public void update(Department department, String introduction) {
+    this.nickname = nickname;
+    this.department = department;
+    this.introduction = introduction;
+  }
+
+  //회원의 닉네임 수정
+  public void updateNickname(String nickname) {
+    this.nickname = nickname;
+  }
+
+  //비밀번호 수정
+  public void passwordUpdate(String password) {
+    this.password = password;
+  }
+
+  // 이미지 수정
+  public void profileImgUpdate(String profileImg) {
+    this.profileImg = profileImg;
+  }
+
 
 }

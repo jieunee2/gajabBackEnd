@@ -28,12 +28,13 @@ public class CoverLetterItemDto {
             .format(DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm"));
 
     private CoverLetter coverLetter;
+    private User user;
 
-    public CoverLetterItem toEntity(CoverLetter coverLetter) {
+    public CoverLetterItem toEntity(User user, CoverLetter coverLetter) {
         CoverLetterItem coverLetterItem = CoverLetterItem.builder()
                 .id(id).question(question).answer(answer)
                 .createdDate(createdDate).modifiedDate(modifiedDate)
-                .coverLetter(coverLetter).build();
+                .coverLetter(coverLetter).user(user).build();
         return coverLetterItem;
     }
 
