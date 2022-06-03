@@ -33,12 +33,19 @@ public class StudyRecruitmentServiceImpl implements StudyRecruitmentService {
 
     Study study = studyRepository.findById(postId).orElseThrow();
 
-    if (studyRecruitmentRepository.findByStudyAndUser(study, user).get() != null) {
+    if (isNotAlreadySupply(user, study)) {
+      return new StudyRecruitmentResponseDto(
+          studyRecruitmentRepository.save(studyRecruitmentDto.toEntity(user, study)));
+    }
+    // 사용자가 이미 지원한 스터디일 경우 에러문을 띄워줌
+    else {
       throw new CustomException(ErrorCode.DUPLICATE_SUPPLY_STUDY);
     }
+  }
 
-    return new StudyRecruitmentResponseDto(
-        studyRecruitmentRepository.save(studyRecruitmentDto.toEntity(user, study)));
+  // 사용자가 이미 지원한 스터디인지 체크
+  private boolean isNotAlreadySupply(User user, Study study) {
+    return studyRecruitmentRepository.findByStudyAndUser(study, user).isEmpty();
   }
 
   // 스터디 모임 신청자 전체 조회
