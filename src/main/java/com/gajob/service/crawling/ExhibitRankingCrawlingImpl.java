@@ -168,7 +168,7 @@ public class ExhibitRankingCrawlingImpl implements ExhibitRankingCrawling {
     @Transactional
     public ExhibitRankingResponseDto getExhibitRanking(Long exhibitRankingId) {
         ExhibitRanking exhibitRanking = exhibitRankingRepository.findById(exhibitRankingId)
-                .orElseThrow(() -> new CustomException(ErrorCode.COVER_LETTER_ID_NOT_EXIST));
+                .orElseThrow(() -> new CustomException(ErrorCode.EXHIBIT_RANKING_ID_NOT_EXIST));
 
         ExhibitRankingResponseDto exhibitRankingResponseDto = new ExhibitRankingResponseDto(exhibitRanking);
 

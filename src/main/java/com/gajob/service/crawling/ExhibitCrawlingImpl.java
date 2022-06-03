@@ -141,7 +141,7 @@ public class ExhibitCrawlingImpl implements ExhibitCrawling {
     @Transactional
     public ExhibitResponseDto getExhibit(Long exhibitId) {
         Exhibit exhibit = exhibitRepository.findById(exhibitId)
-                .orElseThrow(() -> new CustomException(ErrorCode.COVER_LETTER_ID_NOT_EXIST));
+                .orElseThrow(() -> new CustomException(ErrorCode.EXHIBIT_ID_NOT_EXIST));
 
         ExhibitResponseDto exhibitResponseDto = new ExhibitResponseDto(exhibit);
 
