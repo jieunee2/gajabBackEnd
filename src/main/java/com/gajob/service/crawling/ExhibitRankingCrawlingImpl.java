@@ -3,6 +3,8 @@ package com.gajob.service.crawling;
 import com.gajob.dto.crawling.ExhibitRankingDto;
 import com.gajob.dto.crawling.ExhibitRankingResponseDto;
 import com.gajob.entity.crawling.ExhibitRanking;
+import com.gajob.enumtype.ErrorCode;
+import com.gajob.exception.CustomException;
 import com.gajob.repository.crawling.ExhibitRankingRepository;
 import lombok.RequiredArgsConstructor;
 import org.jsoup.Jsoup;
@@ -152,7 +154,7 @@ public class ExhibitRankingCrawlingImpl implements ExhibitRankingCrawling {
     // DB에 저장한 공모전 랭킹 정보 읽어오기
     @Transactional
     @Override
-    public List<ExhibitRankingResponseDto> getExhibitRanking() {
+    public List<ExhibitRankingResponseDto> getAllExhibitRanking() {
         List<ExhibitRankingResponseDto> exhibitRankingResponseDtos = new ArrayList<>();
 
         for (ExhibitRanking exhibitRanking : exhibitRankingRepository.findAll()) {
@@ -160,5 +162,16 @@ public class ExhibitRankingCrawlingImpl implements ExhibitRankingCrawling {
             exhibitRankingResponseDtos.add(exhibitRankingResponseDto);
         }
         return exhibitRankingResponseDtos;
+    }
+
+    // 공모전 랭킹 정보 낱개 조회
+    @Transactional
+    public ExhibitRankingResponseDto getExhibitRanking(Long exhibitRankingId) {
+        ExhibitRanking exhibitRanking = exhibitRankingRepository.findById(exhibitRankingId)
+                .orElseThrow(() -> new CustomException(ErrorCode.COVER_LETTER_ID_NOT_EXIST));
+
+        ExhibitRankingResponseDto exhibitRankingResponseDto = new ExhibitRankingResponseDto(exhibitRanking);
+
+        return exhibitRankingResponseDto;
     }
 }
