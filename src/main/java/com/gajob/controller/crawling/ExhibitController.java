@@ -28,7 +28,7 @@ public class ExhibitController {
         return ResponseEntity.ok(exhibitCrawling.getExhibit(exhibitId));
     }
 
-    @PostMapping("/exhibit") // 크롤링한 뉴스 데이터 DB 저장
+    @PostMapping("/exhibits") // 크롤링한 뉴스 데이터 DB 저장
     public ResponseEntity<ExhibitDto> saveExhibit() throws Exception {
         return ResponseEntity.ok(exhibitCrawling.saveExhibit(new ExhibitDto(Exhibit.builder().build())));
     }
