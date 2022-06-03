@@ -18,7 +18,9 @@ public interface ExhibitRankingCrawling {
     // 크롤링한 공모전 랭킹 정보들을 DB에 저장
     ExhibitRankingDto saveExhibitRanking(ExhibitRankingDto exhibitRankingDto) throws Exception;
 
-    // 저장한 공모전 랭킹 정보들 읽어오기
-    List<ExhibitRankingResponseDto> getExhibitRanking();
+    // 저장한 공모전 랭킹 정보 전체 조회
+    List<ExhibitRankingResponseDto> getAllExhibitRanking();
 
+    // 저장한 공모전 랭킹 정보 낱개 조회
+    ExhibitRankingResponseDto getExhibitRanking(Long exhibitRankingId);
 }
