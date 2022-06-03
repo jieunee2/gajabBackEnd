@@ -31,6 +31,9 @@ public class StudyComments {
   @Column(columnDefinition = "TEXT", nullable = false)
   private String comment; //내용
 
+  @Column
+  private Boolean isSecret; //비밀 댓글 여부
+
   @Column(name = "created_date")
   @CreatedDate
   private String createdDate; //작성일
@@ -48,8 +51,9 @@ public class StudyComments {
   private User user;
 
   // 댓글 수정
-  public void update(String comment) {
+  public void update(String comment, Boolean isSecret) {
     this.comment = comment;
+    this.isSecret = isSecret;
   }
 
 }

@@ -19,6 +19,8 @@ public class StudyCommentsDto {
   private Long id;
   private String comment;
 
+  private Boolean isSecret;
+
   // 년, 월, 일, 시, 분까지 나오게 포맷
   private String createdDate = LocalDateTime.now().format(
       DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm"));
@@ -29,7 +31,7 @@ public class StudyCommentsDto {
   private Study study;
 
   public StudyComments toEntity(User user, Study study) {
-    StudyComments studyComments = StudyComments.builder().id(id).comment(comment)
+    StudyComments studyComments = StudyComments.builder().id(id).comment(comment).isSecret(isSecret)
         .createdDate(createdDate)
         .modifiedDate(modifiedDate).user(user).study(study).build();
     return studyComments;
