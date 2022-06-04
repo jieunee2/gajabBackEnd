@@ -13,9 +13,9 @@ public class ExhibitScrapResponseDto {
 
     public ExhibitScrapResponseDto(ExhibitScrap exhibitScrap) {
         this.id = exhibitScrap.getId();
-        this.title = exhibitScrap.getExhibit().getTitle();
+        this.title = exhibitScrap.getExhibitFrame().getTitle();
         this.scrapDate = exhibitScrap.getCreatedDate();
-        this.exhibitUrl = "http://" + exhibitScrap.getExhibit().getUrl();
+        this.exhibitUrl = "http://" + exhibitScrap.getExhibitFrame().getUrl();
     }
 
 }
