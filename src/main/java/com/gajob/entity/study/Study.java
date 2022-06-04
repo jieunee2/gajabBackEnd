@@ -100,6 +100,10 @@ public class Study extends TimeEntity {
   @OneToMany(mappedBy = "study", cascade = CascadeType.ALL)
   private List<StudyScrap> studyScrapList;
 
+  @JsonIgnoreProperties({"study"})
+  @OneToMany(mappedBy = "study", cascade = CascadeType.ALL)
+  private List<StudyRecruitment> studyRecruitmentList;
+
   //게시글이 삭제될 경우 댓글도 삭제되어야 하기 때문에 CascadeType.REMOVE 를 사용
   @OneToMany(mappedBy = "study", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
   private List<StudyComments> studyCommentsList;
