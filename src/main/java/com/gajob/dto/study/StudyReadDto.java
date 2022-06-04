@@ -36,6 +36,8 @@ public class StudyReadDto {
 
   private boolean scrapStatus; // 현재 로그인 한 유저의 스크랩 여부
 
+  private int supplyCnt; // 스터디 모집 지원자 수
+
   public StudyReadDto(Study study) {
     this.id = study.getId();
     this.title = study.getTitle();
@@ -59,5 +61,8 @@ public class StudyReadDto {
     this.likesList = study.getLikeList().stream().map(StudyLikesResponseDto::new).collect(
         Collectors.toList());
     this.scrap = study.getStudyScrapList().size();
+    this.supplyCnt = study.getStudyRecruitmentList().stream()
+        .map(StudyRecruitmentResponseDto::new).collect(
+            Collectors.toList()).size();
   }
 }
