@@ -1,6 +1,6 @@
 package com.gajob.repository.crawling;
 
-import com.gajob.entity.crawling.ExhibitRanking;
+import com.gajob.entity.crawling.ExhibitRankingFrame;
 import com.gajob.entity.crawling.ExhibitRankingScrap;
 import com.gajob.entity.user.User;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -14,8 +14,8 @@ public interface ExhibitRankingScrapRepository extends JpaRepository<ExhibitRank
     @Query("select e from ExhibitRankingScrap e")
     List<ExhibitRankingScrap> findAll();
 
-    Optional<ExhibitRankingScrap> findByUserAndExhibitRanking(User user, ExhibitRanking exhibitRanking);
+    Optional<ExhibitRankingScrap> findByUserAndExhibitRankingFrame(User user, ExhibitRankingFrame exhibitRankingFrame);
 
-    Optional<ExhibitRankingScrap> deleteByUserAndExhibitRanking(User user, ExhibitRanking exhibitRanking);
+    Optional<ExhibitRankingScrap> deleteByUserAndExhibitRankingFrame(User user, ExhibitRankingFrame exhibitRankingFrame);
 
 }

@@ -13,12 +13,12 @@ public class ExhibitRankingScrapController {
 
     private final ExhibitRankingScrapService exhibitRankingScrapService;
 
-    @PostMapping("/scrap/{exhibitRankingId}")   // 랭킹 공모전 스크랩 기능
-    public String scrap(@PathVariable Long exhibitRankingId) {
-        return exhibitRankingScrapService.scrap(exhibitRankingId);
+    @PostMapping("/scraps/{exhibitRankingFrameId}")   // 랭킹 공모전 스크랩 기능
+    public String scrap(@PathVariable Long exhibitRankingFrameId) {
+        return exhibitRankingScrapService.scrap(exhibitRankingFrameId);
     }
 
-    @GetMapping("/scrap")   // 스크랩한 랭킹 공모전 전체 조회
+    @GetMapping("/scraps")   // 스크랩한 랭킹 공모전 전체 조회
     public ResponseEntity getScrap() {
         return ResponseEntity.ok(exhibitRankingScrapService.getScrap());
     }

@@ -13,9 +13,9 @@ public class ExhibitRankingScrapResponseDto {
 
     public ExhibitRankingScrapResponseDto(ExhibitRankingScrap exhibitRankingScrap) {
         this.id = exhibitRankingScrap.getId();
-        this.title = exhibitRankingScrap.getExhibitRanking().getTitle();
+        this.title = exhibitRankingScrap.getExhibitRankingFrame().getTitle();
         this.scrapDate = exhibitRankingScrap.getCreatedDate();
-        this.exhibitRankingUrl = exhibitRankingScrap.getExhibitRanking().getUrl();
+        this.exhibitRankingUrl = exhibitRankingScrap.getExhibitRankingFrame().getUrl();
     }
 
 }
