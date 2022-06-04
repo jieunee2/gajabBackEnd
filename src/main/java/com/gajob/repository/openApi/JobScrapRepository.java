@@ -1,6 +1,6 @@
 package com.gajob.repository.openApi;
 
-import com.gajob.entity.openApi.Job;
+import com.gajob.entity.openApi.JobFrame;
 import com.gajob.entity.openApi.JobScrap;
 import com.gajob.entity.user.User;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -14,8 +14,8 @@ public interface JobScrapRepository extends JpaRepository<JobScrap, Long> {
     @Query("select j from JobScrap j")
     List<JobScrap> findAll();
 
-    Optional<JobScrap> findByUserAndJob(User user, Job job);
+    Optional<JobScrap> findByUserAndJobFrame(User user, JobFrame jobFrame);
 
-    Optional<JobScrap> deleteByUserAndJob(User user, Job job);
+    Optional<JobScrap> deleteByUserAndJobFrame(User user, JobFrame jobFrame);
 
 }

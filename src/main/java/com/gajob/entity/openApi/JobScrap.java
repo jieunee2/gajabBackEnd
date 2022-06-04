@@ -24,15 +24,15 @@ public class JobScrap extends TimeEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "job_posting_id")
-    private Job job;
+    private JobFrame jobFrame;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     @JsonIgnoreProperties({"job"})
     private User user;
 
-    public JobScrap(Job job, User user) {
-        this.job = job;
+    public JobScrap(JobFrame jobFrame, User user) {
+        this.jobFrame = jobFrame;
         this.user = user;
     }
 

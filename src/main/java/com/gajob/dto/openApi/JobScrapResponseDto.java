@@ -13,9 +13,9 @@ public class JobScrapResponseDto {
 
     public JobScrapResponseDto(JobScrap jobScrap) {
         this.id = jobScrap.getId();
-        this.title = jobScrap.getJob().getTitle();
+        this.title = jobScrap.getJobFrame().getTitle();
         this.scrapDate = jobScrap.getCreatedDate();
-        this.wantedInfoUrl = jobScrap.getJob().getWantedInfoUrl();
+        this.wantedInfoUrl = jobScrap.getJobFrame().getWantedInfoUrl();
     }
 
 }
