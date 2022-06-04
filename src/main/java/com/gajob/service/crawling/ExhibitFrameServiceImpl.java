@@ -55,7 +55,7 @@ public class ExhibitFrameServiceImpl implements ExhibitFrameService {
                 SecurityUtil.getCurrentUsername().get()).get();
 
         ExhibitFrame exhibitFrame = exhibitFrameRepository.findById(exhibitFrameId)
-                .orElseThrow(() -> new CustomException(ErrorCode.JOB_POSTING_ID_NOT_EXIST));
+                .orElseThrow(() -> new CustomException(ErrorCode.EXHIBIT_ID_NOT_EXIST));
 
         if (!(exhibitFrame.getUser().getEmail().equals(user.getEmail()))) {
             throw new CustomException(ErrorCode.NO_ACCESS_RIGHTS);
