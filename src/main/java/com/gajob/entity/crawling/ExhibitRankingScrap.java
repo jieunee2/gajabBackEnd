@@ -24,15 +24,15 @@ public class ExhibitRankingScrap extends TimeEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "exhibit_ranking_id")
-    private ExhibitRanking exhibitRanking;
+    private ExhibitRankingFrame exhibitRankingFrame;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     @JsonIgnoreProperties({"exhibit_ranking"})
     private User user;
 
-    public ExhibitRankingScrap(ExhibitRanking exhibitRanking, User user) {
-        this.exhibitRanking = exhibitRanking;
+    public ExhibitRankingScrap(ExhibitRankingFrame exhibitRankingFrame, User user) {
+        this.exhibitRankingFrame = exhibitRankingFrame;
         this.user = user;
     }
 
