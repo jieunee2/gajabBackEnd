@@ -14,6 +14,7 @@ public class StudyRecruitmentResponseDto {
 
   private String studentId;
 
+  private String studentEmail;
   private String applicationDate;
 
   private Result result;
@@ -23,6 +24,7 @@ public class StudyRecruitmentResponseDto {
     this.content = studyRecruitment.getContent();
     this.writer = studyRecruitment.getUser().getNickname();
     this.studentId = studyRecruitment.getUser().getStudentId();
+    this.studentEmail = studyRecruitment.getUser().getStudentEmail();
     this.applicationDate = studyRecruitment.getCreatedDate();
     this.result = studyRecruitment.getResult();
   }
