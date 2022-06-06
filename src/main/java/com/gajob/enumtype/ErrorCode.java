@@ -36,6 +36,7 @@ public enum ErrorCode {
   DUPLICATE_SUPPLY_STUDY(INTERNAL_SERVER_ERROR, "이미 지원한 스터디입니다."),
   NOT_MATCH_PASSWORD(INTERNAL_SERVER_ERROR, "기존의 비밀번호를 잘못 입력하셨습니다."),
   POST_ID_NOT_EXIST(INTERNAL_SERVER_ERROR, "해당 게시글이 존재하지 않습니다."),
+  SUPPLY_ID_NOT_EXIST(INTERNAL_SERVER_ERROR, "지원 내역이 존재하지 않습니다."),
   COMMENT_ID_NOT_EXIST(INTERNAL_SERVER_ERROR, "해당 댓글이 존재하지 않습니다"),
   NO_ACCESS_RIGHTS(INTERNAL_SERVER_ERROR, "접근 권한이 없습니다."),
   COVER_LETTER_ID_NOT_EXIST(INTERNAL_SERVER_ERROR, "해당 자기소개서가 존재하지 않습니다"),
