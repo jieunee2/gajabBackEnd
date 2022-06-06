@@ -1,6 +1,7 @@
 package com.gajob.controller.study;
 
 import com.gajob.dto.study.StudyRecruitmentDto;
+import com.gajob.dto.study.StudyRecruitmentUpdateDto;
 import com.gajob.service.study.StudyRecruitmentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -34,4 +35,12 @@ public class StudyRecruitmentController {
     return ResponseEntity.ok(studyRecruitmentService.getAllSupport(postId));
   }
 
+  //스터디 지원자들의 모집결과 설정
+  @PostMapping("/{postId}/result/{supplyId}")
+  public ResponseEntity setResult(@PathVariable("postId") Long postId,
+      @PathVariable("supplyId") Long supplyId,
+      @RequestBody StudyRecruitmentUpdateDto studyRecruitmentUpdateDto) {
+    return ResponseEntity.ok(
+        studyRecruitmentService.setResult(postId, supplyId, studyRecruitmentUpdateDto));
+  }
 }

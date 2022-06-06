@@ -47,4 +47,9 @@ public class StudyRecruitment extends TimeEntity {
   @JsonIgnoreProperties({"study"})
   private User user;
 
+  // 모집 결과 수정
+  public void update(Result result) {
+    this.result = result;
+  }
+
 }

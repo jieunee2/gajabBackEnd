@@ -56,6 +56,11 @@ public class UserService {
     if (userRepository.existsByStudentId(userDto.getStudentId())) {
       throw new CustomException(ErrorCode.DUPLICATE_STUDENT_ID);
     }
+
+    // 중복된 교내 이메일이 있을 경우, 에러 처리
+    if (userRepository.existsByStudentEmail(userDto.getStudentEmail())) {
+      throw new CustomException(ErrorCode.DUPLICATE_STUDENT_EMAIL);
+    }
     // 잘못된 형식의 학번을 입력할 경우, 에러 처리(교내 기준, 학번 9자리)
     else if (!(userDto.getStudentId().length() == 9)) {
       throw new CustomException(ErrorCode.INVALID_STUDENT_ID);

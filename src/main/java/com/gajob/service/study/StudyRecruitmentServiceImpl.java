@@ -2,7 +2,9 @@ package com.gajob.service.study;
 
 import com.gajob.dto.study.StudyRecruitmentDto;
 import com.gajob.dto.study.StudyRecruitmentResponseDto;
+import com.gajob.dto.study.StudyRecruitmentUpdateDto;
 import com.gajob.entity.study.Study;
+import com.gajob.entity.study.StudyRecruitment;
 import com.gajob.entity.user.User;
 import com.gajob.enumtype.ErrorCode;
 import com.gajob.exception.CustomException;
@@ -58,5 +60,32 @@ public class StudyRecruitmentServiceImpl implements StudyRecruitmentService {
     return studyRecruitmentRepository.findAllByStudyId(postId).stream()
         .map(StudyRecruitmentResponseDto::new)
         .collect(Collectors.toList());
+  }
+
+  // 스터디 지원자들의 모집결과 설정
+  @Transactional
+  public StudyRecruitmentResponseDto setResult
+  (Long postId,
+      Long supplyId, StudyRecruitmentUpdateDto studyRecruitmentUpdateDto) {
+    User user = userRepository.findOneWithAuthoritiesByEmail(
+        SecurityUtil.getCurrentUsername().get()).get();
+
+    Study study = studyRepository.findById(postId)
+        .orElseThrow(() -> new CustomException(ErrorCode.POST_ID_NOT_EXIST));
+
+    StudyRecruitment studyRecruitment = studyRecruitmentRepository.findById(supplyId)
+        .orElseThrow(() -> new CustomException(ErrorCode.SUPPLY_ID_NOT_EXIST));
+
+    // 스터디 모집 게시물 작성자가 현재 로그인 한 유저가 아니라면 접근하지 못하도록 에러를 출력
+    if (!study.getWriter().equals(user.getNickname())) {
+      throw new CustomException(ErrorCode.NO_ACCESS_RIGHTS);
+    }
+
+    studyRecruitment.update(studyRecruitmentUpdateDto.getResult());
+
+    StudyRecruitmentResponseDto studyRecruitmentResponseDto = new StudyRecruitmentResponseDto(
+        studyRecruitment);
+
+    return studyRecruitmentResponseDto;
   }
 }
