@@ -45,6 +45,8 @@ public class StudyRecruitmentServiceImpl implements StudyRecruitmentService {
     }
   }
 
+//  value = value.replaceAll(System.getProperty("line.separator"), " ");
+
   // 사용자가 이미 지원한 스터디인지 체크
   private boolean isNotAlreadySupply(User user, Study study) {
     return studyRecruitmentRepository.findByStudyAndUser(study, user).isEmpty();
