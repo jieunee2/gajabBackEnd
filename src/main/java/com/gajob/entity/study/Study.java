@@ -51,12 +51,12 @@ public class Study extends TimeEntity {
   @DateTimeFormat(pattern = "yyyy-MM-dd")
   @JsonProperty("startDate")
   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-  private LocalDate startDate; //스터디 시작 예정일
+  private LocalDate startDate; //모집 예정일
 
   @DateTimeFormat(pattern = "yyyy-MM-dd")
   @JsonProperty("endDate")
   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-  private LocalDate endDate; //스터디 종료 예정일
+  private LocalDate endDate; //모집 예정일
 
   @Column
   private int minPeople; //최소정원

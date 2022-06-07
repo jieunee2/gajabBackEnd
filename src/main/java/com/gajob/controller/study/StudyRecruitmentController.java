@@ -39,7 +39,7 @@ public class StudyRecruitmentController {
   @PostMapping("/{postId}/result/{supplyId}")
   public ResponseEntity setResult(@PathVariable("postId") Long postId,
       @PathVariable("supplyId") Long supplyId,
-      @RequestBody StudyRecruitmentUpdateDto studyRecruitmentUpdateDto) {
+      @RequestBody StudyRecruitmentUpdateDto studyRecruitmentUpdateDto) throws Exception {
     return ResponseEntity.ok(
         studyRecruitmentService.setResult(postId, supplyId, studyRecruitmentUpdateDto));
   }

@@ -14,7 +14,13 @@ import com.gajob.repository.user.UserRepository;
 import com.gajob.util.SecurityUtil;
 import java.util.List;
 import java.util.stream.Collectors;
+import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMessage.RecipientType;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.mail.MailException;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,6 +33,9 @@ public class StudyRecruitmentServiceImpl implements StudyRecruitmentService {
 
   private final StudyRepository studyRepository;
 
+  private final JavaMailSender javaMailSender;
+  private final Logger logger = LoggerFactory.getLogger(this.getClass());
+
   // 스터디 모임 신청
   @Transactional
   public StudyRecruitmentResponseDto support(Long postId, StudyRecruitmentDto studyRecruitmentDto) {
@@ -36,7 +45,6 @@ public class StudyRecruitmentServiceImpl implements StudyRecruitmentService {
     Study study = studyRepository.findById(postId).orElseThrow();
 
     if (isNotAlreadySupply(user, study)) {
-//      study.getContent().replace("\r\n", "<br>");
       return new StudyRecruitmentResponseDto(
           studyRecruitmentRepository.save(studyRecruitmentDto.toEntity(user, study)));
     }
@@ -45,8 +53,6 @@ public class StudyRecruitmentServiceImpl implements StudyRecruitmentService {
       throw new CustomException(ErrorCode.DUPLICATE_SUPPLY_STUDY);
     }
   }
-
-//  value = value.replaceAll(System.getProperty("line.separator"), " ");
 
   // 사용자가 이미 지원한 스터디인지 체크
   private boolean isNotAlreadySupply(User user, Study study) {
@@ -69,7 +75,7 @@ public class StudyRecruitmentServiceImpl implements StudyRecruitmentService {
   @Transactional
   public StudyRecruitmentResponseDto setResult
   (Long postId,
-      Long supplyId, StudyRecruitmentUpdateDto studyRecruitmentUpdateDto) {
+      Long supplyId, StudyRecruitmentUpdateDto studyRecruitmentUpdateDto) throws Exception {
     User user = userRepository.findOneWithAuthoritiesByEmail(
         SecurityUtil.getCurrentUsername().get()).get();
 
@@ -86,9 +92,45 @@ public class StudyRecruitmentServiceImpl implements StudyRecruitmentService {
 
     studyRecruitment.update(studyRecruitmentUpdateDto.getResult());
 
+    // 스터디 모집 결과 알림 메일 발송
+    mailSend(studyRecruitment.getUser().getStudentEmail());
+    sendSimpleMessage(studyRecruitment.getUser().getStudentEmail());
+
     StudyRecruitmentResponseDto studyRecruitmentResponseDto = new StudyRecruitmentResponseDto(
         studyRecruitment);
 
     return studyRecruitmentResponseDto;
+  }
+
+  // 메일 내용을 생성
+  @Transactional
+  public void sendSimpleMessage(String email) throws Exception {
+    MimeMessage message = mailSend(email);
+    try {//예외처리
+      javaMailSender.send(message);
+    } catch (MailException es) {
+      es.printStackTrace();
+      throw new IllegalArgumentException();
+    }
+  }
+
+  //스터디 모집 결과 알림 메일 보내기
+  @Transactional
+  public MimeMessage mailSend(String email) throws Exception {
+    logger.info("보내는 대상 : " + email);
+
+    MimeMessage mimeMessage = javaMailSender.createMimeMessage();
+
+    mimeMessage.addRecipients(RecipientType.TO, email); // 보내는 대상
+    mimeMessage.setSubject("GA-JOB에서 회원님의 스터디 모집 결과를 알려드립니다.");
+
+    // 메일에 담길 내용
+    String message = "";
+    message += "<a href=\"http://localhost:3000\">";
+    message += "<img width=\"600\" height=\"800\" style=\"margin: auto; padding-top: 50px; place-content:center; display: grid;\" src=\"https://postfiles.pstatic.net/MjAyMjA2MDdfMjMx/MDAxNjU0NTg3NzY2Nzc2.JjazBHgcSzQxIim84uMlaV368nfKEeZ-tpL9K3RojwAg.Mr4Cn3zmKsxD9_SzrOWpZ2tQgKtO8QAJo6XAmThfQVgg.JPEG.980lje/%EC%8A%A4%ED%84%B0%EB%94%94_%EB%AA%A8%EC%A7%91_%EA%B2%B0%EA%B3%BC.jpg?type=w773\" alt=\"\" loading=\"lazy\">";
+    message += "</a>\"";
+    mimeMessage.setText(message, "utf-8", "html"); // 내용
+    mimeMessage.setFrom("980lje@naver.com");
+    return mimeMessage;
   }
 }
