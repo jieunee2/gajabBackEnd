@@ -6,6 +6,7 @@ import com.gajob.service.study.StudyRecruitmentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,6 +28,13 @@ public class StudyRecruitmentController {
       @RequestBody StudyRecruitmentDto studyRecruitmentDto) {
     return ResponseEntity.ok(studyRecruitmentService.support
         (postId, studyRecruitmentDto));
+  }
+
+  // 스터디 모임 신청 취소
+  @DeleteMapping("/{postId}")
+  public ResponseEntity supportCancel(@PathVariable Long postId) {
+    return ResponseEntity.ok(studyRecruitmentService.supportCancel(postId));
+
   }
 
   //스터디 모임 신청자 전체 조회
