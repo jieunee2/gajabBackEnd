@@ -15,4 +15,6 @@ public interface StudyRecruitmentRepository extends JpaRepository<StudyRecruitme
 
   List<StudyRecruitment> findAllByUser(User user);
 
+  Optional<StudyRecruitment> deleteByUserAndStudyId(User user, Long postId);
+
 }

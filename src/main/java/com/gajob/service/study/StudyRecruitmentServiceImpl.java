@@ -59,6 +59,20 @@ public class StudyRecruitmentServiceImpl implements StudyRecruitmentService {
     return studyRecruitmentRepository.findByStudyAndUser(study, user).isEmpty();
   }
 
+  // 스터디 모임 신청 취소
+  @Transactional
+  public String supportCancel(Long postId) {
+    User user = userRepository.findOneWithAuthoritiesByEmail(
+        SecurityUtil.getCurrentUsername().get()).get();
+
+    Study study = studyRepository.findById(postId)
+        .orElseThrow(() -> new CustomException(ErrorCode.POST_ID_NOT_EXIST));
+
+    studyRecruitmentRepository.deleteByUserAndStudyId(user, postId);
+
+    return "supply-cancel";
+  }
+
   // 스터디 모임 신청자 전체 조회
   @Transactional(readOnly = true)
   public List<StudyRecruitmentResponseDto> getAllSupport(Long postId) {

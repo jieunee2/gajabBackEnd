@@ -11,6 +11,8 @@ public interface StudyRecruitmentService {
   StudyRecruitmentResponseDto support(Long postId,
       StudyRecruitmentDto studyRecruitmentDto); //스터디 모임 신청
 
+  String supportCancel(Long postId); //스터디 모임 신청 취소
+
   List<StudyRecruitmentResponseDto> getAllSupport(Long postId); //스터디 모임 신청자 전체 조회
 
   StudyRecruitmentResponseDto setResult(Long postId,
