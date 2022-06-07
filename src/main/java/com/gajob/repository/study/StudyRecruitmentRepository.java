@@ -13,4 +13,6 @@ public interface StudyRecruitmentRepository extends JpaRepository<StudyRecruitme
 
   Optional<StudyRecruitment> findByStudyAndUser(Study study, User user);
 
+  List<StudyRecruitment> findAllByUser(User user);
+
 }
