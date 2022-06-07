@@ -36,6 +36,7 @@ public class StudyRecruitmentServiceImpl implements StudyRecruitmentService {
     Study study = studyRepository.findById(postId).orElseThrow();
 
     if (isNotAlreadySupply(user, study)) {
+//      study.getContent().replace("\r\n", "<br>");
       return new StudyRecruitmentResponseDto(
           studyRecruitmentRepository.save(studyRecruitmentDto.toEntity(user, study)));
     }

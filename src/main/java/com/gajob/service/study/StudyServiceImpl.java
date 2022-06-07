@@ -40,6 +40,11 @@ public class StudyServiceImpl implements StudyService {
         studyList.setStatus(Status.모집종료);
         studyRepository.save(studyList);
       }
+      // 현재 날짜가 스터디 모집 예정일 날짜보다 이전일 경우 Status의 상태를 모집예정일로 변경
+      else if (nowDate.isBefore(studyList.getStartDate())) {
+        studyList.setStatus(Status.모집예정일);
+        studyRepository.save(studyList);
+      }
     }
   }
 
