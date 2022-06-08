@@ -12,6 +12,7 @@ import com.gajob.repository.study.StudyRecruitmentRepository;
 import com.gajob.repository.study.StudyRepository;
 import com.gajob.repository.user.UserRepository;
 import com.gajob.util.SecurityUtil;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.mail.internet.MimeMessage;
@@ -106,9 +107,11 @@ public class StudyRecruitmentServiceImpl implements StudyRecruitmentService {
 
     studyRecruitment.update(studyRecruitmentUpdateDto.getResult());
 
-    // 스터디 모집 결과 알림 메일 발송
-    mailSend(studyRecruitment.getUser().getStudentEmail());
-    sendSimpleMessage(studyRecruitment.getUser().getStudentEmail());
+    // 현재 날짜가 모집마감일과 같을 경우, 스터디 모집 결과 알림 메일 발송
+    if (studyRecruitment.getStudy().getEndDate().equals(LocalDate.now())) {
+      mailSend(studyRecruitment.getUser().getStudentEmail());
+      sendSimpleMessage(studyRecruitment.getUser().getStudentEmail());
+    }
 
     StudyRecruitmentResponseDto studyRecruitmentResponseDto = new StudyRecruitmentResponseDto(
         studyRecruitment);
