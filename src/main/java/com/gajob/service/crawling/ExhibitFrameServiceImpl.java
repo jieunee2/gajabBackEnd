@@ -1,3 +1,4 @@
+/*
 package com.gajob.service.crawling;
 
 import com.gajob.dto.crawling.ExhibitFrameDto;
@@ -67,3 +68,4 @@ public class ExhibitFrameServiceImpl implements ExhibitFrameService {
     }
 
 }
+*/

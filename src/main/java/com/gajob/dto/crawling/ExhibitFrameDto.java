@@ -1,3 +1,4 @@
+/*
 package com.gajob.dto.crawling;
 
 import com.gajob.entity.crawling.ExhibitFrame;
@@ -32,3 +33,4 @@ public class ExhibitFrameDto {
         return exhibitFrame;
     }
 }
+*/

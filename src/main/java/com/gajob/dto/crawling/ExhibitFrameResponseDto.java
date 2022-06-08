@@ -1,3 +1,4 @@
+/*
 package com.gajob.dto.crawling;
 
 import com.gajob.entity.crawling.ExhibitFrame;
@@ -29,3 +30,4 @@ public class ExhibitFrameResponseDto {
         this.imgUrl = exhibitFrame.getImgUrl();
     }
 }
+*/

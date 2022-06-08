@@ -1,3 +1,4 @@
+/*
 package com.gajob.controller.crawling;
 
 import com.gajob.dto.crawling.ExhibitFrameDto;
@@ -30,3 +31,4 @@ public class ExhibitFrameController {
     }
 
 }
+*/
