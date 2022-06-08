@@ -1,3 +1,4 @@
+/*
 package com.gajob.service.crawling;
 
 import com.gajob.dto.crawling.ExhibitFrameDto;
@@ -14,3 +15,4 @@ public interface ExhibitFrameService {
     String delete(Long exhibitFrameId); // 공모전 정보 삭제
 
 }
+*/
