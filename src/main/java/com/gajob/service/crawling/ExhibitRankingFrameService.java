@@ -1,3 +1,4 @@
+/*
 package com.gajob.service.crawling;
 
 import com.gajob.dto.crawling.ExhibitRankingFrameDto;
@@ -14,3 +15,4 @@ public interface ExhibitRankingFrameService {
     String delete(Long exhibitRankingFrameId); // 공모전랭킹 정보 삭제
 
 }
+*/

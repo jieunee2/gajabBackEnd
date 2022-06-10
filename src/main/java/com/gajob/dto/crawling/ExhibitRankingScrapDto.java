@@ -1,7 +1,6 @@
-/*
 package com.gajob.dto.crawling;
 
-import com.gajob.entity.crawling.ExhibitRankingFrame;
+import com.gajob.entity.crawling.ExhibitRankingScrap;
 import com.gajob.entity.user.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -14,7 +13,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class ExhibitRankingFrameDto {
+public class ExhibitRankingScrapDto {
 
     private String title;
     private String ranking;
@@ -29,13 +28,11 @@ public class ExhibitRankingFrameDto {
     private String imgUrl;
     private User user;
 
-    public ExhibitRankingFrame toEntity(User user) {
-        ExhibitRankingFrame exhibitRankingFrame = ExhibitRankingFrame.builder().title(title).ranking(ranking).rankingState(rankingState)
+    public ExhibitRankingScrap toEntity(User user) {
+        ExhibitRankingScrap exhibitRankingScrap = ExhibitRankingScrap.builder().title(title).ranking(ranking).rankingState(rankingState)
                 .host(host).perks(perks).categories(categories).targets(targets).dDay(dDay)
                 .state(state).url(url).imgUrl(imgUrl).user(user).build();
 
-        return exhibitRankingFrame;
+        return exhibitRankingScrap;
     }
-
 }
-*/
