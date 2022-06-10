@@ -1,3 +1,4 @@
+/*
 package com.gajob.dto.crawling;
 
 import com.gajob.entity.crawling.ExhibitRankingFrame;
@@ -37,3 +38,4 @@ public class ExhibitRankingFrameResponseDto {
     }
 
 }
+*/

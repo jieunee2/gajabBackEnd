@@ -1,3 +1,4 @@
+/*
 package com.gajob.service.crawling;
 
 import com.gajob.dto.crawling.ExhibitRankingFrameDto;
@@ -67,3 +68,4 @@ public class ExhibitRankingFrameServiceImpl implements ExhibitRankingFrameServic
     }
 
 }
+*/
