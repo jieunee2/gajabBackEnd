@@ -46,6 +46,11 @@ public class StudyServiceImpl implements StudyService {
         studyList.setStatus(Status.모집예정일);
         studyRepository.save(studyList);
       }
+      // 그 이외에는 Status의 상태를 모집중으로 변경
+      else {
+        studyList.setStatus(Status.모집중);
+        studyRepository.save(studyList);
+      }
     }
   }
 
