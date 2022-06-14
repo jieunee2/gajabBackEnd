@@ -43,7 +43,7 @@ public class StudyController {
     return ResponseEntity.ok(studyService.update(postId, studyDto));
   }
 
-  @DeleteMapping("/posts/{postId}")
+  @DeleteMapping("/posts/{postId}") // 게시물 삭제
   public ResponseEntity delete(@PathVariable Long postId) {
     return ResponseEntity.ok(studyService.delete(postId));
   }
