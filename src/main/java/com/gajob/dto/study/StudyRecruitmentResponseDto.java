@@ -25,6 +25,10 @@ public class StudyRecruitmentResponseDto {
 
   private Result result;
 
+  private Long postId;
+
+  private Long supplyId;
+
   public StudyRecruitmentResponseDto(StudyRecruitment studyRecruitment) {
     this.id = studyRecruitment.getId();
     this.name = studyRecruitment.getUser().getName();
@@ -35,5 +39,7 @@ public class StudyRecruitmentResponseDto {
     this.studentEmail = studyRecruitment.getUser().getStudentEmail();
     this.applicationDate = studyRecruitment.getCreatedDate();
     this.result = studyRecruitment.getResult();
+    this.postId = studyRecruitment.getStudy().getId();
+    this.supplyId = studyRecruitment.getId();
   }
 }
