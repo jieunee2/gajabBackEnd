@@ -38,6 +38,8 @@ public class StudyReadDto {
 
   private int supplyCnt; // 스터디 모집 지원자 수
 
+  private boolean applyStatus; // 현재 로그인 한 유저의 스터디 지원 여부
+
   public StudyReadDto(Study study) {
     this.id = study.getId();
     this.title = study.getTitle();

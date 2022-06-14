@@ -3,6 +3,7 @@ package com.gajob.service.study;
 import com.gajob.dto.study.StudyDto;
 import com.gajob.dto.study.StudyLikesResponseDto;
 import com.gajob.dto.study.StudyReadDto;
+import com.gajob.dto.study.StudyRecruitmentResponseDto;
 import com.gajob.dto.study.StudyResponseDto;
 import com.gajob.dto.study.StudyScrapResponseDto;
 import com.gajob.entity.study.Study;
@@ -67,10 +68,11 @@ public class StudyServiceImpl implements StudyService {
 
     StudyReadDto studyReadDto = new StudyReadDto(study);
 
-    // 게시물 조회시 Study 테이블의 likes 컬럼 업데이트 및 유저의 게시물 좋아요 상태 변경
+    // 게시물 조회시 Study 테이블의 likes 컬럼 업데이트 및 유저의 게시물 좋아요 상태, 스터디 지원 상태 변경
     study.likeUpdate(studyReadDto.getLikes());
     studyReadDto.setLikeStatus(isLikeStatus(study));
     studyReadDto.setScrapStatus(isScrapStatus(study));
+    studyReadDto.setApplyStatus(isApplyStatus(study));
 
     return studyReadDto;
   }
@@ -82,12 +84,13 @@ public class StudyServiceImpl implements StudyService {
 
     ArrayList<StudyReadDto> studyReadDtos = new ArrayList<StudyReadDto>();
 
-    // 게시물 조회시 Study 테이블의 likes 컬럼 업데이트 및 유저의 게시물 좋아요, 스크랩 상태 변경
+    // 게시물 조회시 Study 테이블의 likes 컬럼 업데이트 및 유저의 게시물 좋아요, 스크랩 상태, 스터디 지원 상태 변경
     for (Study studyList : study) {
       StudyReadDto studyReadDto = new StudyReadDto(studyList);
       studyList.likeUpdate(studyReadDto.getLikes());
       studyReadDto.setLikeStatus(isLikeStatus(studyList));
       studyReadDto.setScrapStatus(isScrapStatus(studyList));
+      studyReadDto.setApplyStatus(isApplyStatus(studyList));
 
       // 변경된 데이터들을 studyReadDtos에 저장
       studyReadDtos.add(studyReadDto);
@@ -132,6 +135,29 @@ public class StudyServiceImpl implements StudyService {
           .equals(user.getNickname())) {
         StudyReadDto studyReadDto = new StudyReadDto(study);
         studyReadDto.setScrapStatus(true);
+        return true;
+      }
+    }
+    return false;
+  }
+
+  // 스터디 지원 여부 확인
+  @Transactional
+  public boolean isApplyStatus(Study study) {
+    User user = userRepository.findOneWithAuthoritiesByEmail(
+        SecurityUtil.getCurrentUsername().get()).get();
+
+    List<StudyRecruitmentResponseDto> recruitmentList = study.getStudyRecruitmentList().stream()
+        .map(StudyRecruitmentResponseDto::new).collect(Collectors.toList());
+
+    System.out.println("리스트" + recruitmentList);
+
+    for (StudyRecruitmentResponseDto studyRecruitmentResponseDto : recruitmentList) {
+      // StudyRecruitmentResponseDto 내에 현재 로그인 한 유저의 이름이 포함되어 있으면 applyStatus 값을 true로 변환
+      if (studyRecruitmentResponseDto.getName()
+          .equals(user.getName())) {
+        StudyReadDto studyReadDto = new StudyReadDto(study);
+        studyReadDto.setApplyStatus(true);
         return true;
       }
     }

@@ -20,6 +20,8 @@ public interface StudyService {
 
   boolean isScrapStatus(Study study); //스크랩 여부 확인
 
+  boolean isApplyStatus(Study study); // 스터디 지원 여부 확인
+
   StudyReadDto update(Long postId, StudyDto studyDto); //게시물 수정
 
   String delete(Long postId); //게시물 삭제
