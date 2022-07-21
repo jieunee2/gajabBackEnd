@@ -19,6 +19,7 @@
  
 
 ## 🛠 Technology
+<div>
 <img src="https://img.shields.io/badge/Java-007396?style=flat&logo=JAVA&logoColor=white"/>
 <img src="https://img.shields.io/badge/Gradle-02303A?style=flat&logo=Gradle&logoColor=white"/>
 <img src="https://img.shields.io/badge/MySQL-4479A1?style=flat&logo=MySQL&logoColor=white"/><br>
@@ -28,7 +29,7 @@
 <img src="https://img.shields.io/badge/Git-F05032?style=flat&logo=Git&logoColor=white"/>
 <img src="https://img.shields.io/badge/GitHub-181717?style=flat&logo=Github&logoColor=white"/>
 <img src="https://img.shields.io/badge/Notion-000000?style=flat&logo=Notion&logoColor=white"/>
-
+</div>
 
 ## Dependencies
 
@@ -59,9 +60,9 @@ Depends on:
 
 ## 💻 Cooperation
 <b>✨꾸준한 협업을 중요시 하는 GA-JOB</b><br><br>
-<img width="705" alt="스크린샷 2022-07-21 오후 2 58 33" src="https://user-images.githubusercontent.com/70866902/180140232-889b2ee9-6582-4364-8892-4687dcc7cb75.png">
-<img width="1058" alt="스크린샷 2022-07-21 오후 3 00 38" src="https://user-images.githubusercontent.com/70866902/180140466-75d9e7e4-ae4e-4d7d-af28-8d778b1e12db.png">
-<img width="1202" alt="스크린샷 2022-07-21 오후 3 06 36" src="https://user-images.githubusercontent.com/70866902/180141288-9588903d-338c-4544-907d-c57229e7a17b.png">
+<img width="650" alt="스크린샷 2022-07-21 오후 2 58 33" src="https://user-images.githubusercontent.com/70866902/180140232-889b2ee9-6582-4364-8892-4687dcc7cb75.png">
+<img width="800" alt="스크린샷 2022-07-21 오후 3 00 38" src="https://user-images.githubusercontent.com/70866902/180140466-75d9e7e4-ae4e-4d7d-af28-8d778b1e12db.png">
+<img width="900" alt="스크린샷 2022-07-21 오후 3 06 36" src="https://user-images.githubusercontent.com/70866902/180141288-9588903d-338c-4544-907d-c57229e7a17b.png">
 
 ## Demonstration Video
 - [GA-JOB 시연 영상](https://www.youtube.com/watch?v=AT5ZSIxbeSg&t=651s)
