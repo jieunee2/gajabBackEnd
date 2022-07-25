@@ -26,6 +26,7 @@ dependencies {
     implementation group: 'javax.validation', name: 'validation-api', version: '2.0.1.Final'
     implementation 'org.springframework.boot:spring-boot-starter-mail'
     implementation group: 'commons-io', name: 'commons-io', version: '2.4'
+    implementation 'mysql:mysql-connector-java:8.0.29'
     compileOnly 'org.projectlombok:lombok'
     developmentOnly 'org.springframework.boot:spring-boot-devtools' // 임시 비밀번호 발급시 이메일 전송을 위해 추가
     runtimeOnly 'com.h2database:h2'
